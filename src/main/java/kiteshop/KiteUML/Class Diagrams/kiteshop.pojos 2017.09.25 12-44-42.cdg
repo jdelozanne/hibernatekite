@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="kiteshop.pojos">
+  <ClassDiagramComponents>
+    <Class name="Account" package="kiteshop.pojos" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="gebruikersnaam" type="String" visibility="private"/>
+        <Field name="wachtwoord" type="String" visibility="private"/>
+        <Field name="type" type="AccountType" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getType" returnType="AccountType" visibility="public"/>
+        <Method name="setType" returnType="void" visibility="public">
+          <Argument type="AccountType" name="type"/>
+        </Method>
+        <Method name="setGebruikersnaam" returnType="void" visibility="public">
+          <Argument type="String" name="s"/>
+        </Method>
+        <Method name="getGebruikersnaam" returnType="String" visibility="public"/>
+        <Method name="setWachtwoord" returnType="void" visibility="public">
+          <Argument type="String" name="s"/>
+        </Method>
+        <Method name="getWachtwoord" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Enum name="AccountType" package="kiteshop.pojos" visibility="public" xPosition="320.0" yPosition="20.0">
+      <Literals>
+        <Literal name="Medewerker"/>
+      </Literals>
+    </Enum>
+    <Class name="Adres" package="kiteshop.pojos" visibility="public" xPosition="620.0" yPosition="20.0">
+      <Fields>
+        <Field name="woonplaats" type="String" visibility="private"/>
+        <Field name="postcode" type="String" visibility="private"/>
+        <Field name="straatnaam" type="String" visibility="private"/>
+        <Field name="huisnummer" type="int" visibility="private"/>
+        <Field name="toevoeging" type="String" visibility="private"/>
+        <Field name="email" type="String" visibility="private"/>
+        <Field name="telefoon" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getWoonplaats" returnType="String" visibility="public"/>
+        <Method name="setWoonplaats" returnType="void" visibility="public">
+          <Argument type="String" name="woonplaats"/>
+        </Method>
+        <Method name="getPostcode" returnType="String" visibility="public"/>
+        <Method name="setPostcode" returnType="void" visibility="public">
+          <Argument type="String" name="postcode"/>
+        </Method>
+        <Method name="getStraatnaam" returnType="String" visibility="public"/>
+        <Method name="setStraatnaam" returnType="void" visibility="public">
+          <Argument type="String" name="straatnaam"/>
+        </Method>
+        <Method name="getHuisnummer" returnType="int" visibility="public"/>
+        <Method name="setHuisnummer" returnType="void" visibility="public">
+          <Argument type="int" name="huisnummer"/>
+        </Method>
+        <Method name="getToevoeging" returnType="String" visibility="public"/>
+        <Method name="setToevoeging" returnType="void" visibility="public">
+          <Argument type="String" name="toevoeging"/>
+        </Method>
+        <Method name="getEmail" returnType="String" visibility="public"/>
+        <Method name="setEmail" returnType="void" visibility="public">
+          <Argument type="String" name="email"/>
+        </Method>
+        <Method name="getTelefoon" returnType="int" visibility="public"/>
+        <Method name="setTelefoon" returnType="void" visibility="public">
+          <Argument type="int" name="telefoon"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Bestelling" package="kiteshop.pojos" visibility="public" xPosition="920.0" yPosition="20.0">
+      <Fields>
+        <Field name="bestellingID" type="int" visibility="private"/>
+        <Field name="klant" type="Klant" visibility="private"/>
+        <Field name="bestelling" type="ArrayList&lt;Product&gt;" visibility="private"/>
+        <Field name="totaalprijs" type="BigDecimal" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="Klant" name="klant"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="voegToe" returnType="void" visibility="public">
+          <Argument type="Product" name="p"/>
+        </Method>
+        <Method name="getBestellingID" returnType="int" visibility="public"/>
+        <Method name="setBestellingID" returnType="void" visibility="public">
+          <Argument type="int" name="bestellingID"/>
+        </Method>
+        <Method name="getKlant" returnType="Klant" visibility="public"/>
+        <Method name="setKlant" returnType="void" visibility="public">
+          <Argument type="Klant" name="klant"/>
+        </Method>
+        <Method name="getBestelling" returnType="ArrayList&lt;Product&gt;" visibility="public"/>
+        <Method name="setBestelling" returnType="void" visibility="public">
+          <Argument type="ArrayList&lt;Product&gt;" name="bestelling"/>
+        </Method>
+        <Method name="getTotaalprijs" returnType="BigDecimal" visibility="public"/>
+        <Method name="setTotaalprijs" returnType="void" visibility="public">
+          <Argument type="BigDecimal" name="totaalprijs"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Klant" package="kiteshop.pojos" visibility="public" xPosition="1220.0" yPosition="20.0">
+      <Fields>
+        <Field name="klantID" type="int" visibility="private"/>
+        <Field name="adres" type="Adres" visibility="private"/>
+        <Field name="voornaam" type="String" visibility="private"/>
+        <Field name="tussenvoegsel" type="String" visibility="private"/>
+        <Field name="achternaam" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getAdres" returnType="Adres" visibility="public"/>
+        <Method name="setAdres" returnType="void" visibility="public">
+          <Argument type="Adres" name="adres"/>
+        </Method>
+        <Method name="getVoornaam" returnType="String" visibility="public"/>
+        <Method name="setVoornaam" returnType="void" visibility="public">
+          <Argument type="String" name="voornaam"/>
+        </Method>
+        <Method name="getTussenvoegsel" returnType="String" visibility="public"/>
+        <Method name="setTussenvoegsel" returnType="void" visibility="public">
+          <Argument type="String" name="tussenvoegsel"/>
+        </Method>
+        <Method name="getAchternaam" returnType="String" visibility="public"/>
+        <Method name="setAchternaam" returnType="void" visibility="public">
+          <Argument type="String" name="achternaam"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Product" package="kiteshop.pojos" visibility="public" xPosition="1520.0" yPosition="20.0">
+      <Fields>
+        <Field name="productID" type="int" visibility="private"/>
+        <Field name="naam" type="String" visibility="private"/>
+        <Field name="omschrijving" type="String" visibility="private"/>
+        <Field name="prijs" type="BigDecimal" visibility="private"/>
+        <Field name="voorraad" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="naam"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getProductID" returnType="int" visibility="public"/>
+        <Method name="setProductID" returnType="void" visibility="public">
+          <Argument type="int" name="productID"/>
+        </Method>
+        <Method name="getNaam" returnType="String" visibility="public"/>
+        <Method name="setNaam" returnType="void" visibility="public">
+          <Argument type="String" name="naam"/>
+        </Method>
+        <Method name="getOmschrijving" returnType="String" visibility="public"/>
+        <Method name="setOmschrijving" returnType="void" visibility="public">
+          <Argument type="String" name="omschrijving"/>
+        </Method>
+        <Method name="getPrijs" returnType="BigDecimal" visibility="public"/>
+        <Method name="setPrijs" returnType="void" visibility="public">
+          <Argument type="BigDecimal" name="prijs"/>
+        </Method>
+        <Method name="getVoorraad" returnType="int" visibility="public"/>
+        <Method name="setVoorraad" returnType="void" visibility="public">
+          <Argument type="int" name="voorraad"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="klant" source="kiteshop.pojos.Bestelling" target="kiteshop.pojos.Klant" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="kiteshop.pojos.Bestelling" target="kiteshop.pojos.Product" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="type" source="kiteshop.pojos.Account" target="kiteshop.pojos.AccountType" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="kiteshop.pojos.Bestelling" target="kiteshop.pojos.Klant" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="adres" source="kiteshop.pojos.Klant" target="kiteshop.pojos.Adres" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="kiteshop.pojos.Account" target="kiteshop.pojos.AccountType" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="bestelling" source="kiteshop.pojos.Bestelling" target="kiteshop.pojos.Product" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Product&gt;"/>
+    <UseRelation source="kiteshop.pojos.Klant" target="kiteshop.pojos.Adres" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
