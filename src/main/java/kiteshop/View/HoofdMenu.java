@@ -14,8 +14,6 @@ import kiteshop.pojos.Account;
  * @author julia
  */
 
-
-
 public class HoofdMenu {
 	
 	Scanner input = new Scanner(System.in);
@@ -69,7 +67,6 @@ public class HoofdMenu {
             System.exit(0);
         } else {
             start();
-                    
         }
     }
     
