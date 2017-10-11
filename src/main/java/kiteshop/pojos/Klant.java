@@ -2,6 +2,8 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
+
+bla die bla
  */
 package kiteshop.pojos;
 
@@ -9,13 +11,10 @@ public class Klant {
 
     
     private int klantID;
-    private Adres bezoekAdres;
-    private Adres factuurAdres;
+    private Adres adres;
     private String voornaam;
     private String tussenvoegsel;
     private String achternaam;
-    private String email;
-    private String telefoonnummer;
     
     public Klant() {
     }
@@ -26,6 +25,14 @@ public class Klant {
     
     public void setKlantID(int id){
         this.klantID = id;
+    }
+
+    public Adres getAdres() {
+        return adres;
+    }
+
+    public void setAdres(Adres adres) {
+        this.adres = adres;
     }
 
     public String getVoornaam() {
@@ -52,56 +59,22 @@ public class Klant {
         this.achternaam = achternaam;
     }
 
-       
-    public String getEmail() {
-		return email;
-	}
-
-	public String getTelefoonnummer() {
-		return telefoonnummer;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public void setTelefoonnummer(String telefoonnummer) {
-		this.telefoonnummer = telefoonnummer;
-	}
-	
-	public Adres getBezoekAdres() {
-		return bezoekAdres;
-	}
-
-	public Adres getFactuurAdres() {
-		return factuurAdres;
-	}
-
-	public void setBezoekAdres(Adres bezoekAdres) {
-		this.bezoekAdres = bezoekAdres;
-	}
-
-	public void setFactuurAdres(Adres factuurAdres) {
-		this.factuurAdres = factuurAdres;
-	}
-
-	@Override
+    
+    
+    @Override
 	public String toString() {
-		return "Klant [klantID=" + klantID + ", bezoekAdres=" + bezoekAdres + ", factuurAdres=" + factuurAdres
-				+ ", voornaam=" + voornaam + ", tussenvoegsel=" + tussenvoegsel + ", achternaam=" + achternaam
-				+ ", email=" + email + ", telefoonnummer=" + telefoonnummer + "]";
+		return "KlantID = " + klantID + " voornaam = " + voornaam + " tussenvoegsel = "
+				+ tussenvoegsel + " achternaam = " + achternaam;
 	}
 
+	//Benodigd voor het testen met JUnit
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((achternaam == null) ? 0 : achternaam.hashCode());
-		result = prime * result + ((bezoekAdres == null) ? 0 : bezoekAdres.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((factuurAdres == null) ? 0 : factuurAdres.hashCode());
+		result = prime * result + ((adres == null) ? 0 : adres.hashCode());
 		result = prime * result + klantID;
-		result = prime * result + ((telefoonnummer == null) ? 0 : telefoonnummer.hashCode());
 		result = prime * result + ((tussenvoegsel == null) ? 0 : tussenvoegsel.hashCode());
 		result = prime * result + ((voornaam == null) ? 0 : voornaam.hashCode());
 		return result;
@@ -121,27 +94,12 @@ public class Klant {
 				return false;
 		} else if (!achternaam.equals(other.achternaam))
 			return false;
-		if (bezoekAdres == null) {
-			if (other.bezoekAdres != null)
+		if (adres == null) {
+			if (other.adres != null)
 				return false;
-		} else if (!bezoekAdres.equals(other.bezoekAdres))
-			return false;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (factuurAdres == null) {
-			if (other.factuurAdres != null)
-				return false;
-		} else if (!factuurAdres.equals(other.factuurAdres))
+		} else if (!adres.equals(other.adres))
 			return false;
 		if (klantID != other.klantID)
-			return false;
-		if (telefoonnummer == null) {
-			if (other.telefoonnummer != null)
-				return false;
-		} else if (!telefoonnummer.equals(other.telefoonnummer))
 			return false;
 		if (tussenvoegsel == null) {
 			if (other.tussenvoegsel != null)
@@ -155,10 +113,6 @@ public class Klant {
 			return false;
 		return true;
 	}
-
-	
-
-	
 
     
     
