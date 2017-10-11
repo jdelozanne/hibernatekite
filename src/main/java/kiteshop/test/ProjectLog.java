@@ -33,7 +33,7 @@ public class ProjectLog {
 
 		try {
 			
-			FileHandler fh = new FileHandler("src/kiteshop/test/ProjectLog.log", true);
+			FileHandler fh = new FileHandler("src/main/java/kiteshop/test/ProjectLog.log", true);
 			fh.setLevel(filePrintLevel);
 			fh.setFormatter(new SimpleFormatter());
 
