@@ -42,8 +42,9 @@ public class KlantenController {
         klantDAO.deleteKlant(klant);
     }
     
-    public void showAllKlanten(){
-        klantDAO.readAllKlanten();
+    public ArrayList<Klant> showAllKlanten(){
+    	
+        return klantDAO.readAllKlanten();
     }
 
 }

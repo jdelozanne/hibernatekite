@@ -98,7 +98,7 @@ public class KlantDAO implements KlantDAOInterface {
 	}
 
 
-	
+
 	//Deze is volgens mij niet nodig wordt 100% afgedekt door ArrayList<Klant> readSelectedKlantenAchternaam(String achternaam) 
 	@Override
 	public Klant readKlant(String achternaam) {
@@ -172,7 +172,7 @@ public class KlantDAO implements KlantDAOInterface {
 
 			String sql ="UPDATE klant SET voornaam=?,tussenvoegsel=?,achternaam=?,emailadres=?,"
 					+ "telefoonnummer=? WHERE KlantID=?;";
-					
+
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setString(1, klant.getVoornaam());
 			statement.setString(2, klant.getTussenvoegsel());
@@ -181,11 +181,11 @@ public class KlantDAO implements KlantDAOInterface {
 			statement.setString(5, klant.getTelefoonnummer());
 			statement.setInt(6, klant.getKlantID());
 			statement.execute();
-			
+
 
 			String sql2 ="UPDATE adres SET straatnaam=?, huisnummer=?, toevoeging=?, postcode=?,"
 					+ "woonplaats = ? WHERE KlantIDadres=? and adres_type = ?";
-				
+
 			PreparedStatement statement2 = connection.prepareStatement(sql2);
 			statement2.setString(1, klant.getBezoekAdres().getStraatnaam());
 			statement2.setInt(2, klant.getBezoekAdres().getHuisnummer());
@@ -195,10 +195,10 @@ public class KlantDAO implements KlantDAOInterface {
 			statement2.setInt(6, klant.getKlantID());
 			statement2.setString(7, "BEZOEKADRES");
 			statement2.execute();
-			
+
 			String sql3 ="UPDATE adres SET straatnaam=?, huisnummer=?, toevoeging=?, postcode=?,"
 					+ "woonplaats = ? WHERE KlantIDadres=? and adres_type = ?";
-				
+
 			PreparedStatement statement3 = connection.prepareStatement(sql3);
 			statement3.setString(1, klant.getFactuurAdres().getStraatnaam());
 			statement3.setInt(2, klant.getFactuurAdres().getHuisnummer());
@@ -208,15 +208,15 @@ public class KlantDAO implements KlantDAOInterface {
 			statement3.setInt(6, klant.getKlantID());
 			statement3.setString(7, "FACTUURADRES");
 			statement3.execute();
-			
+
 
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
 	}
-	
-	
-	
+
+
+
 
 	@Override
 	public void deleteKlant(Klant klant) {
@@ -319,27 +319,74 @@ public class KlantDAO implements KlantDAOInterface {
 	}
 
 	@Override
-	public void readAllKlanten(){
-		ArrayList <Klant> allKlanten = new ArrayList<>();
+	public ArrayList<Klant> readAllKlanten(){
+		ArrayList<Klant> allKlanten = new ArrayList<Klant>();
+
 		try {
-			PreparedStatement statement = connection.prepareStatement("select * from klant");
+			String query = "Select * from klant";
+			PreparedStatement statement = connection.prepareStatement(query);
+
 
 			ResultSet result = statement.executeQuery();
 
 			while(result.next()){
-				Klant k = new Klant();
-				k.setKlantID(result.getInt(1));
-				k.setVoornaam(result.getString(2));
-				k.setTussenvoegsel(result.getString(3));
-				k.setAchternaam(result.getString(4));
-
-				allKlanten.add(k);
+				Klant klant = new Klant();
+				klant.setKlantID(result.getInt(1));
+				klant.setVoornaam(result.getString(2));
+				klant.setTussenvoegsel(result.getString(3));
+				klant.setAchternaam(result.getString(4));
+				klant.setEmail(result.getString(5));
+				klant.setTelefoonnummer(result.getString(6));
+				allKlanten.add(klant);
 			}
 
-		}catch(SQLException ex){
+			for(int i = 0; i < allKlanten.size(); i++){
 
+				Adres bezoekAdres = new Adres();
+				Adres factuurAdres = new Adres();
+
+				String query2 = "Select * from adres where klantIDadres = ? and adres_type = ?";
+				PreparedStatement statement2 = connection.prepareStatement(query2);
+				statement2.setInt(1, allKlanten.get(i).getKlantID());
+				statement2.setString(2, "BEZOEKADRES");
+
+				ResultSet result2 = statement2.executeQuery();
+
+				while(result2.next()){
+					logger.info("In while loop voor bezoekadres, "+ result2.getString(3));
+					bezoekAdres.setStraatnaam(result2.getString(3));
+					bezoekAdres.setHuisnummer(result2.getInt(4));
+					bezoekAdres.setToevoeging(result2.getString(5));
+					bezoekAdres.setPostcode(result2.getString(6));
+					bezoekAdres.setWoonplaats(result2.getString(7));
+					bezoekAdres.setAdresType(AdresType.BEZOEKADRES);
+				}
+				allKlanten.get(i).setBezoekAdres(bezoekAdres);
+
+
+				String query3 = "Select * from adres where klantIDadres = ? and adres_type = ?";
+				PreparedStatement statement3 = connection.prepareStatement(query3);
+				statement3.setInt(1, allKlanten.get(i).getKlantID());
+				statement3.setString(2, "FACTUURADRES");
+
+				ResultSet result3 = statement3.executeQuery();
+
+				while(result3.next()){
+					factuurAdres.setStraatnaam(result3.getString(3));
+					factuurAdres.setHuisnummer(result3.getInt(4));
+					factuurAdres.setToevoeging(result3.getString(5));
+					factuurAdres.setPostcode(result3.getString(6));
+					factuurAdres.setWoonplaats(result3.getString(7));
+					factuurAdres.setAdresType(AdresType.FACTUURADRES);
+				}
+
+				allKlanten.get(i).setFactuurAdres(factuurAdres);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
 		}
-		displayKlanten(allKlanten);
+
+		return allKlanten;
 
 	}
 
