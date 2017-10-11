@@ -64,7 +64,7 @@ public class MenuKlanten {
 			break;
 		case 4:
 			readKlanten();
-
+			start();
 			break;
 		case 5:
 			break; 
@@ -149,7 +149,8 @@ public class MenuKlanten {
 
 
 	public void readKlanten(){
-		controller.showAllKlanten();
+		for(Klant klant : controller.showAllKlanten())
+		System.out.println(klant);
 	}
 
 	private void klantWijzigenAchternaam() {
