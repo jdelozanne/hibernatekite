@@ -29,9 +29,6 @@ public class KlantDAO implements KlantDAOInterface {
 
 	Connection connection;
 
-
-
-
 	public KlantDAO() {
 		this.connection = DBConnect.getConnection();
 	}
@@ -41,7 +38,7 @@ public class KlantDAO implements KlantDAOInterface {
 		try {
 			String sql1 = "INSERT INTO klant" + "(KlantID, voornaam, tussenvoegsel, achternaam, "
 					+ "emailadres, telefoonnummer)" 
-					+ "values (?,?,?,?,?, ?)";
+					+ "values (?,?,?,?,?,?)";
 
 			PreparedStatement statement1 = connection.prepareStatement(sql1,Statement.RETURN_GENERATED_KEYS);
 

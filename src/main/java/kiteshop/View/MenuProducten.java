@@ -27,7 +27,8 @@ public class MenuProducten {
         System.out.println("Kies 1 voor Nieuwe product maken");
         System.out.println("Kies 2 voor Een product wijzigen");
         System.out.println("Kies 3 voor Een product verwijderen");
-        System.out.println("Kies 4 voor terug naar Startscherm");
+        System.out.println("Kies 4 voor Overzicht producten");
+        System.out.println("Kies 5 voor terug naar Hoofdmenu");
         int keuze = input.nextInt();
         switch (keuze) {
             case 1:
@@ -40,7 +41,10 @@ public class MenuProducten {
             	deleteProduct();
             	break;
             case 4:
-            	break;
+            	showProducten();
+                break;
+            case 5:
+                new HoofdMenu().start();
             default:
             	System.out.println("Probeer opnieuw");
             	start();
@@ -66,19 +70,13 @@ public class MenuProducten {
         BigDecimal prijs = input.nextBigDecimal();
     	product.setPrijs(prijs);
 
-    
-    	
-
-
-    	// product.setVoorraad(voorraad); vooraad beheer optioneel??
-
     	controller.createProduct(product);
 
 
     }
 
-    public void readProduct() {
-    	   System.out.println("Geef de naam het het product");
+    public void showProducten() {
+    	   controller.showProducten();
     }
 
     public void updateProduct() {
@@ -89,5 +87,8 @@ public class MenuProducten {
     public void deleteProduct() {
         //print lijst product en maak een keuze welk product je wilt verwijderen
         //als alleen de eigenaar mag wijzigen verifieren met een ww
+    }
+    public static void main(String[] args) {
+        new MenuProducten().start();
     }
 }
