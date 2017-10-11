@@ -21,7 +21,7 @@ import kiteshop.test.ProjectLog;
 
 /**
  *
- * @author julia
+ * @author julia ne steef
  */
 public class KlantDAO implements KlantDAOInterface {
 
