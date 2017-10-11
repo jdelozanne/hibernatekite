@@ -202,6 +202,7 @@ public class MenuKlanten {
 			Adres bezoekadres = createAdres();
 			bezoekadres.setAdresType(AdresType.BEZOEKADRES);
 			choosenKlant.setBezoekAdres(bezoekadres);
+			System.out.println(choosenKlant);
 			break;
 		case 5:
 			System.out.println("Nu wordt het factuuradres gevraagd");

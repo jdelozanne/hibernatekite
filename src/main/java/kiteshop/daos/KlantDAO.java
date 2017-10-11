@@ -170,16 +170,53 @@ public class KlantDAO implements KlantDAOInterface {
 	public void updateKlant(Klant klant) {
 		try {
 
-			String sql ="UPDATE `juliaworkshop`.`klant` SET `voornaam`='"+klant.getVoornaam()+"', `tussenvoegsel`='d"+klant.getTussenvoegsel()+"', `achternaam`='"+klant.getAchternaam()+"', `emailadres`='"+klant.getEmail()+" ', `telefoonnummer`='"+klant.getTelefoonnummer()+"' WHERE `KlantID`='"+klant.getKlantID()+"';";
-			Statement statement = connection.createStatement();
-			statement.executeUpdate(sql);
+			String sql ="UPDATE klant SET voornaam=?,tussenvoegsel=?,achternaam=?,emailadres=?,"
+					+ "telefoonnummer=? WHERE KlantID=?;";
+					
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, klant.getVoornaam());
+			statement.setString(2, klant.getTussenvoegsel());
+			statement.setString(3, klant.getAchternaam());
+			statement.setString(4, klant.getEmail());
+			statement.setString(5, klant.getTelefoonnummer());
+			statement.setInt(6, klant.getKlantID());
+			statement.execute();
+			
 
+			String sql2 ="UPDATE adres SET straatnaam=?, huisnummer=?, toevoeging=?, postcode=?,"
+					+ "woonplaats = ? WHERE KlantIDadres=? and adres_type = ?";
+				
+			PreparedStatement statement2 = connection.prepareStatement(sql2);
+			statement2.setString(1, klant.getBezoekAdres().getStraatnaam());
+			statement2.setInt(2, klant.getBezoekAdres().getHuisnummer());
+			statement2.setString(3, klant.getBezoekAdres().getToevoeging());
+			statement2.setString(4, klant.getBezoekAdres().getPostcode());
+			statement2.setString(5, klant.getBezoekAdres().getWoonplaats());
+			statement2.setInt(6, klant.getKlantID());
+			statement2.setString(7, "BEZOEKADRES");
+			statement2.execute();
+			
+			String sql3 ="UPDATE adres SET straatnaam=?, huisnummer=?, toevoeging=?, postcode=?,"
+					+ "woonplaats = ? WHERE KlantIDadres=? and adres_type = ?";
+				
+			PreparedStatement statement3 = connection.prepareStatement(sql3);
+			statement3.setString(1, klant.getFactuurAdres().getStraatnaam());
+			statement3.setInt(2, klant.getFactuurAdres().getHuisnummer());
+			statement3.setString(3, klant.getFactuurAdres().getToevoeging());
+			statement3.setString(4, klant.getFactuurAdres().getPostcode());
+			statement3.setString(5, klant.getFactuurAdres().getWoonplaats());
+			statement3.setInt(6, klant.getKlantID());
+			statement3.setString(7, "FACTUURADRES");
+			statement3.execute();
 			
 
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
 	}
+	
+	
+	
 
 	@Override
 	public void deleteKlant(Klant klant) {
