@@ -64,7 +64,7 @@ public class MenuKlanten {
 			break;
 		case 4:
 			readKlanten();
-			
+
 			break;
 		case 5:
 			break; 
@@ -76,33 +76,56 @@ public class MenuKlanten {
 	}
 
 
-	
+
 
 	private void createKlant(){
-		
+
 		// om toch het 'teveel strings in contructor' te vermijden, alles met setters gedaan
 		// neemt wel iets meer plaats in
-		
+
 		Klant klant = new Klant();
-                Adres adres = new Adres();
+
 
 		System.out.println("geef voornaam: ");
 		String voornaam = input.next();
 		klant.setVoornaam(voornaam);
-		
+
 		System.out.println("geef tussenvoegsel: ");
 		String tussenvoegsel = input.next();
 		klant.setTussenvoegsel(tussenvoegsel);
-		
+
 		System.out.println("geef achternaam: ");
 		String achternaam = input.next();
 		klant.setAchternaam(achternaam);
-		
-		
 
-		
+		System.out.println("geef emailadres: ");
+		String email = input.next();
+		klant.setEmail(email);
 
-		System.out.println("geef woonplaats: ");
+		System.out.println("geef telefoonnummer: ");
+		String  telefoonnr = input.next();
+		klant.setTelefoonnummer(telefoonnr);
+
+		System.out.println("Nu wordt het bezoekadres gevraagd");
+		Adres bezoekadres = createAdres();
+		bezoekadres.setAdresType(AdresType.BEZOEKADRES);
+		klant.setBezoekAdres(bezoekadres);
+
+		System.out.println("Wilt u een apart factuuradres toevoegen?");
+		if(input.next().equalsIgnoreCase("J")){
+			System.out.println("Nu wordt het factuuradres gevraagd");
+			Adres factuurAdres = createAdres();
+			factuurAdres.setAdresType(AdresType.FACTUURADRES);
+			klant.setFactuurAdres(factuurAdres);
+		} 
+
+		controller.createKlant(klant);
+
+	}
+
+	private Adres createAdres(){
+		Adres adres = new Adres();
+		System.out.println("geef plaats: ");
 		String woonplaats = input.next();
 		adres.setWoonplaats(woonplaats);
 
@@ -113,30 +136,21 @@ public class MenuKlanten {
 		System.out.println("geef straatnaam: ");
 		String straatnaam = input.next();
 		adres.setStraatnaam(straatnaam);
-		
+
 		int huisnummer = geefHuisnummer();  // aparte methode van gemaakt om te checken voor int en evt te herhalen
-		
-		
+		adres.setHuisnummer(huisnummer);
+
 		System.out.println("geef toevoeging: ");
 		String toevoeging = input.next();
 		adres.setToevoeging(toevoeging);
-                
-		System.out.println("geef emailadres: ");
-		String email = input.next();
-		adres.setEmail(email);
-				
-		System.out.println("geef telefoon: ");
-		int telefoonnr = input.nextInt();
-		adres.setTelefoon(telefoonnr);
-		klant.setAdres(adres);
-		
-		controller.createKlant(klant);
+		return adres;
 
 	}
-        
-        public void readKlanten(){
-            controller.showAllKlanten();
-        }
+
+
+	public void readKlanten(){
+		controller.showAllKlanten();
+	}
 
 	private void klantWijzigenAchternaam() {
 		System.out.println("Geef alstublieft de achternaam van de klant die u wilt wijzigen?");
@@ -144,24 +158,70 @@ public class MenuKlanten {
 
 		System.out.println("De volgende klanten zijn gevonden, geeft u alstublieft het nummer van de klant die u wil wijzigen");
 		for(int i = 0; i < searchResult.size(); i++ ){
-			// arraylist begint op 0, maar ik laat de klant kiezen vanaf 1, moet later wel weer terugrekenen
 			System.out.println(i+1 +" "+ searchResult.get(i));
 		}
 		Klant choosenKlant = searchResult.get(input.nextInt()-1);
-		
+
 		System.out.println("Wat wilt u wijzigen van de klant? ");
-		System.out.println("Kies 1 voor Voornaam");
-		System.out.println("Kies 2 voor Tussenvoegsel");
-		System.out.println("Kies 3 voor Achternaam");
-		System.out.println("Kies 4 voor E-mail");
-		System.out.println("Kies 5 voor Adres");
-		
+		System.out.println("Kies 1 voor Naam");
+		System.out.println("Kies 2 voor E-mail");
+		System.out.println("Kies 3 voor telefoonnummer");
+		System.out.println("Kies 4 voor bezoekadres");
+		System.out.println("Kies 5 voor factuuradres");
+		System.out.println("Kies 6 voor terug naar MenuKlanten");
+
+		int keuze = input.nextInt();
+
+		switch (keuze) {
+		case 1:
+			System.out.println("geef voornaam: ");
+			String voornaam = input.next();
+			choosenKlant.setVoornaam(voornaam);
+
+			System.out.println("geef tussenvoegsel: ");
+			String tussenvoegsel = input.next();
+			choosenKlant.setTussenvoegsel(tussenvoegsel);
+
+			System.out.println("geef achternaam: ");
+			String achternaam = input.next();
+			choosenKlant.setAchternaam(achternaam);
+			System.out.println("De naam van de klant is aangepast, klant heeft nu de volgende gegevens: "+choosenKlant);
+			break;
+		case 2:  
+			System.out.println("geef emailadres: ");
+			String email = input.next();
+			choosenKlant.setEmail(email);
+			break;
+		case 3:
+			System.out.println("geef telefoonnummer: ");
+			String  telefoonnr = input.next();
+			choosenKlant.setTelefoonnummer(telefoonnr);
+			break;
+		case 4:
+			System.out.println("Nu wordt het bezoekadres gevraagd");
+			Adres bezoekadres = createAdres();
+			bezoekadres.setAdresType(AdresType.BEZOEKADRES);
+			choosenKlant.setBezoekAdres(bezoekadres);
+			break;
+		case 5:
+			System.out.println("Nu wordt het factuuradres gevraagd");
+			Adres factuurAdres = createAdres();
+			factuurAdres.setAdresType(AdresType.FACTUURADRES);
+			choosenKlant.setFactuurAdres(factuurAdres);
+			break; 
+		case 6:
+			break; 	
+		default:
+			System.out.println("Uw keuze was incorrect");
+			klantWijzigenAchternaam();
+		}
+
 		// We moeten even kijken hoe precies we heir in moeten zijn.
-		
-		
+
+		controller.updateKlant(choosenKlant);
 	}
 
-	
+
 	private void klantVerwijderenAchterNaam(){
 		System.out.println("Geef alstublieft de achternaam van de klant die u wilt verwijderen?");
 		ArrayList<Klant> searchResult = controller.showKlantenAchternaam(input.next());
@@ -196,7 +256,7 @@ public class MenuKlanten {
 	}
 
 
-        //niet hier lijkt mij?
+	//niet hier lijkt mij?
 	public void printKlanten() {
 		ArrayList<Klant> klantenlijst = new ArrayList<>();
 		for (Klant element : klantenlijst) {
@@ -204,10 +264,12 @@ public class MenuKlanten {
 		}
 	}
 
-	
+
 	public static void main (String args[]){
+
+
 		new MenuKlanten().start();
 	}
-	
-	
+
+
 }
