@@ -35,7 +35,7 @@ public class DatabaseTest {
     void initializeDatabase() {
         logger.info("Entering initializeDatabase()");
         
-        // Prepare the SQL statements to drop the DATABASE and recreate it
+        // Prepare the SQL statements to drop the DATABASE and recreate itff
         //@Julia, dit is allemaal gecopy/paste van de tekst die verschijnt als je forward engineer doet
 
         String dropDatabase = "DROP DATABASE IF EXISTS " + DATABASE;
