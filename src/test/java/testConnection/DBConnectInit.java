@@ -33,7 +33,7 @@ public class DBConnectInit {
 
     public void connect() {
         try {
-            //load properties file
+            //load properties file s
             Properties props = new Properties();
             props.load(new FileInputStream(pathOfActivePropopertyFile));
             //read props
