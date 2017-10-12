@@ -18,12 +18,11 @@ import kiteshop.test.ProjectLog;
  * @author julia
  */
 public class DBConnectInit {
-	private final Logger logger = ProjectLog.getLogger();
-
+	private final Logger logger = ProjectLog.getLogger(); 
     private Connection connection;
     private static final DBConnectInit INSTANCE = new DBConnectInit();
     
-    public static String pathOfActivePropopertyFile = "test/testConnection/connectInit.properties";
+    public static String pathOfActivePropopertyFile = "src/test/java/testConnection/connectInit.properties";
     
     public static void setPathOfActivePropopertyFile (String path){
     	pathOfActivePropopertyFile = path;
