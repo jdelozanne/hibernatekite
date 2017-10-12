@@ -30,7 +30,7 @@ public class BestellingDAO implements BestellingDAOInterface {
 
     @Override
     public void createBestelling(Bestelling bestelling) {
-        //hier knippen en plakken
+        
         try {
             String sql = "INSERT INTO bestelling"
                     + "(bestellingID, klantID)"
