@@ -13,7 +13,7 @@ public class ProjectLog {
 	
 	/* 
 	 * De 2 waarden hieronder kunnen naar believen worden aangepast door de programmeur
-	 * voor test doeleinden SP
+	 * voor test doeleinden SP SP
 	*/ 
 	static Level consolePrintLevel = Level.SEVERE;
 	static Level filePrintLevel  = Level.FINE;
