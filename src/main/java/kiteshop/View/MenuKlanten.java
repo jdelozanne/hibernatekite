@@ -27,7 +27,8 @@ public class MenuKlanten {
 		System.out.println("Kies 2 voor Klantgegevens wijzigen");
 		System.out.println("Kies 3 voor Klantgegevens verwijderen");
 		System.out.println("Kies 4 voor Overzicht klanten");
-		System.out.println("Kies 5 voor terug naar Startscherm");
+		System.out.println("Kies 5 voor Overzicht klanten, gezocht op achternaam");
+		System.out.println("Kies 6 voor terug naar Startscherm");
 		int keuze = input.nextInt();
 
 		switch (keuze) {
@@ -67,6 +68,10 @@ public class MenuKlanten {
 			start();
 			break;
 		case 5:
+			readKlantenByAchternaam();
+			start();
+			break;	
+		case 6:
 			break; 
 			// hiermee komt de methode ten einde, en valt het programma vanzelf terug naar waar hij in het hoofdmenu gebleven was
 		default:
@@ -150,7 +155,16 @@ public class MenuKlanten {
 
 	public void readKlanten(){
 		for(Klant klant : controller.showAllKlanten())
-		System.out.println(klant);
+			System.out.println(klant);
+	}
+
+	public void readKlantenByAchternaam(){
+		System.out.println("Geef alstublieft de achternaam van de klanten die u wilt zien?");
+		ArrayList<Klant> searchResult = controller.showKlantenAchternaam(input.next());
+
+		for(Klant klant : searchResult) {
+			System.out.println(klant);
+		}
 	}
 
 	private void klantWijzigenAchternaam() {
