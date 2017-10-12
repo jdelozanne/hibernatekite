@@ -18,7 +18,7 @@ public class DBConnect {
     private Connection connection;
     private static final DBConnect INSTANCE = new DBConnect();
     
-    private static String pathOfActivePropopertyFile = "C:\\Users\\julia\\Documents\\NetBeansProjects\\KiteshopMaven\\src\\main\\java\\kiteshop\\daos\\connect.properties";
+    private static String pathOfActivePropopertyFile = "src/main/java/kiteshop/daos/connect.properties";
 
     private DBConnect() {
     }
@@ -56,7 +56,7 @@ public class DBConnect {
 
     //Toegevoegd om voor het testen het pad te veranderen naar het de testdatabase, zodat de DAOs hier verbinding op maken
 	public static void setPathOfActivePropopertyFiletoTest() {
-		pathOfActivePropopertyFile = "C:\\Users\\julia\\Documents\\NetBeansProjects\\KiteshopMaven\\src\\main\\java\\kiteshop\\daos\\connect.properties";
+		pathOfActivePropopertyFile = "src/main/java/kiteshop/daos/connect.properties";
 		
 	}
        
