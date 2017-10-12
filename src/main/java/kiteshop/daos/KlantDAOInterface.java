@@ -14,7 +14,7 @@ public interface KlantDAOInterface {
 
     void deleteKlant(Klant klant);
     
-    void readAllKlanten();
+    ArrayList<Klant> readAllKlanten();
 
     ArrayList<Klant> readSelectedKlantenAchternaam(String a);
 

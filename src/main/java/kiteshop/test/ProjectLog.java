@@ -13,7 +13,7 @@ public class ProjectLog {
 	
 	/* 
 	 * De 2 waarden hieronder kunnen naar believen worden aangepast door de programmeur
-	 * voor test doeleinden
+	 * voor test doeleinden SP SP
 	*/ 
 	static Level consolePrintLevel = Level.SEVERE;
 	static Level filePrintLevel  = Level.FINE;
@@ -33,7 +33,7 @@ public class ProjectLog {
 
 		try {
 			
-			FileHandler fh = new FileHandler("src/kiteshop/test/ProjectLog.log", true);
+			FileHandler fh = new FileHandler("src/main/java/kiteshop/test/ProjectLog.log", true);
 			fh.setLevel(filePrintLevel);
 			fh.setFormatter(new SimpleFormatter());
 

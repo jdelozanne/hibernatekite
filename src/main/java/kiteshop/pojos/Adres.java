@@ -16,13 +16,22 @@ public class Adres {
     private String straatnaam;
     private int huisnummer;
     private String toevoeging;
-    private String email;
-    private int telefoon;
+       
+    private AdresType adresType;
 
     public Adres() {
     }
 
-    public String getWoonplaats() {
+       
+    public AdresType getAdresType() {
+		return adresType;
+	}
+
+    public void setAdresType(AdresType adresType) {
+		this.adresType = adresType;
+	}
+
+	public String getWoonplaats() {
         return woonplaats;
     }
 
@@ -62,29 +71,11 @@ public class Adres {
         this.toevoeging = toevoeging;
     }
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public int getTelefoon() {
-        return telefoon;
-    }
-
-    public void setTelefoon(int telefoon) {
-        this.telefoon = telefoon;
-    }
-    
-  
-
-    @Override
+	@Override
 	public String toString() {
 		return "Adres [woonplaats=" + woonplaats + ", postcode=" + postcode + ", straatnaam=" + straatnaam
-				+ ", huisnummer=" + huisnummer + ", toevoeging=" + toevoeging + ", email=" + email + ", telefoon="
-				+ telefoon + "]";
+				+ ", huisnummer=" + huisnummer + ", toevoeging=" + toevoeging + ", adresType=" + adresType + "]";
 	}
 
 	//Benodigd voor het testen
@@ -92,15 +83,15 @@ public class Adres {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((adresType == null) ? 0 : adresType.hashCode());
 		result = prime * result + huisnummer;
 		result = prime * result + ((postcode == null) ? 0 : postcode.hashCode());
 		result = prime * result + ((straatnaam == null) ? 0 : straatnaam.hashCode());
-		result = prime * result + telefoon;
 		result = prime * result + ((toevoeging == null) ? 0 : toevoeging.hashCode());
 		result = prime * result + ((woonplaats == null) ? 0 : woonplaats.hashCode());
 		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -111,10 +102,7 @@ public class Adres {
 		if (getClass() != obj.getClass())
 			return false;
 		Adres other = (Adres) obj;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
+		if (adresType != other.adresType)
 			return false;
 		if (huisnummer != other.huisnummer)
 			return false;
@@ -128,8 +116,6 @@ public class Adres {
 				return false;
 		} else if (!straatnaam.equals(other.straatnaam))
 			return false;
-		if (telefoon != other.telefoon)
-			return false;
 		if (toevoeging == null) {
 			if (other.toevoeging != null)
 				return false;
@@ -142,6 +128,12 @@ public class Adres {
 			return false;
 		return true;
 	}
+
+
+
+
+	
+	
 
     
 }

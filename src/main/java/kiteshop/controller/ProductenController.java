@@ -23,9 +23,15 @@ public class ProductenController {
 
     }
 
-    public ArrayList<Product> showProducten() {
-        // TODO Auto-generated method stub
-        return null;
+    public void showProducten() {
+        ArrayList<Product> producten =productDAO.showProducten();
+        displayProducten(producten);
+       
+    }
+    
+    public void displayProducten(ArrayList<Product> lijst){
+        for(Product p : lijst)
+            System.out.println(p.toString());
     }
 
     public void updateProduct() {

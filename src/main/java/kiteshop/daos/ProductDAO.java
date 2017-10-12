@@ -9,6 +9,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import kiteshop.pojos.Product;
 
 /**
@@ -77,7 +80,7 @@ public class ProductDAO implements ProductDAOInterface {
         Product p = new Product();
         try {
             String query = "Select productnaam from product where productID = ?";
-            this.statement = this.connection.prepareStatement(query);
+            statement = this.connection.prepareStatement(query);
             statement.setInt(1, productID);
 
             result = statement.executeQuery();
@@ -94,6 +97,31 @@ public class ProductDAO implements ProductDAOInterface {
         }
         return p.getNaam();
     }
+    //aanpassen
+    @Override
+    public ArrayList<Product> showProducten(){
+        ArrayList<Product> producten = new ArrayList<>();
+        
+        
+        try {
+            String query = "Select * from product";
+            Statement statement = this.connection.createStatement();
+            result = statement.executeQuery(query);
+            
+            while (result.next()) {
+                Product p = new Product();
+                p.setProductID(result.getInt(1));
+                p.setNaam(result.getString(2));
+                p.setVoorraad(result.getInt(3));
+                p.setPrijs(result.getBigDecimal(4));
+                producten.add(p);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return producten;
+    }
 
     @Override
     public void updateProduct(Product product) {
@@ -104,5 +132,11 @@ public class ProductDAO implements ProductDAOInterface {
     public void deleteProduct(Product product) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    public void displayProducten(ArrayList <Product> producten){
+		for(Product p : producten){
+			System.out.println(p.toString());
+		}
+	}
 
 }
