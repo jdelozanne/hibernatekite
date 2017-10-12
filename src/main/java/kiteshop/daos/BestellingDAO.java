@@ -33,11 +33,12 @@ public class BestellingDAO implements BestellingDAOInterface {
         
         try {
             String sql = "INSERT INTO bestelling"
-                    + "(bestellingID, klantID)"
-                    + "values (?,?)";
+                    + "(bestellingID, klantID, totaalprijs)"
+                    + "values (?,?,?)";
             this.statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, 0);
             statement.setInt(2, bestelling.getKlant().getKlantID());
+            statement.setBigDecimal(3, bestelling.getTotaalprijs());
             statement.execute();
 
             result = statement.getGeneratedKeys();
@@ -53,6 +54,7 @@ public class BestellingDAO implements BestellingDAOInterface {
         }
         
     }
+
 
 @Override
         public void updateBestelling(Bestelling bestelling) {

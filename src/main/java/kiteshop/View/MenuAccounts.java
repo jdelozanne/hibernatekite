@@ -27,6 +27,7 @@ public class MenuAccounts {
         System.out.println("Kies 2 voor Je account wijzigen");
         System.out.println("Kies 3 voor Een account verwijderen");
         int keuze = input.nextInt();
+        input.nextLine();
         switch (keuze) {
             case 1:
                 maakNieuwAccount();

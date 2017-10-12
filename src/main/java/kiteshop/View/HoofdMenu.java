@@ -26,6 +26,7 @@ public class HoofdMenu {
         System.out.println("Kies 4 Account");
         System.out.println("Kies 5 Uitloggen");
         int keuze = input.nextInt();
+        input.nextLine();
         switch (keuze) {
             case 1:
                 System.out.println("naar menu klanten");
@@ -61,7 +62,7 @@ public class HoofdMenu {
 
     public void uitloggen() {
         System.out.println("Weet u zeker dat u wilt afsluiten? J/N");
-        if (input.next().equalsIgnoreCase("j")) {
+        if (input.nextLine().equalsIgnoreCase("j")) {
             System.exit(0);
         } else {
             start();
@@ -71,7 +72,6 @@ public class HoofdMenu {
     public static void main(String[] args) {
 
         new HoofdMenu().start();
-                
 
     }
 }

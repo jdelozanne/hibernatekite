@@ -28,14 +28,12 @@ public class ProductDAO implements ProductDAOInterface {
         this.connection = DBConnect.getConnection();
     }
 
-    /* (non-Javadoc)
-	 * @see kiteshop.daos.ProductDAOInterface#createProduct(kiteshop.pojos.Product)
-     */
+    
     @Override
     public void createProduct(Product product) {
         try {
             String sql = "INSERT INTO product"
-                    + "(idProduct, productnaam, voorraad, prijs)"
+                    + "(productID, productnaam, voorraad, prijs)"
                     + "values (?,?,?,?)";
             statement = connection.prepareStatement(sql);
             statement.setInt(1, 0);

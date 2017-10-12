@@ -30,6 +30,7 @@ public class MenuProducten {
         System.out.println("Kies 4 voor Overzicht producten");
         System.out.println("Kies 5 voor terug naar Hoofdmenu");
         int keuze = input.nextInt();
+        
         switch (keuze) {
             case 1:
                 createProduct();
@@ -69,6 +70,7 @@ public class MenuProducten {
     	System.out.println("geef prijs ");
         BigDecimal prijs = input.nextBigDecimal();
     	product.setPrijs(prijs);
+        input.nextLine();
 
     	controller.createProduct(product);
 

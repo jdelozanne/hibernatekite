@@ -35,7 +35,7 @@ public class MenuKlanten {
 		case 1:
 			createKlant();
 			System.out.println("Wilt u nog een nieuwe klant maken J/N");
-			if(input.next().equalsIgnoreCase("J")){
+			if(input.nextLine().equalsIgnoreCase("J")){
 				createKlant();
 			} else {
 				start();
@@ -44,7 +44,7 @@ public class MenuKlanten {
 		case 2:  
 			klantWijzigenAchternaam();
 			System.out.println("Wilt u nog een klant wijzigen J/N");
-			if(input.next().equalsIgnoreCase("J")){
+			if(input.nextLine().equalsIgnoreCase("J")){
 				klantWijzigenAchternaam();
 			} else {
 				start();
@@ -56,7 +56,7 @@ public class MenuKlanten {
 			 */
 			klantVerwijderenAchterNaam();
 			System.out.println("Wilt u nog een een klant verwijderen J/N");
-			if(input.next().equalsIgnoreCase("J")){
+			if(input.nextLine().equalsIgnoreCase("J")){
 				klantVerwijderenAchterNaam();
 				start();
 			} else {
@@ -92,23 +92,23 @@ public class MenuKlanten {
 
 
 		System.out.println("geef voornaam: ");
-		String voornaam = input.next();
+		String voornaam = input.nextLine();
 		klant.setVoornaam(voornaam);
 
 		System.out.println("geef tussenvoegsel: ");
-		String tussenvoegsel = input.next();
+		String tussenvoegsel = input.nextLine();
 		klant.setTussenvoegsel(tussenvoegsel);
 
 		System.out.println("geef achternaam: ");
-		String achternaam = input.next();
+		String achternaam = input.nextLine();
 		klant.setAchternaam(achternaam);
 
 		System.out.println("geef emailadres: ");
-		String email = input.next();
+		String email = input.nextLine();
 		klant.setEmail(email);
 
 		System.out.println("geef telefoonnummer: ");
-		String  telefoonnr = input.next();
+		String  telefoonnr = input.nextLine();
 		klant.setTelefoonnummer(telefoonnr);
 
 		System.out.println("Nu wordt het bezoekadres gevraagd");
@@ -131,22 +131,22 @@ public class MenuKlanten {
 	private Adres createAdres(){
 		Adres adres = new Adres();
 		System.out.println("geef plaats: ");
-		String woonplaats = input.next();
+		String woonplaats = input.nextLine();
 		adres.setWoonplaats(woonplaats);
 
 		System.out.println("geef postcode: ");
-		String postcode = input.next();
+		String postcode = input.nextLine();
 		adres.setPostcode(postcode);
 
 		System.out.println("geef straatnaam: ");
-		String straatnaam = input.next();
+		String straatnaam = input.nextLine();
 		adres.setStraatnaam(straatnaam);
 
 		int huisnummer = geefHuisnummer();  // aparte methode van gemaakt om te checken voor int en evt te herhalen
 		adres.setHuisnummer(huisnummer);
 
 		System.out.println("geef toevoeging: ");
-		String toevoeging = input.next();
+		String toevoeging = input.nextLine();
 		adres.setToevoeging(toevoeging);
 		return adres;
 
@@ -160,7 +160,7 @@ public class MenuKlanten {
 
 	public void readKlantenByAchternaam(){
 		System.out.println("Geef alstublieft de achternaam van de klanten die u wilt zien?");
-		ArrayList<Klant> searchResult = controller.showKlantenAchternaam(input.next());
+		ArrayList<Klant> searchResult = controller.showKlantenAchternaam(input.nextLine());
 
 		for(Klant klant : searchResult) {
 			System.out.println(klant);
@@ -169,7 +169,7 @@ public class MenuKlanten {
 
 	private void klantWijzigenAchternaam() {
 		System.out.println("Geef alstublieft de achternaam van de klant die u wilt wijzigen?");
-		ArrayList<Klant> searchResult = controller.showKlantenAchternaam(input.next());
+		ArrayList<Klant> searchResult = controller.showKlantenAchternaam(input.nextLine());
 
 		System.out.println("De volgende klanten zijn gevonden, geeft u alstublieft het nummer van de klant die u wil wijzigen");
 		for(int i = 0; i < searchResult.size(); i++ ){
@@ -186,30 +186,31 @@ public class MenuKlanten {
 		System.out.println("Kies 6 voor terug naar MenuKlanten");
 
 		int keuze = input.nextInt();
+                
 
 		switch (keuze) {
 		case 1:
 			System.out.println("geef voornaam: ");
-			String voornaam = input.next();
+			String voornaam = input.nextLine();
 			choosenKlant.setVoornaam(voornaam);
 
 			System.out.println("geef tussenvoegsel: ");
-			String tussenvoegsel = input.next();
+			String tussenvoegsel = input.nextLine();
 			choosenKlant.setTussenvoegsel(tussenvoegsel);
 
 			System.out.println("geef achternaam: ");
-			String achternaam = input.next();
+			String achternaam = input.nextLine();
 			choosenKlant.setAchternaam(achternaam);
 			System.out.println("De naam van de klant is aangepast, klant heeft nu de volgende gegevens: "+choosenKlant);
 			break;
 		case 2:  
 			System.out.println("geef emailadres: ");
-			String email = input.next();
+			String email = input.nextLine();
 			choosenKlant.setEmail(email);
 			break;
 		case 3:
 			System.out.println("geef telefoonnummer: ");
-			String  telefoonnr = input.next();
+			String  telefoonnr = input.nextLine();
 			choosenKlant.setTelefoonnummer(telefoonnr);
 			break;
 		case 4:
@@ -240,7 +241,7 @@ public class MenuKlanten {
 
 	private void klantVerwijderenAchterNaam(){
 		System.out.println("Geef alstublieft de achternaam van de klant die u wilt verwijderen?");
-		ArrayList<Klant> searchResult = controller.showKlantenAchternaam(input.next());
+		ArrayList<Klant> searchResult = controller.showKlantenAchternaam(input.nextLine());
 
 		System.out.println("De volgende klanten zijn gevonden, geeft u alstublieft het nummer van de klant die u wil verwijderen");
 		for(int i = 0; i < searchResult.size(); i++ ){
@@ -261,7 +262,7 @@ public class MenuKlanten {
 	private int geefHuisnummer(){
 		int huisnummer = 0;
 		System.out.println("geef huisnummer: ");  // ik begreep uit een tutorial dat je next int en next niet doorelkaar moet gebruiken, tevens , next intwacht niet, vandaar deze oplossing
-		String tempHuisnummer = input.next();
+		String tempHuisnummer = input.nextLine();
 		try {
 			huisnummer = Integer.parseInt(tempHuisnummer);
 		} catch (NumberFormatException e) {

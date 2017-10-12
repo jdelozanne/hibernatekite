@@ -100,8 +100,6 @@ public class KlantDAO implements KlantDAOInterface {
 	@Override
 	public Klant readKlant(String achternaam) {
 		Klant klant = new Klant();
-		Adres bezoekAdres = new Adres();
-		Adres factuurAdres = new Adres();
 
 		try {
 			String query = "Select * from klant where achternaam = ?";
@@ -119,43 +117,6 @@ public class KlantDAO implements KlantDAOInterface {
 				klant.setTelefoonnummer(result.getString(6));
 				logger.info("In first loop");
 			}
-
-			String query2 = "Select * from adres where klantIDadres = ? ";
-			PreparedStatement statement2 = connection.prepareStatement(query2);
-			statement.setInt(1, klant.getKlantID());
-			//statement.setString(1, klant.getBezoekAdres().getAdresType().toString());
-
-			ResultSet result2 = statement2.executeQuery();
-
-			while(result2.next()){
-				logger.info("In while loop voor bezoekadres, "+ result2.getString(3));
-				bezoekAdres.setStraatnaam(result2.getString(3));
-				bezoekAdres.setHuisnummer(result2.getInt(4));
-				bezoekAdres.setToevoeging(result2.getString(5));
-				bezoekAdres.setPostcode(result2.getString(6));
-				bezoekAdres.setWoonplaats(result2.getString(7));
-				bezoekAdres.setAdresType(AdresType.BEZOEKADRES);
-			}
-
-			String query3 = "Select * from adres where klantIDadres = ? and adres_type = ?";
-			PreparedStatement statement3 = connection.prepareStatement(query3);
-			statement.setInt(1, klant.getKlantID());
-			statement.setString(1, klant.getFactuurAdres().getAdresType().toString());
-
-			ResultSet result3 = statement3.executeQuery();
-
-			while(result3.next()){
-				factuurAdres.setStraatnaam(result3.getString(3));
-				factuurAdres.setHuisnummer(result3.getInt(4));
-				factuurAdres.setToevoeging(result3.getString(5));
-				factuurAdres.setPostcode(result3.getString(6));
-				factuurAdres.setWoonplaats(result3.getString(7));
-				factuurAdres.setAdresType(AdresType.FACTUURADRES);
-			}
-
-			logger.info("just before set besoekadres");
-			klant.setBezoekAdres(bezoekAdres);
-			klant.setFactuurAdres(factuurAdres);
 
 		} catch (SQLException ex) {
 			ex.printStackTrace();

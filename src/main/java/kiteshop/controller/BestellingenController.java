@@ -35,7 +35,6 @@ public class BestellingenController {
         bestelregels = bestelling.getBestelling();
         for(BestelRegel b : bestelregels){
             bestelRegelDAO.createBestelRegel(b);
-            System.out.println("prijs: "+ b.pricePerLine());
             logger.info("bestelregels gemaakt");
         }
         

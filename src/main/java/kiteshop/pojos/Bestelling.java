@@ -80,12 +80,13 @@ public class Bestelling {
         return regel;
     }
     
-    public BigDecimal calculatePrijs() {
-        BigDecimal result = null;
+    public BigDecimal calculatePrijs(List <BestelRegel> bestelregels) {
+        totaalprijs = new BigDecimal (0);
         for(BestelRegel b : bestelregels){
-            result = new BigDecimal(b.getAantal()).multiply(b.getProduct().getPrijs());
+            BigDecimal temp = BigDecimal.valueOf(b.getAantal()).multiply(b.getProduct().getPrijs());
+            this.totaalprijs = totaalprijs.add(temp);
         }
-        return this.totaalprijs = result;
+        return totaalprijs;
     }
 
 }

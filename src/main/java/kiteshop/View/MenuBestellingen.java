@@ -57,8 +57,7 @@ public class MenuBestellingen {
                 break;
         }
     }
-
-    public void createBestelling() {
+public void createBestelling() {
 
         System.out.println("Voor welke klant is deze bestelling? Geef de achternaam");
 
@@ -76,9 +75,8 @@ public class MenuBestellingen {
             System.out.println("Wilt u iets toevoegen aan de bestelling? J/N");
             antwoord = input.nextLine();
         }
+        System.out.println("totaalprijs van de bestelling: EURO " + bestelling.calculatePrijs(bestelling.getBestelling()));
        
-        System.out.println("Uw bestelling wordt opgeslagen");
-        
         controller.createBestelling(bestelling);
         logger.info("bereken de prijs");
     }
