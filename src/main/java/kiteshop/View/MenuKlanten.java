@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author julia fgf
+ * @author julia fgf test
  */
 public class MenuKlanten {
 
