@@ -14,7 +14,7 @@ import kiteshop.pojos.Account;
 
 /**
  *
- * @author julia
+ * @author julia en steef
  */
 public class AccountDAO implements AccountDAOInterface {
 
