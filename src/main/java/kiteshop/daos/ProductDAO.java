@@ -141,7 +141,8 @@ public class ProductDAO implements ProductDAOInterface {
 
     @Override
     public void deleteProduct(Product product) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       //om product te kunnen verwijderen moet eerst de parent worden verwijderd. klopt dat?
+       
     }
     
     public void displayProducten(ArrayList <Product> producten){
