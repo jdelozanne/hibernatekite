@@ -36,7 +36,8 @@ public class MenuProducten {
                 createProduct();
                 break;
             case 2:
-                updateProduct();
+                System.out.println("Geef alstublieft de naam van het product dat u wilt wijzigen: ");
+                showSpecificProduct(input.nextLine());
                 break;
             case 3:
             	deleteProduct();
@@ -80,10 +81,43 @@ public class MenuProducten {
     public void showProducten() {
     	   controller.showProducten();
     }
-
-    public void updateProduct() {
-        //print lijst product en maak een keuze welk product je wilt wijzigen
-        //als alleen de eigenaar mag wijzigen verifieren met een ww
+public void showSpecificProduct(String productnaam) {
+        Product p = controller.showSpecificProduct(productnaam);
+        System.out.println(p.toString());
+        updateProduct(p);
+    }
+    
+    public void updateProduct(Product p){
+        System.out.println("Wat wilt u aanpassen aan dit product?");
+        System.out.println("Kies 1 voor de productnaam");
+        System.out.println("Kies 2 voor de voorraad");
+        System.out.println("Kies 3 voor de prijs");
+        
+        int keuze = input.nextInt();
+        input.nextLine();
+        switch(keuze){
+            case 1: 
+                System.out.println("Geef de nieuwe productnaam: ");
+                p.setNaam(input.nextLine());
+                break;
+            case 2: 
+                System.out.println("Geef de nieuwe voorraad: ");
+                p.setVoorraad(input.nextInt());
+                input.nextLine();
+                break;
+            case 3: 
+                System.out.println("Geef de nieuwe prijs: ");
+                p.setPrijs(input.nextBigDecimal());
+                input.nextLine();
+                break;
+        }
+        System.out.println(p.toString() + "\nWilt u nog iets aanpassen aan dit product? J/N");
+        if (input.nextLine().equalsIgnoreCase("j")){
+            updateProduct(p);
+        }
+        else 
+            controller.updateProduct(p);
+        
     }
 
     public void deleteProduct() {

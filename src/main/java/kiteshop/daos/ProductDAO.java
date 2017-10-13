@@ -123,7 +123,20 @@ public class ProductDAO implements ProductDAOInterface {
 
     @Override
     public void updateProduct(Product product) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("updaten naar database");
+        String update = "UPDATE product SET productnaam = ?, voorraad = ?, prijs = ? where productID = ?";
+        try {
+            statement = this.connection.prepareStatement(update);
+            statement.setString(1, product.getNaam());
+            statement.setInt(2, product.getVoorraad());
+            statement.setBigDecimal(3, product.getPrijs());
+            statement.setInt(4, product.getProductID());
+            
+            statement.executeUpdate();
+            
+        } catch (SQLException ex) {
+           ex.printStackTrace();
+        }
     }
 
     @Override
