@@ -14,6 +14,7 @@ import kiteshop.daos.AccountDAO;
  */
 public class Account {
 
+	private int accountID;
     private String gebruikersnaam;
     private String wachtwoord;
     private AccountType type;
@@ -49,4 +50,58 @@ public class Account {
     public String getWachtwoord(){
         return wachtwoord;
     }
+
+	public int getAccountID() {
+		return accountID;
+	}
+
+	public void setAccountID(int accountID) {
+		this.accountID = accountID;
+	}
+
+	@Override
+	public String toString() {
+		return "Account [accountID=" + accountID + ", gebruikersnaam=" + gebruikersnaam + ", wachtwoord=" + wachtwoord
+				+ ", type=" + type + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + accountID;
+		result = prime * result + ((gebruikersnaam == null) ? 0 : gebruikersnaam.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		result = prime * result + ((wachtwoord == null) ? 0 : wachtwoord.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Account other = (Account) obj;
+		if (accountID != other.accountID)
+			return false;
+		if (gebruikersnaam == null) {
+			if (other.gebruikersnaam != null)
+				return false;
+		} else if (!gebruikersnaam.equals(other.gebruikersnaam))
+			return false;
+		if (type != other.type)
+			return false;
+		if (wachtwoord == null) {
+			if (other.wachtwoord != null)
+				return false;
+		} else if (!wachtwoord.equals(other.wachtwoord))
+			return false;
+		return true;
+	}
+	
+    
+    
 }
