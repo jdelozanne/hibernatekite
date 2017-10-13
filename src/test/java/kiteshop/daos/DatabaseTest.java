@@ -119,7 +119,7 @@ public class DatabaseTest {
 			Connection initConnection = DBConnectInit.getConnection();
 			Statement stat = initConnection.createStatement();
 			// Executes the given SQL statement, which may be an INSERT, UPDATE, or DELETE statement or an SQL statement that returns nothing, such as an SQL DDL statement. ExecuteQuery kan niet gebruikt worden voor DDL statements
-System.out.println("kon ik wel aan uitvoeren statements toe?");
+			System.out.println("kon ik wel aan uitvoeren statements toe?");
 			stat.executeUpdate(dropDatabase);
 			stat.executeUpdate(createDatabase);
 			stat.executeUpdate(create_account);
@@ -141,7 +141,7 @@ System.out.println("kon ik wel aan uitvoeren statements toe?");
 		logger.info("Entering populate database");
 
 		// Prepare the SQL statements to insert the test data into the DATABASE
-		String insert_account = "INSERT INTO `" + DATABASE + "`.`account` (`gebruikersnaam`, `wachtwoord`) VALUES ('Steef2', 'Bier2');";
+		String insert_account = "INSERT INTO `" + DATABASE + "`.`account` (`gebruikersnaam`, `wachtwoord`) VALUES ('Steef', 'Cola');";
 		String insert_product = "INSERT INTO `" + DATABASE + "`.`product` (`idProduct`, `productnaam`, `omschrijving`, `prijs`) VALUES ('1', 'Cabrinha Drifter', 'Cabrinha Drifter 2017 Kite Only Red/Blue - 4,5 meter', '719.00'), ('2', 'Cabrinha Chaos', 'Cabrinha Chaos 2017 Kite Only Yellow/Orange - 5,5 meter', '719.00'),('3', 'Brunotti Virtuoso', 'Brunotti Dimension Kiteboard 136 (model 2015)', '399.00');";
 		String insert_klant = "INSERT INTO `" + DATABASE + "`.`klant` (`KlantID`, `voornaam`, `achternaam`, `emailadres`, `straatnaam`, `huisnummer`, `postcode`, `plaats`, `telefoonnummer`) VALUES ('1', 'Steef', 'Pelgrom', 'stevey@hotmail.com', 'Hendriklaan', '38', '5034KL', 'Tilburg', '06-56847965');";
 		String insert_bestelling = "INSERT INTO `" + DATABASE + "`.`bestelling` (`bestellingID`, `klantID`) VALUES ('1', '1');";
@@ -161,6 +161,20 @@ System.out.println("kon ik wel aan uitvoeren statements toe?");
 		} catch (SQLException ex) {
 			logger.info("SQLException" + ex);
 		}
+	}
+
+	void dropDatabase(){
+		String dropDatabase = "DROP DATABASE IF EXISTS " + DATABASE;
+
+		try {
+			Connection initConnection = DBConnectInit.getConnection();
+			Statement stat = initConnection.createStatement();
+			stat.executeUpdate(dropDatabase);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	public static void main(String args[]) {

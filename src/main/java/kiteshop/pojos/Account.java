@@ -21,11 +21,13 @@ public class Account {
 
     public Account() {
     }
+    public Account(int accountID, String gebruikersnaam, String wachtwoord) {
+		this.accountID = accountID;
+		this.gebruikersnaam = gebruikersnaam;
+		this.wachtwoord = wachtwoord;
+	}
+	
     
-    public Account(String x, String y){
-        this.gebruikersnaam = x;
-        this.wachtwoord = y;
-    }
 
     public AccountType getType() {
         return type;
@@ -101,6 +103,9 @@ public class Account {
 			return false;
 		return true;
 	}
+
+
+
 	
     
     

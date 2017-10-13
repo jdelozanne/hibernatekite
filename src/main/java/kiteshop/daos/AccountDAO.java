@@ -85,7 +85,7 @@ public class AccountDAO implements AccountDAOInterface {
 		try {
 			String sqlQuery = "SELECT * FROM account WHERE gebruikersnaam = ? ";
 
-			PreparedStatement prepstat = this.connection.prepareStatement(sqlQuery);
+			PreparedStatement prepstat = connection.prepareStatement(sqlQuery);
 			prepstat.setString(1, gebruikersnaam);
 
 			ResultSet result = prepstat.executeQuery();
