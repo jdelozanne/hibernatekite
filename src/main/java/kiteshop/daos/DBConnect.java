@@ -17,9 +17,8 @@ public class DBConnect {
 
     private Connection connection;
     private static final DBConnect INSTANCE = new DBConnect();
+    private static String pathOfActivePropopertyFile =  "C:\\Users\\julia\\Documents\\NetBeansProjects\\project1steefJulia\\KiteshopMaven\\src\\main\\java\\kiteshop\\daos\\connect.properties";
     
-    private static String pathOfActivePropopertyFile =  "C:\\Users\\julia\\Documents\\NetBeansProjects\\KiteshopMaven\\src\\main\\java\\kiteshop\\daos\\connect.properties";
-
     private DBConnect() {
     }
 

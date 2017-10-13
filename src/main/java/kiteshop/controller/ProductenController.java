@@ -24,7 +24,9 @@ public class ProductenController {
     }
     
     public Product showSpecificProduct(String naam){
-        return productDAO.readProduct(naam);
+        Product p = productDAO.readProduct(naam);
+        System.out.println(p.toString());
+        return p;
     }
 
     public void showProducten() {
@@ -44,8 +46,9 @@ public class ProductenController {
     }
 
 
-    public void removeProduct(Product product) {
-        logger.info("Product " + product + " wordt toegevoegd aan database");
+    public void deleteProduct(Product product) {
+        productDAO.deleteProduct(product);
+        logger.info("Product " + product + "wordt verwijderd");
 
     }
 

@@ -12,7 +12,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import kiteshop.pojos.Product;
+import kiteshop.test.ProjectLog;
 
 /**
  *
@@ -23,12 +25,12 @@ public class ProductDAO implements ProductDAOInterface {
     Connection connection;
     PreparedStatement statement;
     ResultSet result;
+    private final Logger logger = ProjectLog.getLogger();
 
     public ProductDAO() {
         this.connection = DBConnect.getConnection();
     }
 
-    
     @Override
     public void createProduct(Product product) {
         try {
@@ -73,6 +75,7 @@ public class ProductDAO implements ProductDAOInterface {
         }
         return p;
     }
+//overloaded
 
     public String readProduct(int productID) {
         Product p = new Product();
@@ -95,17 +98,17 @@ public class ProductDAO implements ProductDAOInterface {
         }
         return p.getNaam();
     }
+
     //aanpassen
     @Override
-    public ArrayList<Product> showProducten(){
+    public ArrayList<Product> showProducten() {
         ArrayList<Product> producten = new ArrayList<>();
-        
-        
+
         try {
             String query = "Select * from product";
             Statement statement = this.connection.createStatement();
             result = statement.executeQuery(query);
-            
+
             while (result.next()) {
                 Product p = new Product();
                 p.setProductID(result.getInt(1));
@@ -131,24 +134,42 @@ public class ProductDAO implements ProductDAOInterface {
             statement.setInt(2, product.getVoorraad());
             statement.setBigDecimal(3, product.getPrijs());
             statement.setInt(4, product.getProductID());
-            
+
             statement.executeUpdate();
-            
+
         } catch (SQLException ex) {
-           ex.printStackTrace();
+            ex.printStackTrace();
         }
     }
 
     @Override
     public void deleteProduct(Product product) {
-       //om product te kunnen verwijderen moet eerst de parent worden verwijderd. klopt dat?
-       
+        try {
+            //First delete 'children' dwz bestelregel
+            Statement statement = connection.createStatement();
+
+            String query = " DELETE FROM bestel_regel "
+                    + " WHERE productID = " + product.getProductID();
+            statement.executeUpdate(query);
+
+            //Then delete 'mother' dwz product
+            Statement statement1 = connection.createStatement();
+
+            logger.info("Deleting");
+            String query1 = " DELETE FROM product "
+                    + " WHERE productID = " + product.getProductID();
+
+            statement1.executeUpdate(query1);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
-    
-    public void displayProducten(ArrayList <Product> producten){
-		for(Product p : producten){
-			System.out.println(p.toString());
-		}
-	}
+
+    public void displayProducten(ArrayList<Product> producten) {
+        for (Product p : producten) {
+            System.out.println(p.toString());
+        }
+    }
 
 }
