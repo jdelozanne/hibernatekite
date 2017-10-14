@@ -61,7 +61,7 @@ public class MenuBestellingen {
                 deleteBestelling(id1);
                 break;
             case 4:
-                new HoofdMenu().start();
+                showBestellingen();
                 break;
             case 5:
                 new HoofdMenu().start();
@@ -112,6 +112,10 @@ public class MenuBestellingen {
 
     public void showSpecificBestelling(int id) {
         controller.showSpecificBestelling(id);
+    }
+    
+    public void showBestellingen(){
+        controller.showBestellingen();
     }
 
 }

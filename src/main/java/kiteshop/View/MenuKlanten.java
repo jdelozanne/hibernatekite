@@ -64,7 +64,7 @@ public class MenuKlanten {
 			}
 			break;
 		case 4:
-			readKlanten();
+			showKlanten();
 			start();
 			break;
 		case 5:
@@ -116,7 +116,7 @@ public class MenuKlanten {
 		bezoekadres.setAdresType(AdresType.BEZOEKADRES);
 		klant.setBezoekAdres(bezoekadres);
 
-		System.out.println("Wilt u een apart factuuradres toevoegen?");
+		System.out.println("Wilt u een apart factuuradres toevoegen? J/N");
 		if(input.next().equalsIgnoreCase("J")){
 			System.out.println("Nu wordt het factuuradres gevraagd");
 			Adres factuurAdres = createAdres();
@@ -153,13 +153,13 @@ public class MenuKlanten {
 	}
 
 
-	public void readKlanten(){
+	public void showKlanten(){
 		for(Klant klant : controller.showAllKlanten())
 			System.out.println(klant);
 	}
 
 	public void readKlantenByAchternaam(){
-		System.out.println("Geef alstublieft de achternaam van de klanten die u wilt zien?");
+		System.out.println("Geef alstublieft de achternaam van de klant die u wilt zien?");
 		ArrayList<Klant> searchResult = controller.showKlantenAchternaam(input.nextLine());
 
 		for(Klant klant : searchResult) {

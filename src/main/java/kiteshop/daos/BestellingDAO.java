@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import kiteshop.pojos.Bestelling;
@@ -108,4 +109,28 @@ public class BestellingDAO implements BestellingDAOInterface {
         }
         return b;
     }
+
+    public ArrayList<Bestelling> readAllBestelling() {
+        ArrayList<Bestelling> bestellingen = new ArrayList<>();
+        try {
+
+            Statement statement = connection.createStatement();
+
+            String readAll = "Select * from bestelling";
+
+            statement.executeUpdate(readAll);
+
+            while (result.next()) {
+                Bestelling b = new Bestelling();
+                b.setBestellingID(result.getInt(1));
+                b.setTotaalprijs(result.getBigDecimal(3));
+                bestellingen.add(b);
+            }
+            logger.info("reading all bestelling");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return bestellingen;
+    }
+
 }

@@ -81,6 +81,7 @@ public class MenuProducten {
     }
 
     public void showSpecificProduct(String productnaam) {
+        
         Product p = controller.showSpecificProduct(productnaam);
         updateProduct(p);
     }

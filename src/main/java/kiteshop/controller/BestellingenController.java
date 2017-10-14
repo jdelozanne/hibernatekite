@@ -47,9 +47,20 @@ public class BestellingenController {
         Bestelling b = bestellingDAO.readBestelling(id);
         return b;
     }
+    
+    public void showBestellingen(){
+        ArrayList<Bestelling> bestellingen = bestellingDAO.readAllBestelling();
+        displayBestelling(bestellingen);
+    }
 
     public void deleteBestelling(int bestellingId) {
         bestellingDAO.deleteBestelling(bestellingId);
+    }
+    
+    public void displayBestelling(ArrayList <Bestelling> lijst){
+        for(Bestelling b : lijst){
+            System.out.println(b.toString());
+        }
     }
 
    

@@ -12,5 +12,7 @@ public interface BestellingDAOInterface {
     void updateBestelling(Bestelling bestelling);
 
     void deleteBestelling(int bestellingID);
+    
+    ArrayList<Bestelling> readAllBestelling();
 
 }
