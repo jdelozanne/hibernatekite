@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import kiteshop.pojos.Bestelling;
+import kiteshop.test.ProjectLog;
 
 /**
  *
@@ -24,13 +25,15 @@ public class BestellingDAO implements BestellingDAOInterface {
     PreparedStatement statement;
     ResultSet result;
 
+    private final Logger logger = ProjectLog.getLogger();
+
     public BestellingDAO() {
         connection = DBConnect.getConnection();
     }
 
     @Override
     public void createBestelling(Bestelling bestelling) {
-        
+
         try {
             String sql = "INSERT INTO bestelling"
                     + "(bestellingID, klantID, totaalprijs)"
@@ -45,30 +48,64 @@ public class BestellingDAO implements BestellingDAOInterface {
             if (result.isBeforeFirst()) {
                 result.next();
                 bestelling.setBestellingID(result.getInt(1));
-                
+
                 System.out.println("Nieuwe bestelling aangemaakt met bestelling id: " + bestelling.getBestellingID());
 
             }
 
         } catch (SQLException ex) {
         }
-        
-    }
 
-
-@Override
-        public void updateBestelling(Bestelling bestelling) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-        public void deleteBestelling(Bestelling bestelling) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void updateBestelling(Bestelling bestelling) {
+
     }
 
     @Override
-    public void readBestelling(int bestellingID) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void deleteBestelling(int bestellingID) {
+        try {
+            //First delete 'children' dwz bestelregel
+            Statement statement = connection.createStatement();
+
+            String deleteRegels = " DELETE FROM bestel_regel "
+                    + " WHERE bestellingID =" + bestellingID;
+            statement.executeUpdate(deleteRegels);
+
+            //Then delete 'mother' dwz bestelling
+            Statement statement1 = connection.createStatement();
+
+            String delete = " DELETE FROM bestelling "
+                    + " WHERE bestellingID = " + bestellingID;
+            statement1.executeUpdate(delete);
+            logger.info("Deleting");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
     }
 
+    @Override
+    public Bestelling readBestelling(int bestellingID) {
+        Bestelling b = new Bestelling();
+
+        try {
+            String query = "Select * from bestelling where bestellingID = ?";
+            this.statement = this.connection.prepareStatement(query);
+            statement.setInt(1, bestellingID);
+
+            result = statement.executeQuery();
+            while (result.next()) {
+
+                b.setBestellingID(result.getInt(1));
+                //klantID wordt gegeven, daar moet je dan de klant van readen
+                b.setTotaalprijs(result.getBigDecimal(3));
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return b;
+    }
 }

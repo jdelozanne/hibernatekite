@@ -36,32 +36,41 @@ public class MenuBestellingen {
 
     public void start() {
         System.out.println("Kies wat je wilt doen:");
-        System.out.println("Kies 1 voor Nieuwe bestelling maken");
-        System.out.println("Kies 2 voor een bestelling bekijken");
-        System.out.println("Kies 3 om terug te keren naar het hoofdmenu");
+        System.out.println("Kies 1 voor een nieuwe bestelling maken");
+        System.out.println("Kies 2 voor een bestelling wijzigen");
+        System.out.println("Kies 3 voor een bestelling verwijderen");
+        System.out.println("Kies 4 voor een overzicht van bestellingen");
+        System.out.println("Kies 5 om terug te keren naar het hoofdmenu");
         int keuze = input.nextInt();
         input.nextLine();
 
         switch (keuze) {
             case 1:
-                createBestelling();
-
+                System.out.println("Voor welke klant is deze bestelling? Geef de achternaam");
+                String achternaam = input.nextLine();
+                createBestelling(achternaam);
                 break;
             case 2:
-                //hiervoor moet de productID worden omgezet naar productnaam bij een toString()
-                showBestelling();
+                System.out.println("Geef het bestelID van de bestelling die u wilt wijzigen");
+                int id = input.nextInt();
+                showSpecificBestelling(id);
                 break;
-
             case 3:
+                System.out.println("Geef het bestelID van de bestelling die u wilt wijzigen");
+                int id1 = input.nextInt();
+                deleteBestelling(id1);
+                break;
+            case 4:
+                new HoofdMenu().start();
+                break;
+            case 5:
                 new HoofdMenu().start();
                 break;
         }
     }
-public void createBestelling() {
 
-        System.out.println("Voor welke klant is deze bestelling? Geef de achternaam");
+    public void createBestelling(String achternaam) {
 
-        String achternaam = input.nextLine();
         KlantDAO k = new KlantDAO();
         Klant klant = k.readKlant(achternaam);
         Bestelling bestelling = new Bestelling(klant);
@@ -76,7 +85,7 @@ public void createBestelling() {
             antwoord = input.nextLine();
         }
         System.out.println("totaalprijs van de bestelling: EURO " + bestelling.calculatePrijs(bestelling.getBestelling()));
-       
+
         controller.createBestelling(bestelling);
         logger.info("bereken de prijs");
     }
@@ -95,15 +104,14 @@ public void createBestelling() {
 
         return b;
     }
-
-    public void showBestelling() {
-        System.out.println("Geef het bestelnummer: ");
-        BestelRegelController c = new BestelRegelController();
-        c.showBestelling(input.nextInt());
+    
+    public void deleteBestelling(int id){
+        controller.deleteBestelling(id);
+        System.out.println("bestelling verwijderd");
     }
 
-    public static void main(String[] args) {
-        new MenuBestellingen().createBestelling();
+    public void showSpecificBestelling(int id) {
+        controller.showSpecificBestelling(id);
     }
 
 }

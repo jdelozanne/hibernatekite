@@ -84,7 +84,7 @@ public class Bestelling {
         totaalprijs = new BigDecimal (0);
         for(BestelRegel b : bestelregels){
             BigDecimal temp = BigDecimal.valueOf(b.getAantal()).multiply(b.getProduct().getPrijs());
-            this.totaalprijs = totaalprijs.add(temp);
+            totaalprijs = totaalprijs.add(temp);
         }
         return totaalprijs;
     }

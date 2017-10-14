@@ -37,16 +37,21 @@ public class BestellingenController {
             bestelRegelDAO.createBestelRegel(b);
             logger.info("bestelregels gemaakt");
         }
-        
+    }
+    
+    public void updateBestelling(int id){
+        bestellingDAO.readBestelling(id);
     }
 
-    public ArrayList<Bestelling> showSelectedBestellingen() {
-        // TODO Auto-generated method stub
-        return null;
+    public Bestelling showSpecificBestelling(int id) {
+        Bestelling b = bestellingDAO.readBestelling(id);
+        return b;
     }
 
-    public void deleteBestelling(Bestelling bestelling) {
-        // TODO Auto-generated method stub
+    public void deleteBestelling(int bestellingId) {
+        bestellingDAO.deleteBestelling(bestellingId);
     }
+
+   
 
 }

@@ -7,10 +7,10 @@ public interface BestellingDAOInterface {
     
     void createBestelling(Bestelling bestelling);
 
-    void readBestelling(int bestellingID);
+    Bestelling readBestelling(int bestellingID);
 
     void updateBestelling(Bestelling bestelling);
 
-    void deleteBestelling(Bestelling bestelling);
+    void deleteBestelling(int bestellingID);
 
 }
