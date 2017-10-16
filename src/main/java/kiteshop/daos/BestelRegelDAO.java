@@ -87,7 +87,22 @@ private final Logger logger = ProjectLog.getLogger();
 
     @Override
     public void updateBestelRegel(BestelRegel regel) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("updaten naar database");
+        String update = "UPDATE bestel_regel SET bestel_regelID = ?, productID = ?, aantal = ?, bestellingID =? where bestellingID = ?";
+        try {
+            statement = this.connection.prepareStatement(update);
+            statement.setInt(1, regel.getBestelRegelID());
+            statement.setInt(2, regel.getProduct().getProductID());
+            statement.setInt(3, regel.getAantal());
+            statement.setInt(4, regel.getBestellingID());
+            statement.setInt(5, regel.getBestellingID());
+
+            statement.executeUpdate();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    
     }
 
     @Override

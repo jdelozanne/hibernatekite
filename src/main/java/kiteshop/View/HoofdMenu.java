@@ -15,6 +15,7 @@ import kiteshop.pojos.Account;
  */
 public class HoofdMenu {
 
+
     Scanner input = new Scanner(System.in);
 //hoofdmenu keuze uit diverse opties
 

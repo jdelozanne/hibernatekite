@@ -61,7 +61,8 @@ public class BestellingDAO implements BestellingDAOInterface {
 
     @Override
     public void updateBestelling(Bestelling bestelling) {
-
+        //deze methode is eigenlijk overbodig. Het enige wat je kunt aanpassen zijn de bestelregels. 
+        //Of de klant aan wie de bestelling is gericht..
     }
 
     @Override

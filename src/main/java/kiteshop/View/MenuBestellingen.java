@@ -52,14 +52,19 @@ public class MenuBestellingen {
                 createBestelling(achternaam);
                 break;
             case 2:
-                System.out.println("Geef het bestelID van de bestelling die u wilt wijzigen");
-                int id = input.nextInt();
-                showSpecificBestelling(id);
+                System.out.println("Van welke klant is de bestelling die u wilt wijzigen? Geef de achternaam");
+                String klantnaam = input.nextLine();
+                Klant choosenKlant = firstPickRightKlant(klantnaam);
+                Bestelling choosenBestelling = pickRightBestelling(choosenKlant);
+                showBestelregels(choosenBestelling);
+                
                 break;
             case 3:
-                System.out.println("Geef het bestelID van de bestelling die u wilt wijzigen");
-                int id1 = input.nextInt();
-                deleteBestelling(id1);
+                System.out.println("Van welke klant is de bestelling die u wilt wijzigen? Geef de achternaam");
+                String naam = input.nextLine();
+                Klant klantBestelling = firstPickRightKlant(naam);
+                Bestelling bestellingToDelete = pickRightBestelling(klantBestelling);
+                deleteBestelling(bestellingToDelete);
                 break;
             case 4:
                 showBestellingen();
@@ -67,10 +72,8 @@ public class MenuBestellingen {
             case 5:
                 new HoofdMenu().start();
                 break;
-            case 6:
-                System.out.println("Van welke klant is de bestelling die u wilt wijzigen? Geef de achternaam");
-                String klantnaam = input.nextLine();
-                firstPickRightKlant(klantnaam);
+           
+                
         }
     }
 
@@ -109,48 +112,85 @@ public class MenuBestellingen {
 
         return b;
     }
-    
-    public void deleteBestelling(int id){
-        controller.deleteBestelling(id);
+
+    public void deleteBestelling(Bestelling b) {
+        controller.deleteBestelling(b.getBestellingID());
         System.out.println("bestelling verwijderd");
     }
 
     public void showSpecificBestelling(int id) {
         controller.showSpecificBestelling(id);
     }
-    
-    public void showBestellingen(){
+
+    public void showBestellingen() {
         controller.showBestellingen();
     }
-    
-    public void firstPickRightKlant(String klantachternaam){
+
+    public Klant firstPickRightKlant(String klantachternaam) {
         ArrayList<Klant> klanten = controller.getKlantByAchternaam(klantachternaam);
         System.out.println("De volgende klanten zijn gevonden, geeft u alstublieft het nummer van de klant die u wil wijzigen");
-		for(int i = 0; i < klanten.size(); i++ ){
-			System.out.println(i+1 +" "+ klanten.get(i).toString());
-		}
-		Klant choosenKlant = klanten.get(input.nextInt()-1);
-                input.nextLine();
-                thenPickRightBestelling(choosenKlant);
+        for (int i = 0; i < klanten.size(); i++) {
+            System.out.println(i + 1 + " " + klanten.get(i).toString());
+        }
+        Klant choosenKlant = klanten.get(input.nextInt() - 1);
+        input.nextLine();
+        return choosenKlant;
+        
     }
-    public void thenPickRightBestelling(Klant choosenKlant){
+
+    public Bestelling pickRightBestelling(Klant choosenKlant) {
         ArrayList<Bestelling> bestellingen = controller.getBestellingByKlantID(choosenKlant.getKlantID());
         System.out.println("De volgende bestellingen zijn gevonden van deze klant, geeft u alstublieft het nummer van de bestelling die u wil wijzigen");
-		for(int i = 0; i < bestellingen.size(); i++ ){
-			System.out.println(i+1 +" "+ bestellingen.get(i).bestellingToString());
-		}
-		Bestelling choosenBestelling = bestellingen.get(input.nextInt()-1);
-                showBestelregels(choosenBestelling);
-                
+        for (int i = 0; i < bestellingen.size(); i++) {
+            System.out.println(i + 1 + " " + bestellingen.get(i).bestellingToString());
+        }
+        Bestelling choosenBestelling = bestellingen.get(input.nextInt() - 1);
+        return choosenBestelling;
+
     }
-    public void showBestelregels(Bestelling b){
+
+    public void showBestelregels(Bestelling b) {
         ArrayList<BestelRegel> bestelregels = controller.getBestelregelsByBestelling(b);
         System.out.println("De volgende bestelregels zijn gevonden,geeft u alstublieft het nummer van de bestelregel die u wil wijzigen");
-		for(int i = 0; i < bestelregels.size(); i++ ){
-			System.out.println(i+1 +" "+ bestelregels.get(i).toString());
-		}
+        for (int i = 0; i < bestelregels.size(); i++) {
+            System.out.println(i + 1 + " " + bestelregels.get(i).toString());
         }
+        BestelRegel choosenBestelRegel = bestelregels.get(input.nextInt() - 1);
+        updateBestelling(choosenBestelRegel, b);
     }
-    
 
+    public void updateBestelling(BestelRegel br, Bestelling b) {
+        System.out.println("Wat wilt u veranderen, kies 1 voor product of kies 2 voor het aantal");
+        int keuze = input.nextInt();
+        input.nextLine();
+        switch (keuze) {
+            case 1:
+                System.out.println("Geef de naam van het nieuwe product");
+                String productnaam = input.nextLine();
+                br.setProduct(new ProductDAO().readProduct(productnaam));
+                break;
+            case 2:
+                System.out.println("Geef het nieuwe aantal");
+                int aantal = input.nextInt();
+                br.setAantal(aantal);
+                break;
+        }
+        System.out.println("Wilt u nog een verandering doorvoeren binnen deze regel? Kies 1");
+        System.out.println("Wilt u een andere regel veranderen? Kies 2");
+        System.out.println("Bent u klaar? Kies 3");
+        int keuzeVervolg = input.nextInt();
+        switch (keuzeVervolg) {
+            case 1:
+                updateBestelling(br, b);
+                break;
+            case 2:
+                showBestelregels(b);
+                break;
+            case 3:
+                System.out.println("bestelling is geupdate, terug naar Hoofdmenu");
+                new HoofdMenu().start();
+                break;
+        }
 
+    }
+}
