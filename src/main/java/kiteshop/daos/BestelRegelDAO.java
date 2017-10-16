@@ -110,10 +110,11 @@ private final Logger logger = ProjectLog.getLogger();
             while (result.next()) {
              BestelRegel r = new BestelRegel();
              r.setBestelRegelID(result.getInt(1));
+             r.setProductID(result.getInt(2));
              r.setAantal(result.getInt(3));
              bestelregels.add(r);
             }
-            logger.info("reading from bestelling with specific klantID");
+            logger.info("reading from bestelregel with specific bestellingID");
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
