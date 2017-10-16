@@ -41,6 +41,7 @@ public class MenuBestellingen {
         System.out.println("Kies 3 voor een bestelling verwijderen");
         System.out.println("Kies 4 voor een overzicht van bestellingen");
         System.out.println("Kies 5 om terug te keren naar het hoofdmenu");
+        System.out.println("Kies 6 voor bestelling wijzigen");
         int keuze = input.nextInt();
         input.nextLine();
 
