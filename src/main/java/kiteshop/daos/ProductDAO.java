@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+import kiteshop.pojos.BestelRegel;
 import kiteshop.pojos.Product;
 import kiteshop.test.ProjectLog;
 
@@ -103,11 +104,12 @@ public class ProductDAO implements ProductDAOInterface {
     public Product readProductByID(int productID) {
         Product p = new Product();
         try {
-            String query = "Select productnaam from product where productID = ?";
+            String query = "Select * from product where productID = ?";
             statement = this.connection.prepareStatement(query);
-            statement.setInt(1, productID);
+           statement.setInt(1, productID);
 
             result = statement.executeQuery();
+            
             while (result.next()) {
 
                 p.setProductID(result.getInt(1));
@@ -193,6 +195,11 @@ public class ProductDAO implements ProductDAOInterface {
         for (Product p : producten) {
             System.out.println(p.toString());
         }
+    }
+    public static void main(String[] args) {
+        BestelRegel br = new BestelRegel();
+        br.setProduct(new ProductDAO().readProductByID(13));
+        br.toString();
     }
 
 }
