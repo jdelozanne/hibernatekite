@@ -98,8 +98,31 @@ public class ProductDAO implements ProductDAOInterface {
         }
         return p.getNaam();
     }
+    //ff om te proberen
+    @Override
+    public Product readProductByID(int productID) {
+        Product p = new Product();
+        try {
+            String query = "Select productnaam from product where productID = ?";
+            statement = this.connection.prepareStatement(query);
+            statement.setInt(1, productID);
 
-    //aanpassen
+            result = statement.executeQuery();
+            while (result.next()) {
+
+                p.setProductID(result.getInt(1));
+                p.setNaam(result.getString(2));
+                p.setVoorraad(result.getInt(3));
+                p.setPrijs(result.getBigDecimal(4));
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return p;
+    }
+
+  
     @Override
     public ArrayList<Product> showProducten() {
         ArrayList<Product> producten = new ArrayList<>();

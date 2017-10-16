@@ -9,9 +9,11 @@ import kiteshop.daos.BestellingDAO;
 
 import kiteshop.daos.BestellingDAOInterface;
 import kiteshop.daos.KlantDAO;
+import kiteshop.daos.ProductDAO;
 import kiteshop.pojos.BestelRegel;
 import kiteshop.pojos.Bestelling;
 import kiteshop.pojos.Klant;
+import kiteshop.pojos.Product;
 import kiteshop.test.ProjectLog;
 
 public class BestellingenController {
@@ -76,8 +78,14 @@ public class BestellingenController {
     }
     public void displayBestelRegelsFromBestelling(Bestelling bestelling){
         BestelRegelDAO besteldao = new BestelRegelDAO();
-        besteldao.readBestelRegel(bestelling.getBestellingID());
+        ProductDAO productDAO= new ProductDAO();
+        ArrayList<BestelRegel> bestelregels = besteldao.readBestelRegelsByBestelling(bestelling);
         
+        for(BestelRegel br : bestelregels){
+            
+            System.out.println(br.getProduct().getNaam() + br.getAantal());  
+        }
+//productDAO.readProductByID(br.getProduct().getProductID())).toString() + "\t" + 
     }
 
    

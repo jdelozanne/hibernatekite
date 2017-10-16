@@ -8,7 +8,7 @@ public class BestelRegel {
     private Product product;
     private int aantal;
     private Bestelling bestelling;
-    private int productID;
+    
 
     /**
      *
@@ -40,14 +40,6 @@ public class BestelRegel {
 
     public void setProduct(Product product) {
         this.product = product;
-    }
-    
-    public int getProductID(){
-        return productID;
-    }
-    
-    public void setProductID(int productID){
-        this.productID = productID;
     }
     
     public int getAantal() {

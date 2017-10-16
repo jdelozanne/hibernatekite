@@ -97,6 +97,7 @@ private final Logger logger = ProjectLog.getLogger();
     public ArrayList<BestelRegel> readBestelRegelsByBestelling(Bestelling bestelling){
         
     List<BestelRegel> bestelregels = bestelling.getBestelling();
+    ProductDAO pdao = new ProductDAO();
         //bestelregels opvragen met een bepaalde bestellingID 
         //arraylist teruggeven met alle bestelregels die deze id hebben
         try {
@@ -105,12 +106,12 @@ private final Logger logger = ProjectLog.getLogger();
 
             String query = "Select * from bestel_regel Where bestellingID =" + bestelling.getBestellingID();
 
-            statement.executeQuery(query);
+            result = statement.executeQuery(query);
 
             while (result.next()) {
              BestelRegel r = new BestelRegel();
              r.setBestelRegelID(result.getInt(1));
-             r.setProductID(result.getInt(2));
+             r.setProduct(pdao.readProductByID(result.getInt(2)));
              r.setAantal(result.getInt(3));
              bestelregels.add(r);
             }

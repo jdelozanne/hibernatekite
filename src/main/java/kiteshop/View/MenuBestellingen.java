@@ -139,7 +139,7 @@ public class MenuBestellingen {
 			System.out.println(i+1 +" "+ bestellingen.get(i).bestellingToString());
 		}
 		Bestelling choosenBestelling = bestellingen.get(input.nextInt()-1);
-                //controller.displayBestelRegelsFromBestelling(choosenBestelling);
+                controller.displayBestelRegelsFromBestelling(choosenBestelling);
     }
     }
 
