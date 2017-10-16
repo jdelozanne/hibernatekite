@@ -8,7 +8,6 @@ bla die bla
 package kiteshop.pojos;
 
 public class Klant {
-
     
     private int klantID;
     private Adres bezoekAdres;
@@ -53,8 +52,7 @@ public class Klant {
     public void setAchternaam(String achternaam) {
         this.achternaam = achternaam;
     }
-
-       
+    
     public String getEmail() {
 		return email;
 	}
@@ -157,11 +155,4 @@ public class Klant {
 			return false;
 		return true;
 	}
-
-	
-
-	
-
-    
-    
 }

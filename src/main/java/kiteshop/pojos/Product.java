@@ -13,7 +13,6 @@ import java.math.BigDecimal;
  */
 public class Product {
 
-    //productID hier of pas in DAO?
     private int productID;
     private String naam;
     private BigDecimal prijs;
@@ -57,12 +56,9 @@ public class Product {
     public void setVoorraad(int voorraad) {
         this.voorraad = voorraad;
     }
-
-    
     
     @Override
     public String toString() {
-        
         String productDisplay ="ProductID: " + this.getProductID()+ " Product: " + this.getNaam() + " Prijs: " + this.getPrijs() + " Voorraad: " + this.getVoorraad();
         return productDisplay;
     }
@@ -103,5 +99,4 @@ public class Product {
 			return false;
 		return true;
 	}
-    
 }

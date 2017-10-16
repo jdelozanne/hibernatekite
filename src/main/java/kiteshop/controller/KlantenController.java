@@ -11,7 +11,6 @@ import kiteshop.test.ProjectLog;
 public class KlantenController {
 
     private final Logger logger = ProjectLog.getLogger();
-
     private KlantDAOInterface klantDAO;
 
     public KlantenController() {
@@ -24,7 +23,6 @@ public class KlantenController {
     }
 
     public Klant readKlanten(String achternaam) {
-        
         return klantDAO.readKlant(achternaam);
     }
 
@@ -41,10 +39,8 @@ public class KlantenController {
         logger.info("Deleting " + klant);
         klantDAO.deleteKlant(klant);
     }
-    
-    public ArrayList<Klant> showAllKlanten(){
-    	
+
+    public ArrayList<Klant> showAllKlanten() {
         return klantDAO.readAllKlanten();
     }
-
 }

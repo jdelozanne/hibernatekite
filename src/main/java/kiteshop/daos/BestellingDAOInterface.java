@@ -16,5 +16,4 @@ public interface BestellingDAOInterface {
     ArrayList<Bestelling> readBestellingByKlantID(int klantID);
 
     ArrayList<Bestelling> readAllBestelling();
-
 }

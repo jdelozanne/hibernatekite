@@ -9,15 +9,9 @@ public class BestelRegel {
     private int aantal;
     private Bestelling bestelling;
     
-
-    /**
-     *
-     */
-    
     public BestelRegel(){
         product = new Product();
         bestelling = new Bestelling();
-        
     }
     
     public BestelRegel(Bestelling bestelling, Product product, int aantal) {
@@ -65,9 +59,7 @@ public class BestelRegel {
     public BigDecimal pricePerLine(){
         BigDecimal prijsPerRegel = null;
         return prijsPerRegel = BigDecimal.valueOf(this.aantal).multiply(this.product.getPrijs());
-        
     }
-    
 
     @Override
     public int hashCode() {
@@ -105,8 +97,6 @@ public class BestelRegel {
 
     @Override
     public String toString() {
-
         return "BestelRegel: product = " + product.getNaam()+ " aantal = " + aantal;
     }
-
 }
