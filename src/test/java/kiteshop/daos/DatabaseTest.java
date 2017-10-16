@@ -47,7 +47,7 @@ public class DatabaseTest {
 				+ "  PRIMARY KEY (`accountID`))\n"
 				+ "ENGINE = InnoDB";  // de engine kun je ook weghalen dan werkt het ook SP
 		String create_product = "CREATE TABLE IF NOT EXISTS `" + DATABASE + "`.`product` (\n"
-				+ "  `productID` INT(10) NOT NULL,\n"
+				+ "  `productID` INT(10) NOT NULL AUTO_INCREMENT,\n"
 				+ "  `productnaam` VARCHAR(45) NOT NULL,\n"
 				+ "  `voorraad` INT(5) NOT NULL,\n"
 				+ "  `prijs` DECIMAL(10,2) UNSIGNED NOT NULL,\n"
