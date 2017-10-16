@@ -33,12 +33,37 @@ public class ProductDAOTest {
 
 	@Test
 	public final void testCreateProduct() {
-		fail("Not yet implemented"); // TODO
+		
+		Product expectedresult = new Product();
+		expectedresult.setProductID(1);
+		expectedresult.setNaam("GAASTRA PURE 2017");
+		expectedresult.setVoorraad(10);
+		expectedresult.setPrijs(new BigDecimal("999.00"));
+		
+		new ProductDAO().createProduct(expectedresult);
+		
+		Product result = new ProductDAO().showProducten().get(0);
+		
+		System.out.println("Expeted product "+expectedresult);
+		System.out.println("Result product "+result);
+		
+		assertEquals(expectedresult, result);
 	}
 
 	@Test
 	public final void testReadProductString() {
-		fail("Not yet implemented"); // TODO
+		new DatabaseTest().populateDatabase();
+		//form populate database ('2', 'Cabrinha Chaos', 8,  '719.00')
+		Product expectedresult = new Product();
+		expectedresult.setProductID(2);
+		expectedresult.setNaam("Cabrinha Chaos");
+		expectedresult.setVoorraad(8);
+		expectedresult.setPrijs(new BigDecimal("719.00"));
+		
+		Product result = new ProductDAO().readProduct("Cabrinha Chaos");
+		
+		
+		assertEquals(expectedresult, result);
 	}
 
 	@Test
@@ -56,20 +81,45 @@ public class ProductDAOTest {
 		expectedresult.setPrijs(new BigDecimal("719.00"));
 		
 		Product result = new ProductDAO().showProducten().get(1);
-		System.out.println("Expeted product "+expectedresult);
-		System.out.println("Result product "+result);
+		
 		assertEquals(expectedresult, result);
 		
 	}
 
 	@Test
 	public final void testUpdateProduct() {
-		fail("Not yet implemented"); // TODO
+		Product resultbefore = new ProductDAO().showProducten().get(1); // ik pak hier de tweede (arraylist begint op 0 database op 1, omdat ik ook de tweede ga vervangen
+		
+		Product expectedresult = new Product();
+		expectedresult.setProductID(2);
+		expectedresult.setNaam("GAASTRA PURE 2017");
+		expectedresult.setVoorraad(10);
+		expectedresult.setPrijs(new BigDecimal("999.00"));
+		
+		new ProductDAO().updateProduct(expectedresult);
+		
+		Product result = new ProductDAO().showProducten().get(1);
+		System.out.println("Expeted product "+expectedresult);
+		System.out.println("Result product "+result);
+		
+		assertEquals(expectedresult, result);
+		
 	}
 
 	@Test
 	public final void testDeleteProduct() {
-		fail("Not yet implemented"); // TODO
+		new DatabaseTest().populateDatabase();
+		int productenindatabase = new ProductDAO().showProducten().size();
+		assertTrue(productenindatabase == 3);
+		Product producttobedeleted = new Product();
+		producttobedeleted.setProductID(2);
+		producttobedeleted.setNaam("Cabrinha Chaos");
+		producttobedeleted.setVoorraad(8);
+		producttobedeleted.setPrijs(new BigDecimal("719.00"));
+		new ProductDAO().deleteProduct(producttobedeleted);
+		int productenindatabaseafterdelete = new ProductDAO().showProducten().size();
+		assertTrue(productenindatabaseafterdelete == 2);
+		
 	}
 
 }
