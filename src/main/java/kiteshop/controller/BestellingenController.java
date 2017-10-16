@@ -76,18 +76,16 @@ public class BestellingenController {
             System.out.println(b.toString());
         }
     }
-    public void displayBestelRegelsFromBestelling(Bestelling bestelling){
+    public ArrayList<BestelRegel> getBestelregelsByBestelling(Bestelling bestelling){
         BestelRegelDAO besteldao = new BestelRegelDAO();
-        ProductDAO productDAO= new ProductDAO();
-        ArrayList<BestelRegel> bestelregels = besteldao.readBestelRegelsByBestelling(bestelling);
         
-        for(BestelRegel br : bestelregels){
-            
-            System.out.println(br.getProduct().getNaam() + br.getAantal());  
+        return besteldao.readBestelRegelsByBestelling(bestelling);
+        
+        
         }
 //productDAO.readProductByID(br.getProduct().getProductID())).toString() + "\t" + 
     }
 
    
 
-}
+

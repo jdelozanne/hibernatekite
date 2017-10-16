@@ -140,8 +140,17 @@ public class MenuBestellingen {
 			System.out.println(i+1 +" "+ bestellingen.get(i).bestellingToString());
 		}
 		Bestelling choosenBestelling = bestellingen.get(input.nextInt()-1);
-                controller.displayBestelRegelsFromBestelling(choosenBestelling);
+                showBestelregels(choosenBestelling);
+                
     }
+    public void showBestelregels(Bestelling b){
+        ArrayList<BestelRegel> bestelregels = controller.getBestelregelsByBestelling(b);
+        System.out.println("De volgende bestelregels zijn gevonden,geeft u alstublieft het nummer van de bestelregel die u wil wijzigen");
+		for(int i = 0; i < bestelregels.size(); i++ ){
+			System.out.println(i+1 +" "+ bestelregels.get(i).toString());
+		}
+        }
     }
+    
 
 

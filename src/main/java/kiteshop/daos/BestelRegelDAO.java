@@ -96,8 +96,8 @@ private final Logger logger = ProjectLog.getLogger();
     }
     public ArrayList<BestelRegel> readBestelRegelsByBestelling(Bestelling bestelling){
         
-    List<BestelRegel> bestelregels = bestelling.getBestelling();
-    ProductDAO pdao = new ProductDAO();
+    ArrayList<BestelRegel> bestelregels = (ArrayList<BestelRegel>) bestelling.getBestelling();
+    
         //bestelregels opvragen met een bepaalde bestellingID 
         //arraylist teruggeven met alle bestelregels die deze id hebben
         try {
@@ -111,7 +111,7 @@ private final Logger logger = ProjectLog.getLogger();
             while (result.next()) {
              BestelRegel r = new BestelRegel();
              r.setBestelRegelID(result.getInt(1));
-             r.setProduct(pdao.readProductByID(result.getInt(2)));
+             r.getProduct().setProductID(result.getInt(2));
              r.setAantal(result.getInt(3));
              bestelregels.add(r);
             }
@@ -119,7 +119,7 @@ private final Logger logger = ProjectLog.getLogger();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return (ArrayList<BestelRegel>) bestelregels;
+        return bestelregels;
     }
   
     
