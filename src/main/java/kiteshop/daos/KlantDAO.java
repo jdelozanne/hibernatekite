@@ -96,7 +96,7 @@ public class KlantDAO implements KlantDAOInterface {
 
 
 
-	//Deze is volgens mij niet nodig wordt 100% afgedekt door ArrayList<Klant> readSelectedKlantenAchternaam(String achternaam) 
+	//Deze is volgens mij niet nodig wordt 100% afgedekt door ArrayList<Klant> readKlantByAchternaam(String achternaam) 
 	@Override
 	public Klant readKlant(String achternaam) {
 		Klant klant = new Klant();
@@ -202,7 +202,7 @@ public class KlantDAO implements KlantDAOInterface {
 	}
 
 	@Override   // nog afmaken
-	public ArrayList<Klant> readSelectedKlantenAchternaam(String achternaam) {
+	public ArrayList<Klant> readKlantByAchternaam(String achternaam) {
 
 		ArrayList<Klant> selectionKlanten = new ArrayList<Klant>();
 
@@ -355,7 +355,7 @@ public class KlantDAO implements KlantDAOInterface {
 	}
 
 	public static void main(String args[]) {
-		new KlantDAO().readSelectedKlantenAchternaam("Lol2");
+		new KlantDAO().readKlantByAchternaam("Lol2");
 	}
 
 

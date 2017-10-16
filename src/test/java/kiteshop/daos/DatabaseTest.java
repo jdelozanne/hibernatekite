@@ -187,7 +187,7 @@ public class DatabaseTest {
 		KlantDAO klantDAO = new KlantDAO();
 
 		logger.info("Beginning klantDAO readselectedklantenAchternaam");
-		ArrayList<Klant> testKlant = klantDAO.readSelectedKlantenAchternaam("Pelgrom");
+		ArrayList<Klant> testKlant = klantDAO.readKlantByAchternaam("Pelgrom");
 		System.out.println(testKlant);
 
 	}

@@ -45,7 +45,7 @@ public class KlantDAOTest {
 		
 		new KlantDAO().createKlant(klanttobecreated);
 
-		Klant result = new KlantDAO().readSelectedKlantenAchternaam("Pelgrom").get(0);
+		Klant result = new KlantDAO().readKlantByAchternaam("Pelgrom").get(0);
 
 		assertEquals(klanttobecreated, result);
 	}
@@ -65,9 +65,9 @@ public class KlantDAOTest {
 		
 		new KlantDAO().updateKlant(klanttobeupdated);
 		
-		Klant result = new KlantDAO().readSelectedKlantenAchternaam("Lozanne").get(0);
+		Klant result = new KlantDAO().readKlantByAchternaam("Lozanne").get(0);
 		
-		int klantenwithachternaampelgrom = new KlantDAO().readSelectedKlantenAchternaam("Pelgrom").size();
+		int klantenwithachternaampelgrom = new KlantDAO().readKlantByAchternaam("Pelgrom").size();
 	
 		assertEquals(klanttobeupdated, result);
 		
@@ -100,7 +100,7 @@ public class KlantDAOTest {
 		verwachtResultKlant.setBezoekAdres(new Adres());
 		verwachtResultKlant.setFactuurAdres(new Adres());
 
-		Klant result = new KlantDAO().readSelectedKlantenAchternaam("Pelgrom").get(0);
+		Klant result = new KlantDAO().readKlantByAchternaam("Pelgrom").get(0);
 
 		assertEquals(verwachtResultKlant, result);
 	}

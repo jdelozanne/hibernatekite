@@ -29,7 +29,7 @@ public class KlantenController {
     }
 
     public ArrayList<Klant> showKlantenAchternaam(String achternaam) {
-        return klantDAO.readSelectedKlantenAchternaam(achternaam);
+        return klantDAO.readKlantByAchternaam(achternaam);
     }
 
     public void updateKlant(Klant klant) {

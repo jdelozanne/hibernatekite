@@ -80,6 +80,12 @@ public class Bestelling {
         return regel;
     }
     
+    public String bestellingToString(){
+       String bestelling = "BestellingID = " + bestellingID + "\n Totaalbedrag = " + totaalprijs;
+       return bestelling;
+        
+    }
+    
     public BigDecimal calculatePrijs(List <BestelRegel> bestelregels) {
         totaalprijs = new BigDecimal (0);
         for(BestelRegel b : bestelregels){

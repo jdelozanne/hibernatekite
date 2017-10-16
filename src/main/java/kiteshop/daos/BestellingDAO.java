@@ -109,6 +109,32 @@ public class BestellingDAO implements BestellingDAOInterface {
         }
         return b;
     }
+    
+    public ArrayList<Bestelling> readBestellingByKlantID(int klantID){
+        ArrayList<Bestelling> bestellingen = new ArrayList<>();
+        
+        try {
+
+            Statement statement = connection.createStatement();
+
+            String query = "Select * from bestelling Where klantID =" + klantID;
+
+            result = statement.executeQuery(query);
+            
+            while (result.next()) {
+                Bestelling b = new Bestelling();
+                b.setBestellingID(result.getInt(1));
+                b.setTotaalprijs(result.getBigDecimal(3));
+                bestellingen.add(b);
+            }
+            logger.info("reading from bestelling with specific klantID");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return bestellingen;
+    }
+        
+    
 
     public ArrayList<Bestelling> readAllBestelling() {
         ArrayList<Bestelling> bestellingen = new ArrayList<>();
@@ -118,7 +144,7 @@ public class BestellingDAO implements BestellingDAOInterface {
 
             String readAll = "Select * from bestelling";
 
-            statement.executeUpdate(readAll);
+            result = statement.executeQuery(readAll);
 
             while (result.next()) {
                 Bestelling b = new Bestelling();

@@ -8,8 +8,10 @@ import kiteshop.daos.BestelRegelDAOInterface;
 import kiteshop.daos.BestellingDAO;
 
 import kiteshop.daos.BestellingDAOInterface;
+import kiteshop.daos.KlantDAO;
 import kiteshop.pojos.BestelRegel;
 import kiteshop.pojos.Bestelling;
+import kiteshop.pojos.Klant;
 import kiteshop.test.ProjectLog;
 
 public class BestellingenController {
@@ -42,6 +44,16 @@ public class BestellingenController {
     public void updateBestelling(int id){
         bestellingDAO.readBestelling(id);
     }
+    
+    public ArrayList<Klant> getKlantByAchternaam(String klantachternaam){
+        KlantDAO klantdao = new KlantDAO();
+        return klantdao.readKlantByAchternaam(klantachternaam);
+        
+    }
+    
+    public ArrayList<Bestelling> getBestellingByKlantID(int klantID){
+        return bestellingDAO.readBestellingByKlantID(klantID);
+    }
 
     public Bestelling showSpecificBestelling(int id) {
         Bestelling b = bestellingDAO.readBestelling(id);
@@ -61,6 +73,11 @@ public class BestellingenController {
         for(Bestelling b : lijst){
             System.out.println(b.toString());
         }
+    }
+    public void displayBestelRegelsFromBestelling(Bestelling bestelling){
+        BestelRegelDAO besteldao = new BestelRegelDAO();
+        besteldao.readBestelRegel(bestelling.getBestellingID());
+        
     }
 
    

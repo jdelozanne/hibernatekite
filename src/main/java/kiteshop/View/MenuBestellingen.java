@@ -66,6 +66,10 @@ public class MenuBestellingen {
             case 5:
                 new HoofdMenu().start();
                 break;
+            case 6:
+                System.out.println("Van welke klant is de bestelling die u wilt wijzigen? Geef de achternaam");
+                String klantnaam = input.nextLine();
+                firstPickRightKlant(klantnaam);
         }
     }
 
@@ -117,5 +121,26 @@ public class MenuBestellingen {
     public void showBestellingen(){
         controller.showBestellingen();
     }
+    
+    public void firstPickRightKlant(String klantachternaam){
+        ArrayList<Klant> klanten = controller.getKlantByAchternaam(klantachternaam);
+        System.out.println("De volgende klanten zijn gevonden, geeft u alstublieft het nummer van de klant die u wil wijzigen");
+		for(int i = 0; i < klanten.size(); i++ ){
+			System.out.println(i+1 +" "+ klanten.get(i).toString());
+		}
+		Klant choosenKlant = klanten.get(input.nextInt()-1);
+                input.nextLine();
+                thenPickRightBestelling(choosenKlant);
+    }
+    public void thenPickRightBestelling(Klant choosenKlant){
+        ArrayList<Bestelling> bestellingen = controller.getBestellingByKlantID(choosenKlant.getKlantID());
+        System.out.println("De volgende bestellingen zijn gevonden van deze klant, geeft u alstublieft het nummer van de bestelling die u wil wijzigen");
+		for(int i = 0; i < bestellingen.size(); i++ ){
+			System.out.println(i+1 +" "+ bestellingen.get(i).bestellingToString());
+		}
+		Bestelling choosenBestelling = bestellingen.get(input.nextInt()-1);
+                //controller.displayBestelRegelsFromBestelling(choosenBestelling);
+    }
+    }
 
-}
+

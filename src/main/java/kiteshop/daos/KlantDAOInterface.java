@@ -16,6 +16,6 @@ public interface KlantDAOInterface {
     
     ArrayList<Klant> readAllKlanten();
 
-    ArrayList<Klant> readSelectedKlantenAchternaam(String a);
+    ArrayList<Klant> readKlantByAchternaam(String a);
 
 }
