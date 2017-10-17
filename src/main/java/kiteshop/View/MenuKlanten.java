@@ -9,7 +9,7 @@ import kiteshop.controller.KlantenController;
 import kiteshop.pojos.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-
+import static kiteshop.test.Validator.*;
 /**
  *
  * @author julia fgf test tset test
@@ -28,7 +28,8 @@ public class MenuKlanten {
         System.out.println("Kies 5 voor Overzicht klanten, gezocht op achternaam");
         System.out.println("Kies 6 voor terug naar Startscherm");
         int keuze = input.nextInt();
-
+input.nextLine();
+        
         switch (keuze) {
             case 1:
                 createKlant();
@@ -93,14 +94,29 @@ public class MenuKlanten {
         String achternaam = input.nextLine();
         klant.setAchternaam(achternaam);
 
-        System.out.println("geef emailadres: ");
-        String email = input.nextLine();
-        klant.setEmail(email);
+        String email = null;
+        while(!isValidEmail(email)){
+        	System.out.println("geef emailadres: ");
+        	email = input.nextLine();
+        	if(isValidEmail(email)){
+        		klant.setEmail(email);
+        	} else{
+        		System.out.println("Dit is geen geldig emailadres, probeer opnieuw");
+        	}
+        }
 
-        System.out.println("geef telefoonnummer: ");
-        String telefoonnr = input.nextLine();
-        klant.setTelefoonnummer(telefoonnr);
 
+        String telefoonnr = null;
+        while(!isValidPnoneNumber(telefoonnr)){
+        	System.out.println("geef telefoonnummer: ");
+        	telefoonnr = input.nextLine();
+        	if(isValidPnoneNumber(telefoonnr)){
+
+        		klant.setTelefoonnummer(telefoonnr);
+        	} else {
+        		System.out.println("Dit is geen geldig telefoonnummer, probeer opnieuw");
+        	}
+        }
         System.out.println("Nu wordt het bezoekadres gevraagd");
         Adres bezoekadres = createAdres();
         bezoekadres.setAdresType(AdresType.BEZOEKADRES);
