@@ -67,7 +67,7 @@ public class BestellingenController {
 
     public void displayBestelling(ArrayList<Bestelling> lijst) {
         for (Bestelling b : lijst) {
-            System.out.println(b.toString());
+            System.out.println(b.bestellingToString());
         }
     }
 

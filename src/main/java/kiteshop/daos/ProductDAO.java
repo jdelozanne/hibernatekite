@@ -89,14 +89,14 @@ public class ProductDAO implements ProductDAOInterface {
         }
         return p.getNaam();
     }
-    
+
     @Override
     public Product readProductByID(int productID) {
         Product p = new Product();
         try {
             String query = "Select * from product where productID = ?";
             statement = this.connection.prepareStatement(query);
-           statement.setInt(1, productID);
+            statement.setInt(1, productID);
             result = statement.executeQuery();
             while (result.next()) {
                 p.setProductID(result.getInt(1));
@@ -109,7 +109,7 @@ public class ProductDAO implements ProductDAOInterface {
         }
         return p;
     }
-    
+
     @Override
     public ArrayList<Product> showProducten() {
         ArrayList<Product> producten = new ArrayList<>();
@@ -171,6 +171,7 @@ public class ProductDAO implements ProductDAOInterface {
             System.out.println(p.toString());
         }
     }
+
     public static void main(String[] args) {
         BestelRegel br = new BestelRegel();
         br.setProduct(new ProductDAO().readProductByID(13));

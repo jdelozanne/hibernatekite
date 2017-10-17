@@ -100,3 +100,4 @@ public class BestelRegel {
         return "BestelRegel: product = " + product.getNaam()+ " aantal = " + aantal;
     }
 }
+

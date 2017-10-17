@@ -79,9 +79,9 @@ input.nextLine();
         }
     }
 
-    private void createKlant() { 
+    private void createKlant() {
         Klant klant = new Klant();
-        
+
         System.out.println("geef voornaam: ");
         String voornaam = input.nextLine();
         klant.setVoornaam(voornaam);
@@ -104,6 +104,12 @@ input.nextLine();
         		System.out.println("Dit is geen geldig emailadres, probeer opnieuw");
         	}
         }
+
+
+        System.out.println("geef emailadres: ");
+        String email = input.nextLine();
+
+        klant.setEmail(email);
 
 
         String telefoonnr = null;

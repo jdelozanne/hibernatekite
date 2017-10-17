@@ -5,8 +5,6 @@
  */
 package kiteshop.View;
 
-import kiteshop.daos.*;
-import kiteshop.pojos.*;
 
 /**
  *
@@ -14,10 +12,4 @@ import kiteshop.pojos.*;
  */
 public class TestClass {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-       new MenuProducten().createProduct();
-    }
 }
