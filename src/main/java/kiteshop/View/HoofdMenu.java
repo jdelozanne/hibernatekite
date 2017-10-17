@@ -15,9 +15,7 @@ import kiteshop.pojos.Account;
  */
 public class HoofdMenu {
 
-
     Scanner input = new Scanner(System.in);
-//hoofdmenu keuze uit diverse opties
 
     public void start() {
         System.out.println("Maak uw keuze:");
@@ -28,6 +26,7 @@ public class HoofdMenu {
         System.out.println("Kies 5 Uitloggen");
         int keuze = input.nextInt();
         input.nextLine();
+        
         switch (keuze) {
             case 1:
                 System.out.println("naar menu klanten");
@@ -42,10 +41,8 @@ public class HoofdMenu {
                 start();
                 break;
             case 3:
-
                 System.out.println("naar menu bestellingen");
                 new MenuBestellingen().start();
-
                 break;
             case 4:
                 System.out.println("naar menu account");
@@ -71,8 +68,6 @@ public class HoofdMenu {
     }
 
     public static void main(String[] args) {
-
         new HoofdMenu().start();
-
     }
 }

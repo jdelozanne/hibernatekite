@@ -16,23 +16,19 @@ import kiteshop.test.ProjectLog;
  * @author julia
  */
 public class BestelRegelController {
-    private final Logger logger = ProjectLog.getLogger();
 
+    private final Logger logger = ProjectLog.getLogger();
     BestelRegelDAOInterface bestelRegelDAO;
-    
-    public BestelRegelController(){
+
+    public BestelRegelController() {
         bestelRegelDAO = new BestelRegelDAO();
     }
-    
-    public void createBestelRegel(BestelRegel regel){
+
+    public void createBestelRegel(BestelRegel regel) {
         bestelRegelDAO.createBestelRegel(regel);
-        
     }
-    
-    public void showBestelling(int bestellingID){
+
+    public void showBestelling(int bestellingID) {
         bestelRegelDAO.readBestelRegel(bestellingID);
     }
-   
-     
 }
-

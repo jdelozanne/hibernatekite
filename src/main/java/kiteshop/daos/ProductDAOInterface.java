@@ -14,7 +14,7 @@ public interface ProductDAOInterface {
     void deleteProduct(Product product);
 
     public ArrayList<Product> showProducten();
-    
+
     public Product readProductByID(int productID);
 
 }

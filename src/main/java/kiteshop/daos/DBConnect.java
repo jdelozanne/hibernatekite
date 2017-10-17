@@ -17,9 +17,8 @@ public class DBConnect {
 
     private Connection connection;
     private static final DBConnect INSTANCE = new DBConnect();
-    
-    private static String pathOfActivePropopertyFile =  "src/main/java/kiteshop/daos/connect.properties";
-    
+    private static String pathOfActivePropopertyFile = "src/main/java/kiteshop/daos/connect.properties";
+
     private DBConnect() {
     }
 
@@ -32,18 +31,14 @@ public class DBConnect {
             String probsUser = props.getProperty("user");
             String probsWW = props.getProperty("password");
             String probsUrl = props.getProperty("dburl");
-            
-
             //connect to database
             connection = DriverManager.getConnection(probsUrl, probsUser, probsWW);
         } catch (Exception ex) {
             System.out.println("geen connectie gemaakt:" + ex);
         }
-
     }
 
     public static Connection getConnection() {
-
         try {
             if (INSTANCE.connection == null) {
                 INSTANCE.connect();
@@ -55,9 +50,7 @@ public class DBConnect {
     }
 
     //Toegevoegd om voor het testen het pad te veranderen naar het de testdatabase, zodat de DAOs hier verbinding op maken
-	public static void setPathOfActivePropopertyFiletoTest() {
-		pathOfActivePropopertyFile = "src/main/java/kiteshop/daos/connectTestDB.properties";
-		
-	}
-       
+    public static void setPathOfActivePropopertyFiletoTest() {
+        pathOfActivePropopertyFile = "src/main/java/kiteshop/daos/connectTestDB.properties";
+    }
 }

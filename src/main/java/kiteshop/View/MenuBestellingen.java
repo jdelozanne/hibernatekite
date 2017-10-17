@@ -23,14 +23,8 @@ import kiteshop.test.ProjectLog;
  */
 public class MenuBestellingen {
 
-    /**
-     *
-     * @author julia
-     */
     private final Logger logger = ProjectLog.getLogger();
-
     private Scanner input = new Scanner(System.in);
-
     BestellingenController controller = new BestellingenController();
     BestelRegelController controller2 = new BestelRegelController();
 
@@ -50,6 +44,7 @@ public class MenuBestellingen {
                 System.out.println("Voor welke klant is deze bestelling? Geef de achternaam");
                 String achternaam = input.nextLine();
                 createBestelling(achternaam);
+                start();
                 break;
             case 2:
                 System.out.println("Van welke klant is de bestelling die u wilt wijzigen? Geef de achternaam");
@@ -57,7 +52,7 @@ public class MenuBestellingen {
                 Klant choosenKlant = firstPickRightKlant(klantnaam);
                 Bestelling choosenBestelling = pickRightBestelling(choosenKlant);
                 showBestelregels(choosenBestelling);
-                
+                start();
                 break;
             case 3:
                 System.out.println("Van welke klant is de bestelling die u wilt wijzigen? Geef de achternaam");
@@ -65,20 +60,22 @@ public class MenuBestellingen {
                 Klant klantBestelling = firstPickRightKlant(naam);
                 Bestelling bestellingToDelete = pickRightBestelling(klantBestelling);
                 deleteBestelling(bestellingToDelete);
+                start();
                 break;
             case 4:
                 showBestellingen();
+                start();
                 break;
             case 5:
                 new HoofdMenu().start();
                 break;
-           
-                
+            default:
+                System.out.println("Probeer opnieuw");
+                start();
         }
     }
 
     public void createBestelling(String achternaam) {
-
         KlantDAO k = new KlantDAO();
         Klant klant = k.readKlant(achternaam);
         Bestelling bestelling = new Bestelling(klant);
@@ -99,7 +96,6 @@ public class MenuBestellingen {
     }
 
     public BestelRegel createBestelRegel(Bestelling bestelling) {
-
         System.out.println("Welk product wilt u toevoegen aan de bestelling");
         String productnaam = input.nextLine();
         Product p = new ProductDAO().readProduct(productnaam);
@@ -109,17 +105,12 @@ public class MenuBestellingen {
         input.nextLine();
 
         BestelRegel b = new BestelRegel(bestelling, p, aantal);
-
         return b;
     }
 
     public void deleteBestelling(Bestelling b) {
         controller.deleteBestelling(b.getBestellingID());
         System.out.println("bestelling verwijderd");
-    }
-
-    public void showSpecificBestelling(int id) {
-        controller.showSpecificBestelling(id);
     }
 
     public void showBestellingen() {
@@ -135,7 +126,6 @@ public class MenuBestellingen {
         Klant choosenKlant = klanten.get(input.nextInt() - 1);
         input.nextLine();
         return choosenKlant;
-        
     }
 
     public Bestelling pickRightBestelling(Klant choosenKlant) {
@@ -146,7 +136,6 @@ public class MenuBestellingen {
         }
         Bestelling choosenBestelling = bestellingen.get(input.nextInt() - 1);
         return choosenBestelling;
-
     }
 
     public void showBestelregels(Bestelling b) {
@@ -179,6 +168,7 @@ public class MenuBestellingen {
         System.out.println("Wilt u een andere regel veranderen? Kies 2");
         System.out.println("Bent u klaar? Kies 3");
         int keuzeVervolg = input.nextInt();
+        
         switch (keuzeVervolg) {
             case 1:
                 updateBestelling(br, b);
@@ -191,6 +181,5 @@ public class MenuBestellingen {
                 new HoofdMenu().start();
                 break;
         }
-
     }
 }

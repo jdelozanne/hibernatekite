@@ -16,7 +16,6 @@ import kiteshop.pojos.Product;
  * @author julia
  */
 public class MenuProducten {
-
     Scanner input = new Scanner(System.in);
     ProductenController controller = new ProductenController();
 
@@ -32,17 +31,21 @@ public class MenuProducten {
         switch (keuze) {
             case 1:
                 createProduct();
+                start();
                 break;
             case 2:
                 System.out.println("Geef alstublieft de naam van het product dat u wilt wijzigen: ");
                 showSpecificProduct(input.nextLine());
+                start();
                 break;
             case 3:
                 System.out.println("Geef alstublieft de naam van het product dat u wilt verwijderen: ");
                 deleteProduct(input.nextLine());
+                start();
                 break;
             case 4:
                 showProducten();
+                start();
                 break;
             case 5:
                 new HoofdMenu().start();
@@ -54,17 +57,15 @@ public class MenuProducten {
 
     public void createProduct() {
         Product product = new Product();
-
+        
         System.out.println("geef productnaam: ");
         input.nextLine();
         String productnaam = input.nextLine();
         product.setNaam(productnaam);
 
         System.out.println("geef voorraad");
-
         int voorraad = input.nextInt();
         product.setVoorraad(voorraad);
-
         input.nextLine();
 
         System.out.println("geef prijs ");
@@ -73,7 +74,6 @@ public class MenuProducten {
         input.nextLine();
 
         controller.createProduct(product);
-
     }
 
     public void showProducten() {
@@ -81,7 +81,6 @@ public class MenuProducten {
     }
 
     public void showSpecificProduct(String productnaam) {
-        
         Product p = controller.showSpecificProduct(productnaam);
         updateProduct(p);
     }
@@ -91,9 +90,9 @@ public class MenuProducten {
         System.out.println("Kies 1 voor de productnaam");
         System.out.println("Kies 2 voor de voorraad");
         System.out.println("Kies 3 voor de prijs");
-
         int keuze = input.nextInt();
         input.nextLine();
+        
         switch (keuze) {
             case 1:
                 System.out.println("Geef de nieuwe productnaam: ");
@@ -116,7 +115,6 @@ public class MenuProducten {
         } else {
             controller.updateProduct(p);
         }
-
     }
 
     public void deleteProduct(String productnaam) {

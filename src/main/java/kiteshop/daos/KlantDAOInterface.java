@@ -13,9 +13,8 @@ public interface KlantDAOInterface {
     void updateKlant(Klant klant);
 
     void deleteKlant(Klant klant);
-    
+
     ArrayList<Klant> readAllKlanten();
 
     ArrayList<Klant> readKlantByAchternaam(String a);
-
 }

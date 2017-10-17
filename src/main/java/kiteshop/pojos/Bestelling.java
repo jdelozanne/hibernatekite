@@ -15,7 +15,6 @@ import java.util.List;
  */
 public class Bestelling {
 
-    //ook hiervoor weer de vraag of de bestellingID niet pas in dao komt
     private int bestellingID;
     private Klant klant;
     private List<BestelRegel> bestelregels;
@@ -37,7 +36,6 @@ public class Bestelling {
     public void setBestellingID(int bestellingID) {
         this.bestellingID = bestellingID;
     }
-    
 
     public Klant getKlant() {
         return klant;
@@ -62,37 +60,32 @@ public class Bestelling {
     public void setTotaalprijs(BigDecimal totaalprijs) {
         this.totaalprijs = totaalprijs;
     }
-    
+
     public void addBestelRegel(BestelRegel b) {
         bestelregels.add(b);
     }
-   
-        
-    
-    
+
     @Override
-    public String toString(){
-        
+    public String toString() {
+
         String regel = null;
-        for(BestelRegel b : bestelregels){
+        for (BestelRegel b : bestelregels) {
             regel += b.toString() + "\n";
         }
         return regel;
     }
-    
-    public String bestellingToString(){
-       String bestelling = "BestellingID = " + bestellingID + "\n Totaalbedrag = " + totaalprijs;
-       return bestelling;
-        
+
+    public String bestellingToString() {
+        String bestelling = "BestellingID = " + bestellingID + "\n Totaalbedrag = " + totaalprijs;
+        return bestelling;
     }
-    
-    public BigDecimal calculatePrijs(List <BestelRegel> bestelregels) {
-        totaalprijs = new BigDecimal (0);
-        for(BestelRegel b : bestelregels){
+
+    public BigDecimal calculatePrijs(List<BestelRegel> bestelregels) {
+        totaalprijs = new BigDecimal(0);
+        for (BestelRegel b : bestelregels) {
             BigDecimal temp = BigDecimal.valueOf(b.getAantal()).multiply(b.getProduct().getPrijs());
             totaalprijs = totaalprijs.add(temp);
         }
         return totaalprijs;
     }
-
 }
