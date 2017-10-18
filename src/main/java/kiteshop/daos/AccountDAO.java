@@ -5,6 +5,7 @@
  */
 package kiteshop.daos;
 
+import Connection.MySQLConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,7 +31,7 @@ public class AccountDAO implements AccountDAOInterface {
     ResultSet result;
 
     public AccountDAO() {
-        this.connection = DBConnect.getConnection();
+        this.connection = MySQLConnection.getConnection();
     }
 
     @Override

@@ -5,6 +5,7 @@
  */
 package kiteshop.daos;
 
+import Connection.MySQLConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,7 +29,7 @@ public class BestellingDAO implements BestellingDAOInterface {
     private final Logger logger = ProjectLog.getLogger();
 
     public BestellingDAO() {
-        connection = DBConnect.getConnection();
+        connection = MySQLConnection.getConnection();
     }
 
     @Override

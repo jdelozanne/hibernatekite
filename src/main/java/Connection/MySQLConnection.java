@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kiteshop.daos;
+package Connection;
 
 import java.io.FileInputStream;
 import java.sql.*;
@@ -13,13 +13,13 @@ import java.util.Properties;
  *
  * @author julia
  */
-public class DBConnect {
+public class MySQLConnection {
 
     private Connection connection;
-    private static final DBConnect INSTANCE = new DBConnect();
+    private static final MySQLConnection INSTANCE = new MySQLConnection();
     private static String pathOfActivePropopertyFile = "src/main/java/kiteshop/daos/connect.properties";
 
-    private DBConnect() {
+    private MySQLConnection() {
     }
 
     public void connect() {

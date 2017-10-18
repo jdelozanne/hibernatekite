@@ -5,6 +5,7 @@
  */
 package kiteshop.daos;
 
+import Connection.MySQLConnection;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -26,8 +27,8 @@ public class DatabaseTest {
 	Connection connection;
 
 	public DatabaseTest() {
-		DBConnect.setPathOfActivePropopertyFiletoTest();
-		this.connection = DBConnect.getConnection();
+		MySQLConnection.setPathOfActivePropopertyFiletoTest();
+		this.connection = MySQLConnection.getConnection();
 	}
 
 	private static final String DATABASE = "TestKiteshop";
