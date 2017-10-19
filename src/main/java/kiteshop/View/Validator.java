@@ -66,7 +66,7 @@ public class Validator {
 
 	public static boolean isValidWachtwoord(String wachtwoord){
 		//minimaal 8 karakters lang en een getal bevatten
-		String regex = "[^\\-]{8,}";
+		String regex = "[^\\-]{4,}";
 		String regex2 = "[^\\-]{0,}[0-9]{1}[^\\-]{0,}";
 		
 		RegexValidator regexValidator = new RegexValidator(regex, true);
