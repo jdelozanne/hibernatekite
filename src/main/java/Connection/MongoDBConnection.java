@@ -22,5 +22,10 @@ public class MongoDBConnection {
     //om data toe te voegen aan mongodb moet je de data eerst in een BasicDBObject zetten. 
     //dat doe je door document.put("naam", "ww");
     //vervolgens kun je het document opslaan door collection.insert(document); 
+    MongoClient mongo;
     
+    public MongoClient connect(){
+        this.mongo = new MongoClient("localhost", 27017);
+        return mongo;
+    }
 }
