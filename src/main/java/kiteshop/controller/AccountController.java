@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import kiteshop.daos.AccountDAO;
 import kiteshop.daos.AccountDAOInterface;
+import kiteshop.daos.AccountDAOMongo;
 import kiteshop.pojos.Account;
 import kiteshop.test.ProjectLog;
 
@@ -41,4 +42,9 @@ public class AccountController {
     public List<Account> readAllAccounts() {
         return accountDAO.readAllAccounts();
     }
+    
+    public List<Account> readAllAccountsMongo() {
+        return new AccountDAOMongo().readAllAccounts();
+    }
+    
 }

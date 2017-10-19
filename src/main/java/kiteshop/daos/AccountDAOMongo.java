@@ -16,6 +16,7 @@ import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
+import static com.mongodb.client.model.Filters.eq;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,23 +45,10 @@ public class AccountDAOMongo implements AccountDAOInterface {
 
     public AccountDAOMongo() {
         //create a connection with mongodb database
-        mongo = new MongoClient("localhost", 27017);
-        database = mongo.getDB("kiteshop");
-        collection = database.getCollection("account");
-    }
-
-    public static Object getNextSequence(String name) throws Exception {
-
-        MongoClient mongoClient = new MongoClient("localhost", 27017);
-        //Now connect to your databases
-        DB db = mongoClient.getDB("kiteshop");
-        DBCollection c = db.getCollection("counters");
-        BasicDBObject find = new BasicDBObject();
-        find.put("_id", name);
-        BasicDBObject update = new BasicDBObject();
-        update.put("$inc", new BasicDBObject("seq", 1));
-        DBObject obj = c.findAndModify(find, update);
-        return obj.get("seq");
+        this.mongo = new MongoDBConnection().connect();
+        //this.mongo = new MongoClient("localhost", 27017);
+        this.database = mongo.getDB("kiteshop");
+        this.collection = database.getCollection("account");
     }
 
     @Override
@@ -89,9 +77,22 @@ public class AccountDAOMongo implements AccountDAOInterface {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public Account readAccountByGebruikersnaam(String gebruikersnaam) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Account readAccountByID(int id) {
+        Account a = new Account();
+        BasicDBObject whereQuery = new BasicDBObject();
+        whereQuery.put("id", id);
+        DBCursor cursor = collection.find(whereQuery);
+        while (cursor.hasNext()) {
+            DBObject object = cursor.next();
+            BasicDBObject accountObj = (BasicDBObject) object;
+            String user = accountObj.getString("gebruikersnaam");
+            String ww = accountObj.getString("wachtwoord");
+
+            a.setAccountID(id);
+            a.setGebruikersnaam(user);
+            a.setWachtwoord(ww);
+        }
+        return a;
     }
 
     @Override
@@ -127,6 +128,9 @@ public class AccountDAOMongo implements AccountDAOInterface {
         BasicDBObject newdoc = new BasicDBObject();
         newdoc.put("gebruikersnaam", account.getGebruikersnaam());
 
+        BasicDBObject doc = new BasicDBObject();
+        doc.put("gebruikersnaam", account.getGebruikersnaam());
+
         BasicDBObject updateObject = new BasicDBObject();
         updateObject.put("$set", newdoc);
 
@@ -138,7 +142,50 @@ public class AccountDAOMongo implements AccountDAOInterface {
         BasicDBObject deletequery = new BasicDBObject();
         deletequery.put("_id", account.getAccountID());
         collection.remove(deletequery);
-
     }
 
+    private Document convertAccountToDocument(Account account) {
+        Document document = new Document();
+        try {
+            document.append("id", getNextSequence("userid"));
+            document.append("gebruikersnaam", account.getGebruikersnaam());
+            document.append("prijs", account.getWachtwoord());
+        } catch (Exception ex) {
+            Logger.getLogger(AccountDAOMongo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return document;
+    }
+
+    public static Object getNextSequence(String name) throws Exception {
+        MongoClient mongoClient = new MongoClient("localhost", 27017);
+        //Now connect to your databases
+        DB db = mongoClient.getDB("kiteshop");
+        DBCollection c = db.getCollection("counters");
+        BasicDBObject find = new BasicDBObject();
+        find.put("_id", name);
+        BasicDBObject update = new BasicDBObject();
+        update.put("$inc", new BasicDBObject("seq", 1));
+        DBObject obj = c.findAndModify(find, update);
+        return obj.get("seq");
+    }
+
+    @Override
+    public Account readAccountByGebruikersnaam(String gebruikersnaam) {
+       Account a = new Account();
+        BasicDBObject whereQuery = new BasicDBObject();
+        whereQuery.put("gebruikersnaam", gebruikersnaam);
+        DBCursor cursor = collection.find(whereQuery);
+        while (cursor.hasNext()) {
+            DBObject object = cursor.next();
+            BasicDBObject accountObj = (BasicDBObject) object;
+            int id = accountObj.getInt("id");
+            String user = accountObj.getString("gebruikersnaam");
+            String ww = accountObj.getString("wachtwoord");
+
+            a.setAccountID(id);
+            a.setGebruikersnaam(user);
+            a.setWachtwoord(ww);
+        }
+        return a;
+    }
 }
