@@ -1,6 +1,7 @@
 package kiteshop.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import kiteshop.daos.ProductDAO;
@@ -28,11 +29,11 @@ public class ProductenController {
     }
 
     public void showProducten() {
-        ArrayList<Product> producten = productDAO.showProducten();
+        List<Product> producten = productDAO.readAllProducten();
         displayProducten(producten);
     }
 
-    public void displayProducten(ArrayList<Product> lijst) {
+    public void displayProducten(List<Product> lijst) {
         for (Product p : lijst) {
             System.out.printf("%s50\n", p.toString());
         }

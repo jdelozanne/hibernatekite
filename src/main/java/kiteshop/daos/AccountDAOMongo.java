@@ -52,29 +52,68 @@ public class AccountDAOMongo implements AccountDAOInterface {
     }
 
     @Override
-    public void createAccount(Account account) {
+    public String givePassword(String gebruiker) {
+        Account a = readAccountByGebruikersnaam(gebruiker);
+        return a.getWachtwoord();
+    }
 
+    @Override
+    public void createAccount(Account account) {
         document = new BasicDBObject();
         try {
             document.put("id", getNextSequence("userid"));
+            document.put("gebruikersnaam", account.getGebruikersnaam());
+            document.put("wachtwoord", account.getWachtwoord());
+            collection.insert(document);
+            //show collection, print to console
+            BasicDBObject read = new BasicDBObject();
+            DBCursor cursor = collection.find(read);
+            while (cursor.hasNext()) {
+                System.out.println(cursor.next());
+            }
         } catch (Exception ex) {
             Logger.getLogger(AccountDAOMongo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        document.put("gebruikersnaam", account.getGebruikersnaam());
-        document.put("wachtwoord", account.getWachtwoord());
-        collection.insert(document);
-
-        //show collection, print to console
-        BasicDBObject read = new BasicDBObject();
-        DBCursor cursor = collection.find(read);
-        while (cursor.hasNext()) {
-            System.out.println(cursor.next());
         }
     }
 
     @Override
-    public String givePassword(String gebruiker) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Account> readAllAccounts() {
+        List<Account> accounts = new ArrayList<>();
+        DBCursor cursor = collection.find();
+        while (cursor.hasNext()) {
+            DBObject object = cursor.next();
+            BasicDBObject accountObj = (BasicDBObject) object;
+            int id = accountObj.getInt("id");
+            String user = accountObj.getString("gebruikersnaam");
+            String ww = accountObj.getString("wachtwoord");
+
+            Account a = new Account();
+            a.setAccountID(id);
+            a.setGebruikersnaam(user);
+            a.setWachtwoord(ww);
+            accounts.add(a);
+        }
+        return accounts;
+    }
+
+    @Override
+    public Account readAccountByGebruikersnaam(String gebruikersnaam) {
+        Account a = new Account();
+        BasicDBObject query = new BasicDBObject();
+        query.put("gebruikersnaam", gebruikersnaam);
+        DBCursor cursor = collection.find(query);
+        while (cursor.hasNext()) {
+            DBObject object = cursor.next();
+            BasicDBObject accountObj = (BasicDBObject) object;
+            int id = accountObj.getInt("id");
+            String user = accountObj.getString("gebruikersnaam");
+            String ww = accountObj.getString("wachtwoord");
+
+            a.setAccountID(id);
+            a.setGebruikersnaam(user);
+            a.setWachtwoord(ww);
+        }
+        return a;
     }
 
     public Account readAccountByID(int id) {
@@ -96,44 +135,17 @@ public class AccountDAOMongo implements AccountDAOInterface {
     }
 
     @Override
-    public List<Account> readAllAccounts() {
-        List<Account> accounts = new ArrayList<>();
-
-        DBCursor cursor = collection.find();
-        while (cursor.hasNext()) {
-            DBObject object = cursor.next();
-
-            BasicDBObject accountObj = (BasicDBObject) object;
-            int id = accountObj.getInt("id");
-            String user = accountObj.getString("gebruikersnaam");
-            String ww = accountObj.getString("wachtwoord");
-
-            Account a = new Account();
-            a.setAccountID(id);
-            a.setGebruikersnaam(user);
-            a.setWachtwoord(ww);
-
-            accounts.add(a);
-        }
-
-        return accounts;
-    }
-
-    @Override
     public void updateAccount(Account account) {
         int id = account.getAccountID();
         BasicDBObject query = new BasicDBObject();
-        query.put("_id", id);
+        query.put("id", id);
 
         BasicDBObject newdoc = new BasicDBObject();
         newdoc.put("gebruikersnaam", account.getGebruikersnaam());
-
-        BasicDBObject doc = new BasicDBObject();
-        doc.put("gebruikersnaam", account.getGebruikersnaam());
-
+        newdoc.put("wachtwoord", account.getWachtwoord());
         BasicDBObject updateObject = new BasicDBObject();
-        updateObject.put("$set", newdoc);
 
+        updateObject.put("$set", newdoc);
         collection.update(query, updateObject);
     }
 
@@ -158,34 +170,13 @@ public class AccountDAOMongo implements AccountDAOInterface {
 
     public static Object getNextSequence(String name) throws Exception {
         MongoClient mongoClient = new MongoClient("localhost", 27017);
-        //Now connect to your databases
         DB db = mongoClient.getDB("kiteshop");
-        DBCollection c = db.getCollection("counters");
+        DBCollection c = db.getCollection("countersAccount");
         BasicDBObject find = new BasicDBObject();
         find.put("_id", name);
         BasicDBObject update = new BasicDBObject();
         update.put("$inc", new BasicDBObject("seq", 1));
         DBObject obj = c.findAndModify(find, update);
         return obj.get("seq");
-    }
-
-    @Override
-    public Account readAccountByGebruikersnaam(String gebruikersnaam) {
-       Account a = new Account();
-        BasicDBObject whereQuery = new BasicDBObject();
-        whereQuery.put("gebruikersnaam", gebruikersnaam);
-        DBCursor cursor = collection.find(whereQuery);
-        while (cursor.hasNext()) {
-            DBObject object = cursor.next();
-            BasicDBObject accountObj = (BasicDBObject) object;
-            int id = accountObj.getInt("id");
-            String user = accountObj.getString("gebruikersnaam");
-            String ww = accountObj.getString("wachtwoord");
-
-            a.setAccountID(id);
-            a.setGebruikersnaam(user);
-            a.setWachtwoord(ww);
-        }
-        return a;
     }
 }

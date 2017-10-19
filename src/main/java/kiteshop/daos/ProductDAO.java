@@ -112,8 +112,8 @@ public class ProductDAO implements ProductDAOInterface {
     }
 
     @Override
-    public ArrayList<Product> showProducten() {
-        ArrayList<Product> producten = new ArrayList<>();
+    public List<Product> readAllProducten() {
+        List<Product> producten = new ArrayList<>();
         try {
             String query = "Select * from product";
             Statement statement = this.connection.createStatement();

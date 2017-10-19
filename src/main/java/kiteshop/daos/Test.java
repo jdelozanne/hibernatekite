@@ -5,10 +5,12 @@
  */
 package kiteshop.daos;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import kiteshop.View.MenuAccounts;
 import kiteshop.pojos.Account;
+import kiteshop.pojos.Product;
 
 /**
  *
@@ -17,9 +19,16 @@ import kiteshop.pojos.Account;
 public class Test {
 
     public static void main(String[] args) {
-        AccountDAOMongo m = new AccountDAOMongo();
-        System.out.println((m.readAccountByID(7)).toString());
-        System.out.println((m.readAccountByGebruikersnaam("user1")).toString());
+       Product a = new Product();
+                
+                a.setNaam("kite");
+                a.setVoorraad(5);
+                a.setPrijs(new BigDecimal(990.10));
+                
+        ProductDAOInterface m = new ProductDAOMongo();
+        
+        System.out.println(m.readProductByID(3));
+        
 
     }
 

@@ -132,7 +132,6 @@ public class AccountDAO implements AccountDAOInterface {
         List<Account> accounts = new ArrayList<Account>();
         try {
             String sqlQuery = "SELECT * FROM account";
-
             PreparedStatement prepstat = connection.prepareStatement(sqlQuery);
             ResultSet result = prepstat.executeQuery();
 

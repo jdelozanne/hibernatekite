@@ -44,7 +44,7 @@ public class ProductDAOTest {
 		
 		new ProductDAO().createProduct(expectedresult);
 		
-		Product result = new ProductDAO().showProducten().get(0);
+		Product result = new ProductDAO().readAllProducten().get(0);
 		
 		System.out.println("Expeted product "+expectedresult);
 		System.out.println("Result product "+result);
@@ -71,7 +71,7 @@ public class ProductDAOTest {
 	@Test
 	public final void testShowProducten() {
 		new SetUpTestDatabase().populateDatabase();
-		int productenindatabase = new ProductDAO().showProducten().size();
+		int productenindatabase = new ProductDAO().readAllProducten().size();
 		assertTrue(productenindatabase == 3);
 		
 
@@ -82,7 +82,7 @@ public class ProductDAOTest {
 		expectedresult.setVoorraad(8);
 		expectedresult.setPrijs(new BigDecimal("719.00"));
 		
-		Product result = new ProductDAO().showProducten().get(1);
+		Product result = new ProductDAO().readAllProducten().get(1);
 		
 		assertEquals(expectedresult, result);
 		
@@ -90,7 +90,7 @@ public class ProductDAOTest {
 
 	@Test
 	public final void testUpdateProduct() {
-		Product resultbefore = new ProductDAO().showProducten().get(1); // ik pak hier de tweede (arraylist begint op 0 database op 1, omdat ik ook de tweede ga vervangen
+		Product resultbefore = new ProductDAO().readAllProducten().get(1); // ik pak hier de tweede (arraylist begint op 0 database op 1, omdat ik ook de tweede ga vervangen
 		
 		Product expectedresult = new Product();
 		expectedresult.setProductID(2);
@@ -100,7 +100,7 @@ public class ProductDAOTest {
 		
 		new ProductDAO().updateProduct(expectedresult);
 		
-		Product result = new ProductDAO().showProducten().get(1);
+		Product result = new ProductDAO().readAllProducten().get(1);
 		System.out.println("Expeted product "+expectedresult);
 		System.out.println("Result product "+result);
 		
@@ -111,7 +111,7 @@ public class ProductDAOTest {
 	@Test
 	public final void testDeleteProduct() {
 		new SetUpTestDatabase().populateDatabase();
-		int productenindatabase = new ProductDAO().showProducten().size();
+		int productenindatabase = new ProductDAO().readAllProducten().size();
 		assertTrue(productenindatabase == 3);
 		Product producttobedeleted = new Product();
 		producttobedeleted.setProductID(2);
@@ -119,7 +119,7 @@ public class ProductDAOTest {
 		producttobedeleted.setVoorraad(8);
 		producttobedeleted.setPrijs(new BigDecimal("719.00"));
 		new ProductDAO().deleteProduct(producttobedeleted);
-		int productenindatabaseafterdelete = new ProductDAO().showProducten().size();
+		int productenindatabaseafterdelete = new ProductDAO().readAllProducten().size();
 		assertTrue(productenindatabaseafterdelete == 2);
 		
 	}

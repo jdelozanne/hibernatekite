@@ -1,6 +1,6 @@
 package kiteshop.daos;
 
-import java.util.ArrayList;
+import java.util.List;
 import kiteshop.pojos.Product;
 
 public interface ProductDAOInterface {
@@ -13,7 +13,7 @@ public interface ProductDAOInterface {
 
     void deleteProduct(Product product);
 
-    public ArrayList<Product> showProducten();
+    public List<Product> readAllProducten();
 
     public Product readProductByID(int productID);
 
