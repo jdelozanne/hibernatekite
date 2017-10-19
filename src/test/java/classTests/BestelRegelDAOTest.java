@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kiteshop.daos;
+package classTests;
 
 import java.util.ArrayList;
+
+import kiteshop.daos.BestelRegelDAO;
 import kiteshop.pojos.BestelRegel;
 import kiteshop.pojos.Bestelling;
 import org.junit.After;

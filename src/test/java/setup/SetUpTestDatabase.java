@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kiteshop.daos;
+package setup;
 
 import Connection.MySQLConnection;
 import java.sql.Connection;
@@ -12,28 +12,28 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+import kiteshop.daos.KlantDAO;
 import kiteshop.pojos.Klant;
 import kiteshop.test.ProjectLog;
-import testConnection.DBConnectInit;
 
 /**
  *
  * @author Steef P
  */
-public class DatabaseTest {
+public class SetUpTestDatabase {
 
 	private static final Logger logger = ProjectLog.getLogger();
 
 	Connection connection;
 
-	public DatabaseTest() {
+	public SetUpTestDatabase() {
 		MySQLConnection.setPathOfActivePropopertyFiletoTest();
 		this.connection = MySQLConnection.getConnection();
 	}
 
 	private static final String DATABASE = "TestKiteshop";
 
-	void initializeDatabase() {
+	public void initializeDatabase() {
 		logger.info("Entering initializeDatabase()");
 
 		// Prepare the SQL statements to drop the DATABASE and recreate itff
@@ -138,7 +138,7 @@ public class DatabaseTest {
 		}
 	}
 
-	void populateDatabase() {
+	public void populateDatabase() {
 		logger.info("Entering populate database");
 
 		// Prepare the SQL statements to insert the test data into the DATABASE
@@ -182,8 +182,8 @@ public class DatabaseTest {
 
 	public static void main(String args[]) {
 
-		new DatabaseTest().initializeDatabase();
-		new DatabaseTest().populateDatabase();
+		new SetUpTestDatabase().initializeDatabase();
+		new SetUpTestDatabase().populateDatabase();
 
 		KlantDAO klantDAO = new KlantDAO();
 

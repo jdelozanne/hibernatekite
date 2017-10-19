@@ -1,4 +1,4 @@
-package kiteshop.daos;
+package classTests;
 
 import static org.junit.Assert.*;
 
@@ -8,7 +8,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import kiteshop.daos.AccountDAO;
 import kiteshop.pojos.Account;
+import setup.SetUpTestDatabase;
 
 public class AccountDAOTest {
 
@@ -22,7 +24,7 @@ public class AccountDAOTest {
 
 	@Before
 	public void setUp() throws Exception {
-		new DatabaseTest().initializeDatabase();
+		new SetUpTestDatabase().initializeDatabase();
 	}
 
 	@After
@@ -32,7 +34,7 @@ public class AccountDAOTest {
 
 	@Test
 	public final void testReadAllAccounts() {
-		new DatabaseTest().populateDatabase();
+		new SetUpTestDatabase().populateDatabase();
 
 		Account expectedResult = new Account(1, "Steef", "Cola");
 		Account result = new AccountDAO().readAllAccounts().get(0);
@@ -43,7 +45,7 @@ public class AccountDAOTest {
 
 	@Test
 	public final void testReadAccountByGebruikersnaam() {
-		new DatabaseTest().populateDatabase();
+		new SetUpTestDatabase().populateDatabase();
 
 		Account expectedResult = new Account(1, "Steef", "Cola");
 		Account result = new AccountDAO().readAccountByGebruikersnaam("Steef");
@@ -63,7 +65,7 @@ public class AccountDAOTest {
 
 	@Test
 	public final void testGivePassword() {
-		new DatabaseTest().populateDatabase();
+		new SetUpTestDatabase().populateDatabase();
 		String password = "Cola";
 		String returnedpassword = new AccountDAO().givePassword("Steef");
 		
@@ -75,7 +77,7 @@ public class AccountDAOTest {
 
 	@Test
 	public final void testUpdateAccount() {
-		new DatabaseTest().populateDatabase();
+		new SetUpTestDatabase().populateDatabase();
 		Account expectedResult = new Account(1, "Julia", "Chablis");
 		new AccountDAO().updateAccount(expectedResult);
 		Account result = new AccountDAO().readAccountByGebruikersnaam("Julia");
@@ -85,7 +87,7 @@ public class AccountDAOTest {
 
 	@Test
 	public final void testDeleteAccount() {
-		new DatabaseTest().populateDatabase();
+		new SetUpTestDatabase().populateDatabase();
 		Account accounttobedeleted = new Account(1, "Steef", "Cola");
 		new AccountDAO().deleteAccount(accounttobedeleted);
 		int numberofaccounts = new AccountDAO().readAllAccounts().size();

@@ -1,4 +1,4 @@
-package kiteshop.daos;
+package classTests;
 
 import static org.junit.Assert.*;
 
@@ -8,8 +8,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import kiteshop.daos.KlantDAO;
 import kiteshop.pojos.Adres;
 import kiteshop.pojos.Klant;
+import setup.SetUpTestDatabase;
 
 public class KlantDAOTest {
 
@@ -23,7 +25,7 @@ public class KlantDAOTest {
 
 	@Before
 	public void setUp() throws Exception {
-		new DatabaseTest().initializeDatabase();
+		new SetUpTestDatabase().initializeDatabase();
 	}
 
 	@After
@@ -52,7 +54,7 @@ public class KlantDAOTest {
 
 	@Test
 	public final void testUpdateKlant() {
-		new DatabaseTest().populateDatabase();
+		new SetUpTestDatabase().populateDatabase();
 		
 		Klant klanttobeupdated = new Klant();
 		klanttobeupdated.setKlantID(1);
@@ -75,7 +77,7 @@ public class KlantDAOTest {
 
 	@Test
 	public final void testDeleteKlant() {
-		new DatabaseTest().populateDatabase();
+		new SetUpTestDatabase().populateDatabase();
 
 		int klantenindatabase = new KlantDAO().readAllKlanten().size();
 		Klant klanttobedeleted = new Klant();
@@ -89,7 +91,7 @@ public class KlantDAOTest {
 
 	@Test
 	public final void testReadSelectedKlantenAchternaam() {
-		new DatabaseTest().populateDatabase();
+		new SetUpTestDatabase().populateDatabase();
 
 		Klant verwachtResultKlant = new Klant();
 		verwachtResultKlant.setKlantID(1);
@@ -107,7 +109,7 @@ public class KlantDAOTest {
 
 	@Test
 	public final void testReadAllKlanten() {
-		new DatabaseTest().populateDatabase();
+		new SetUpTestDatabase().populateDatabase();
 
 		Klant verwachtResultKlant = new Klant();
 		verwachtResultKlant.setKlantID(1);

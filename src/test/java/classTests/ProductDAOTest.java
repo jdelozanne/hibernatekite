@@ -1,4 +1,4 @@
-package kiteshop.daos;
+package classTests;
 
 import static org.junit.Assert.*;
 
@@ -10,7 +10,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import kiteshop.daos.ProductDAO;
 import kiteshop.pojos.Product;
+import setup.SetUpTestDatabase;
 
 public class ProductDAOTest {
 
@@ -24,7 +26,7 @@ public class ProductDAOTest {
 
 	@Before
 	public void setUp() throws Exception {
-		new DatabaseTest().initializeDatabase();
+		new SetUpTestDatabase().initializeDatabase();
 	}
 
 	@After
@@ -52,7 +54,7 @@ public class ProductDAOTest {
 
 	@Test
 	public final void testReadProductString() {
-		new DatabaseTest().populateDatabase();
+		new SetUpTestDatabase().populateDatabase();
 		//form populate database ('2', 'Cabrinha Chaos', 8,  '719.00')
 		Product expectedresult = new Product();
 		expectedresult.setProductID(2);
@@ -68,7 +70,7 @@ public class ProductDAOTest {
 
 	@Test
 	public final void testShowProducten() {
-		new DatabaseTest().populateDatabase();
+		new SetUpTestDatabase().populateDatabase();
 		int productenindatabase = new ProductDAO().showProducten().size();
 		assertTrue(productenindatabase == 3);
 		
@@ -108,7 +110,7 @@ public class ProductDAOTest {
 
 	@Test
 	public final void testDeleteProduct() {
-		new DatabaseTest().populateDatabase();
+		new SetUpTestDatabase().populateDatabase();
 		int productenindatabase = new ProductDAO().showProducten().size();
 		assertTrue(productenindatabase == 3);
 		Product producttobedeleted = new Product();

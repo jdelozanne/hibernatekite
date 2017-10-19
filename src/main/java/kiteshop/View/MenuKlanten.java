@@ -7,9 +7,11 @@ package kiteshop.View;
 
 import kiteshop.controller.KlantenController;
 import kiteshop.pojos.*;
+
+import static kiteshop.View.Validator.*;
+
 import java.util.ArrayList;
 import java.util.Scanner;
-import static kiteshop.test.Validator.*;
 /**
  *
  * @author julia fgf test tset test
@@ -106,17 +108,12 @@ input.nextLine();
         }
 
 
-        System.out.println("geef emailadres: ");
-        String email = input.nextLine();
-
-        klant.setEmail(email);
-
 
         String telefoonnr = null;
-        while(!isValidPnoneNumber(telefoonnr)){
+        while(!isValidTelefoonnummer(telefoonnr)){
         	System.out.println("geef telefoonnummer: ");
         	telefoonnr = input.nextLine();
-        	if(isValidPnoneNumber(telefoonnr)){
+        	if(isValidTelefoonnummer(telefoonnr)){
 
         		klant.setTelefoonnummer(telefoonnr);
         	} else {
