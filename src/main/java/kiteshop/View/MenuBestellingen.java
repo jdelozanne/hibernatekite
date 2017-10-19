@@ -10,10 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
+
+import classTests.*;
 import kiteshop.controller.BestelRegelController;
 import kiteshop.controller.BestellingenController;
-import kiteshop.daos.*;
-
+import kiteshop.daos.KlantDAO;
+import kiteshop.daos.ProductDAO;
 import kiteshop.pojos.*;
 import kiteshop.test.ProjectLog;
 

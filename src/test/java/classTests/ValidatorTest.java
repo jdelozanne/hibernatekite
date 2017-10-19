@@ -1,6 +1,9 @@
 package classTests;
 
 import static org.junit.Assert.*;
+
+import org.apache.commons.validator.routines.RegexValidator;
+
 import static kiteshop.View.Validator.*;
 
 import org.junit.After;
@@ -50,6 +53,30 @@ public class ValidatorTest {
 	}
 
 	@Test
+	public final void testIsValidTelefoonnummerInternet() {
+		String testTelefoonnummer = "06-23546879";
+		assertTrue(isValidTelefoonnummerInternet(testTelefoonnummer));
+		
+		String testTelefoonnummer2 = "026-3546879";
+		assertTrue(isValidTelefoonnummerInternet(testTelefoonnummer2));
+		
+		String testTelefoonnummer3 = "+3126-3546879";
+		assertTrue(isValidTelefoonnummerInternet(testTelefoonnummer3));
+		
+		String testTelefoonnummer4 = "0623459875";
+		assertTrue(isValidTelefoonnummerInternet(testTelefoonnummer4));
+		
+		String testTelefoonnummer5 = "062345987";  //nummer te weinig
+		assertFalse(isValidTelefoonnummerInternet(testTelefoonnummer5));
+		
+		String testTelefoonnummer6 = "06 23459875";
+		assertTrue(isValidTelefoonnummerInternet(testTelefoonnummer6));
+		
+		String testTelefoonnummer8 = "026 3546879";
+		assertTrue(isValidTelefoonnummerInternet(testTelefoonnummer8));
+	}
+	
+	@Test
 	public final void testIsValidTelefoonnummer() {
 		String testTelefoonnummer = "06-23546879";
 		assertTrue(isValidTelefoonnummer(testTelefoonnummer));
@@ -65,6 +92,12 @@ public class ValidatorTest {
 		
 		String testTelefoonnummer5 = "062345987";  //nummer te weinig
 		assertFalse(isValidTelefoonnummer(testTelefoonnummer5));
+		
+		String testTelefoonnummer6 = "+31 6 12345678";
+		assertTrue(isValidTelefoonnummer(testTelefoonnummer6));
+		
+		String testTelefoonnummer8 = "026 3546879";
+		assertTrue(isValidTelefoonnummer(testTelefoonnummer8));
 	}
 
 	@Test
@@ -82,6 +115,25 @@ public class ValidatorTest {
 		assertFalse(isValidPostcode(testPostCode4)); //lowercase mag ook niet, checkt ie goed
 		
 		
+	}
+	
+	
+	@Test
+	public final void testIsValidHuisnummer(){
+
+		String testHuisnummer = "4";
+		assertTrue(isValidHuisnummer(testHuisnummer));
+		String testHuisnummer2 = "K";
+		assertFalse(isValidHuisnummer(testHuisnummer2));
+	}
+	
+	@Test
+	public final void testIsValidToevoeging(){
+
+		String testToevoeging = "b";
+		assertTrue(isValidToevoeging(testToevoeging));
+		String testToevoeging2 = "zwart";
+		assertTrue(isValidToevoeging(testToevoeging2));
 	}
 
 }
