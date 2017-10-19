@@ -135,5 +135,12 @@ public class ValidatorTest {
 		String testToevoeging2 = "zwart";
 		assertTrue(isValidToevoeging(testToevoeging2));
 	}
+	
+	@Test
+	public final void testIsValidWachtwoord(){
+		
+		String wachtwoord = "aap79muis";
+		assertTrue(isValidWachtwoord(wachtwoord));
+	}
 
 }
