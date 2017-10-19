@@ -112,7 +112,7 @@ public class ValidatorTest {
 		assertFalse(isValidPostcode(testPostCode3));
 		
 		String testPostCode4 = "5046nc";   
-		assertFalse(isValidPostcode(testPostCode4)); //lowercase mag ook niet, checkt ie goed
+		assertFalse(isValidPostcode(testPostCode4)); //lowercase mag niet, checkt ie goed
 		
 		
 	}

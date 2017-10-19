@@ -34,7 +34,7 @@ public class Validator {
 		 * +316-12345678
 		 * +316 12345678
 		 * +31 6 12345678
-		 * zelfde voor land lijn , evt kan regio code ook 4 getallen hebben
+		 * hetzelfde voor land lijn , evt kan regio code ook 4 getallen hebben
 		 * ik ga er niet vanuit dat mensen haakjes gaan invoeren ((026) 1234567 is niet toegestaan
 		 */
 
