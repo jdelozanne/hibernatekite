@@ -1,6 +1,6 @@
 package kiteshop.daos;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import kiteshop.pojos.Klant;
 
@@ -14,7 +14,7 @@ public interface KlantDAOInterface {
 
     void deleteKlant(Klant klant);
 
-    ArrayList<Klant> readAllKlanten();
+    List<Klant> readAllKlanten();
 
-    ArrayList<Klant> readKlantByAchternaam(String a);
+    List<Klant> readKlantByAchternaam(String a);
 }

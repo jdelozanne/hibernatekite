@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import kiteshop.pojos.Account;
@@ -168,7 +169,7 @@ public class KlantDAO implements KlantDAOInterface {
     }
 
     @Override
-    public ArrayList<Klant> readKlantByAchternaam(String achternaam) {
+    public List<Klant> readKlantByAchternaam(String achternaam) {
         ArrayList<Klant> selectionKlanten = new ArrayList<Klant>();
         try {
             String query = "Select * from klant where achternaam = ?";
@@ -227,7 +228,7 @@ public class KlantDAO implements KlantDAOInterface {
     }
 
     @Override
-    public ArrayList<Klant> readAllKlanten() {
+    public List<Klant> readAllKlanten() {
         ArrayList<Klant> allKlanten = new ArrayList<Klant>();
         try {
             String query = "Select * from klant";

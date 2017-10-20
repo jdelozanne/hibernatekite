@@ -47,7 +47,7 @@ public class BestellingenController {
         bestellingDAO.readBestelling(id);
     }
 
-    public ArrayList<Klant> getKlantByAchternaam(String klantachternaam) {
+    public List<Klant> getKlantByAchternaam(String klantachternaam) {
         KlantDAO klantdao = new KlantDAO();
         return klantdao.readKlantByAchternaam(klantachternaam);
     }

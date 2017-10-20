@@ -27,6 +27,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import kiteshop.pojos.Account;
 import org.bson.Document;
+import static kiteshop.daos.KlantDAOMongo.getNextSequence;
 
 /**
  *
@@ -61,16 +62,10 @@ public class AccountDAOMongo implements AccountDAOInterface {
     public void createAccount(Account account) {
         document = new BasicDBObject();
         try {
-            document.put("id", getNextSequence("userid"));
+            document.put("id", getNextSequence("userid", "countersAccount"));
             document.put("gebruikersnaam", account.getGebruikersnaam());
             document.put("wachtwoord", account.getWachtwoord());
             collection.insert(document);
-            //show collection, print to console
-            BasicDBObject read = new BasicDBObject();
-            DBCursor cursor = collection.find(read);
-            while (cursor.hasNext()) {
-                System.out.println(cursor.next());
-            }
         } catch (Exception ex) {
             Logger.getLogger(AccountDAOMongo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -159,7 +154,7 @@ public class AccountDAOMongo implements AccountDAOInterface {
     private Document convertAccountToDocument(Account account) {
         Document document = new Document();
         try {
-            document.append("id", getNextSequence("userid"));
+            document.append("id", getNextSequence("userid", "countersAccount"));
             document.append("gebruikersnaam", account.getGebruikersnaam());
             document.append("prijs", account.getWachtwoord());
         } catch (Exception ex) {
@@ -168,15 +163,4 @@ public class AccountDAOMongo implements AccountDAOInterface {
         return document;
     }
 
-    public static Object getNextSequence(String name) throws Exception {
-        MongoClient mongoClient = new MongoClient("localhost", 27017);
-        DB db = mongoClient.getDB("kiteshop");
-        DBCollection c = db.getCollection("countersAccount");
-        BasicDBObject find = new BasicDBObject();
-        find.put("_id", name);
-        BasicDBObject update = new BasicDBObject();
-        update.put("$inc", new BasicDBObject("seq", 1));
-        DBObject obj = c.findAndModify(find, update);
-        return obj.get("seq");
-    }
 }

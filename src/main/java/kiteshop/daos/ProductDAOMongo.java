@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static kiteshop.daos.AccountDAOMongo.getNextSequence;
+import static kiteshop.daos.KlantDAOMongo.getNextSequence;
 import kiteshop.pojos.Account;
 import kiteshop.pojos.Product;
 
@@ -42,7 +42,7 @@ public class ProductDAOMongo implements ProductDAOInterface {
     public void createProduct(Product product) {
         document = new BasicDBObject();
         try {
-            document.put("id", getNextSequence("productid"));
+            document.put("id", getNextSequence("productid", "countersProduct"));
             document.put("productnaam", product.getNaam());
             document.put("voorraad", product.getVoorraad());
             document.put("prijs", (product.getPrijs()).toString()); //dit moet nog bewerkt zodat er twee decimalen worden opgeslagen
@@ -60,17 +60,47 @@ public class ProductDAOMongo implements ProductDAOInterface {
 
     @Override
     public Product readProduct(String productnaam) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Product p = new Product();
+        BasicDBObject query = new BasicDBObject();
+        query.put("productnaam", productnaam);
+        DBCursor cursor = collection.find(query);
+        while (cursor.hasNext()) {
+            DBObject object = cursor.next();
+            BasicDBObject productObj = (BasicDBObject) object;
+            int id = productObj.getInt("id");
+            String naam = productObj.getString("productnaam");
+            int voorraad = productObj.getInt("voorraad");
+            BigDecimal prijs = new BigDecimal(productObj.getString("prijs"));
+
+            p.setProductID(id);
+            p.setNaam(naam);
+            p.setVoorraad(voorraad);
+            p.setPrijs(prijs);
+        }
+        return p;
     }
 
     @Override
     public void updateProduct(Product product) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int id = product.getProductID();
+        BasicDBObject query = new BasicDBObject();
+        query.put("id", id);
+
+        BasicDBObject newdoc = new BasicDBObject();
+        newdoc.put("productnaam", product.getNaam());
+        newdoc.put("voorraad", product.getVoorraad());
+        newdoc.put("prijs", product.getPrijs());
+        BasicDBObject updateObject = new BasicDBObject();
+
+        updateObject.put("$set", newdoc);
+        collection.update(query, updateObject);
     }
 
     @Override
     public void deleteProduct(Product product) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        BasicDBObject deletequery = new BasicDBObject();
+        deletequery.put("id", product.getProductID());
+        collection.remove(deletequery);
     }
 
     @Override
@@ -101,7 +131,7 @@ public class ProductDAOMongo implements ProductDAOInterface {
         BasicDBObject query = new BasicDBObject();
         query.put("id", productID);
         DBCursor cursor = collection.find(query);
-        
+
         while (cursor.hasNext()) {
             DBObject object = cursor.next();
             BasicDBObject productObj = (BasicDBObject) object;
@@ -115,18 +145,6 @@ public class ProductDAOMongo implements ProductDAOInterface {
             p.setPrijs(prijs);
         }
         return p;
-    }
-
-    public static Object getNextSequence(String name) throws Exception {
-        MongoClient mongoClient = new MongoClient("localhost", 27017);
-        DB db = mongoClient.getDB("kiteshop");
-        DBCollection c = db.getCollection("countersProduct");
-        BasicDBObject find = new BasicDBObject();
-        find.put("_id", name);
-        BasicDBObject update = new BasicDBObject();
-        update.put("$inc", new BasicDBObject("seq", 1));
-        DBObject obj = c.findAndModify(find, update);
-        return obj.get("seq");
     }
 
 }

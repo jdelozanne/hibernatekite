@@ -1,6 +1,7 @@
 package kiteshop.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import kiteshop.daos.KlantDAO;
@@ -26,7 +27,7 @@ public class KlantenController {
         return klantDAO.readKlant(achternaam);
     }
 
-    public ArrayList<Klant> showKlantenAchternaam(String achternaam) {
+    public List<Klant> showKlantenAchternaam(String achternaam) {
         return klantDAO.readKlantByAchternaam(achternaam);
     }
 
@@ -40,7 +41,7 @@ public class KlantenController {
         klantDAO.deleteKlant(klant);
     }
 
-    public ArrayList<Klant> showAllKlanten() {
+    public List<Klant> showAllKlanten() {
         return klantDAO.readAllKlanten();
     }
 }

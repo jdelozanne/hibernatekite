@@ -11,6 +11,7 @@ import kiteshop.pojos.*;
 import static kiteshop.View.Validator.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 /**
  *
@@ -195,7 +196,7 @@ public class MenuKlanten {
 
 	public void readKlantenByAchternaam() {
 		System.out.println("Geef alstublieft de achternaam van de klant die u wilt zien?");
-		ArrayList<Klant> searchResult = controller.showKlantenAchternaam(input.nextLine());
+		List<Klant> searchResult = controller.showKlantenAchternaam(input.nextLine());
 
 		for (Klant klant : searchResult) {
 			System.out.println(klant);
@@ -204,7 +205,7 @@ public class MenuKlanten {
 
 	private void klantWijzigenAchternaam() {
 		System.out.println("Geef alstublieft de achternaam van de klant die u wilt wijzigen?");
-		ArrayList<Klant> searchResult = controller.showKlantenAchternaam(input.nextLine());
+		List<Klant> searchResult = controller.showKlantenAchternaam(input.nextLine());
 
 		System.out.println("De volgende klanten zijn gevonden, geeft u alstublieft het nummer van de klant die u wil wijzigen");
 		for (int i = 0; i < searchResult.size(); i++) {
@@ -270,7 +271,7 @@ public class MenuKlanten {
 
 	private void klantVerwijderenAchterNaam() {
 		System.out.println("Geef alstublieft de achternaam van de klant die u wilt verwijderen?");
-		ArrayList<Klant> searchResult = controller.showKlantenAchternaam(input.nextLine());
+		List<Klant> searchResult = controller.showKlantenAchternaam(input.nextLine());
 
 		System.out.println("De volgende klanten zijn gevonden, geeft u alstublieft het nummer van de klant die u wil verwijderen");
 		for (int i = 0; i < searchResult.size(); i++) {

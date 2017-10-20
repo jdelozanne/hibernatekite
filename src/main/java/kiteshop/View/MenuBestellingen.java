@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
-import classTests.*;
+
 import kiteshop.controller.BestelRegelController;
 import kiteshop.controller.BestellingenController;
 import kiteshop.daos.KlantDAO;
@@ -120,7 +120,7 @@ public class MenuBestellingen {
     }
 
     public Klant firstPickRightKlant(String klantachternaam) {
-        ArrayList<Klant> klanten = controller.getKlantByAchternaam(klantachternaam);
+        List<Klant> klanten = controller.getKlantByAchternaam(klantachternaam);
         System.out.println("De volgende klanten zijn gevonden, geeft u alstublieft het nummer van de klant die u wil wijzigen");
         for (int i = 0; i < klanten.size(); i++) {
             System.out.println(i + 1 + " " + klanten.get(i).toString());
@@ -131,7 +131,7 @@ public class MenuBestellingen {
     }
 
     public Bestelling pickRightBestelling(Klant choosenKlant) {
-        ArrayList<Bestelling> bestellingen = controller.getBestellingByKlantID(choosenKlant.getKlantID());
+        List<Bestelling> bestellingen = controller.getBestellingByKlantID(choosenKlant.getKlantID());
         System.out.println("De volgende bestellingen zijn gevonden van deze klant, geeft u alstublieft het nummer van de bestelling die u wil wijzigen");
         for (int i = 0; i < bestellingen.size(); i++) {
             System.out.println(i + 1 + " " + bestellingen.get(i).bestellingToString());
@@ -141,7 +141,7 @@ public class MenuBestellingen {
     }
 
     public void showBestelregels(Bestelling b) {
-        ArrayList<BestelRegel> bestelregels = controller.getBestelregelsByBestelling(b);
+        List<BestelRegel> bestelregels = controller.getBestelregelsByBestelling(b);
         System.out.println("De volgende bestelregels zijn gevonden,geeft u alstublieft het nummer van de bestelregel die u wil wijzigen");
         for (int i = 0; i < bestelregels.size(); i++) {
             System.out.println(i + 1 + " " + bestelregels.get(i).toString());
