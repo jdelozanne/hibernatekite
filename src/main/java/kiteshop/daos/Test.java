@@ -12,6 +12,8 @@ import kiteshop.View.MenuAccounts;
 import kiteshop.pojos.Account;
 import kiteshop.pojos.Adres;
 import kiteshop.pojos.AdresType;
+import kiteshop.pojos.BestelRegel;
+import kiteshop.pojos.Bestelling;
 import kiteshop.pojos.Klant;
 import kiteshop.pojos.Product;
 
@@ -23,20 +25,20 @@ public class Test {
 
     public static void main(String[] args) {
 
-        KlantDAOInterface m = new KlantDAOMongo();
+        BestelRegelDAOInterface m = new BestelRegelDAOMongo();
 
-        Klant klanttobecreated = new Klant();
+     /*   Klant klanttobecreated = new Klant();
         klanttobecreated.setKlantID(5);
         klanttobecreated.setVoornaam("Julia");
-        klanttobecreated.setAchternaam("Pelgrom");
-        klanttobecreated.setEmail("stevey@hotmail.com");
-        klanttobecreated.setTelefoonnummer("06-56847965");
+        klanttobecreated.setAchternaam("Lozanne");
+        klanttobecreated.setEmail("jdl@hotmail.com");
+        klanttobecreated.setTelefoonnummer("0676847965");
         Adres bezoekAdres = new Adres();
         bezoekAdres.setStraatnaam("wagenaarstraat");
         bezoekAdres.setHuisnummer(67);
         bezoekAdres.setToevoeging("g");
         bezoekAdres.setPostcode("1093EA");
-        bezoekAdres.setWoonplaats("amsterdam");
+        bezoekAdres.setWoonplaats("wageningen");
         bezoekAdres.setAdresType(AdresType.BEZOEKADRES);
         Adres factuurAdres = new Adres();
         factuurAdres.setStraatnaam("wagenaarstraat");
@@ -49,11 +51,21 @@ public class Test {
         klanttobecreated.setFactuurAdres(factuurAdres);
 
         m.createKlant(klanttobecreated);
-
-        List<Klant> klanten = m.readAllKlanten();
-        for (Klant k : klanten) {
-            System.out.println(k.toString());
+*/
+     BestelRegel regel = new BestelRegel();
+     Product p = new Product();
+     p.setNaam("kite");
+     Bestelling b = new Bestelling();
+     b.setBestellingID(4);
+     p.setProductID(3);
+     regel.setProduct(p);
+     regel.setAantal(2);
+     regel.setBestelling(b);
+     
+     m.createBestelRegel(regel);
+    m.readBestelRegel(4);
         }
+    
     }
 
-}
+

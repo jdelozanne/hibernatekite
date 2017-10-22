@@ -47,7 +47,6 @@ public class AccountDAOMongo implements AccountDAOInterface {
     public AccountDAOMongo() {
         //create a connection with mongodb database
         this.mongo = new MongoDBConnection().connect();
-        //this.mongo = new MongoClient("localhost", 27017);
         this.database = mongo.getDB("kiteshop");
         this.collection = database.getCollection("account");
     }
@@ -94,15 +93,15 @@ public class AccountDAOMongo implements AccountDAOInterface {
     @Override
     public Account readAccountByGebruikersnaam(String gebruikersnaam) {
         Account a = new Account();
-        BasicDBObject query = new BasicDBObject();
+        DBObject query = new BasicDBObject();
         query.put("gebruikersnaam", gebruikersnaam);
         DBCursor cursor = collection.find(query);
         while (cursor.hasNext()) {
             DBObject object = cursor.next();
-            BasicDBObject accountObj = (BasicDBObject) object;
-            int id = accountObj.getInt("id");
-            String user = accountObj.getString("gebruikersnaam");
-            String ww = accountObj.getString("wachtwoord");
+            DBObject accountObj = (BasicDBObject) object;
+            int id = (int) accountObj.get("id");
+            String user = (String)accountObj.get("gebruikersnaam");
+            String ww = (String)accountObj.get("wachtwoord");
 
             a.setAccountID(id);
             a.setGebruikersnaam(user);
@@ -113,7 +112,7 @@ public class AccountDAOMongo implements AccountDAOInterface {
 
     public Account readAccountByID(int id) {
         Account a = new Account();
-        BasicDBObject whereQuery = new BasicDBObject();
+        DBObject whereQuery = new BasicDBObject();
         whereQuery.put("id", id);
         DBCursor cursor = collection.find(whereQuery);
         while (cursor.hasNext()) {
@@ -132,13 +131,13 @@ public class AccountDAOMongo implements AccountDAOInterface {
     @Override
     public void updateAccount(Account account) {
         int id = account.getAccountID();
-        BasicDBObject query = new BasicDBObject();
+        DBObject query = new BasicDBObject();
         query.put("id", id);
 
-        BasicDBObject newdoc = new BasicDBObject();
+        DBObject newdoc = new BasicDBObject();
         newdoc.put("gebruikersnaam", account.getGebruikersnaam());
         newdoc.put("wachtwoord", account.getWachtwoord());
-        BasicDBObject updateObject = new BasicDBObject();
+        DBObject updateObject = new BasicDBObject();
 
         updateObject.put("$set", newdoc);
         collection.update(query, updateObject);
@@ -146,7 +145,7 @@ public class AccountDAOMongo implements AccountDAOInterface {
 
     @Override
     public void deleteAccount(Account account) {
-        BasicDBObject deletequery = new BasicDBObject();
+        DBObject deletequery = new BasicDBObject();
         deletequery.put("_id", account.getAccountID());
         collection.remove(deletequery);
     }

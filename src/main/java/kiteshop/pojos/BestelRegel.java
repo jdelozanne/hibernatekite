@@ -97,7 +97,7 @@ public class BestelRegel {
 
     @Override
     public String toString() {
-        return "BestelRegel: product = " + product.getNaam()+ " aantal = " + aantal;
+        return "BestelRegel: "+ bestelRegelID +"product = " + product.getNaam()+ " aantal = " + aantal;
     }
 }
 

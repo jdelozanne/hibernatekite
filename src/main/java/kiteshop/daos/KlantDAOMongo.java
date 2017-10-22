@@ -41,7 +41,7 @@ public class KlantDAOMongo implements KlantDAOInterface {
         try {
             //KlantID, voornaam, tussenvoegsel, achternaam, emailadres, telefoonnummer)"
             document = new BasicDBObject();
-            
+
             document.put("id", getNextSequence("klantid", "countersKlant"));
             document.put("voornaam", klant.getVoornaam());
             document.put("tusenvoegsel", klant.getTussenvoegsel());
@@ -55,23 +55,23 @@ public class KlantDAOMongo implements KlantDAOInterface {
             bezoekadres.put("toevoeging", klant.getBezoekAdres().getToevoeging());
             bezoekadres.put("postcode", klant.getBezoekAdres().getPostcode());
             bezoekadres.put("woonplaats", klant.getBezoekAdres().getWoonplaats());
-            //bezoekadres.put("adres_type", (klant.getBezoekAdres().getAdresType()).toString());
-            
+            bezoekadres.put("adres_type", (klant.getBezoekAdres().getAdresType()).toString());
+
             DBObject factuuradres = new BasicDBObject();
             factuuradres.put("straatnaam", klant.getFactuurAdres().getStraatnaam());
             factuuradres.put("huisnummer", klant.getFactuurAdres().getHuisnummer());
             factuuradres.put("toevoeging", klant.getFactuurAdres().getToevoeging());
             factuuradres.put("postcode", klant.getFactuurAdres().getPostcode());
             factuuradres.put("woonplaats", klant.getFactuurAdres().getWoonplaats());
-            //factuuradres.put("adres_type", (klant.getFactuurAdres().getAdresType()).toString());
-            
+            factuuradres.put("adres_type", (klant.getFactuurAdres().getAdresType()).toString());
+
             document.put("bezoekadres", bezoekadres);
             document.put("factuuradres", factuuradres);
             collection.insert(document);
         } catch (Exception ex) {
             Logger.getLogger(KlantDAOMongo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     @Override
@@ -81,12 +81,47 @@ public class KlantDAOMongo implements KlantDAOInterface {
 
     @Override
     public void updateKlant(Klant klant) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int id = klant.getKlantID();
+        DBObject query = new BasicDBObject();
+        query.put("id", id);
+
+        DBObject updateklant = new BasicDBObject();
+
+        updateklant.put("voornaam", klant.getVoornaam());
+        updateklant.put("tusenvoegsel", klant.getTussenvoegsel());
+        updateklant.put("achternaam", klant.getAchternaam());
+        updateklant.put("emailadres", klant.getEmail());
+        updateklant.put("telefoon", klant.getTelefoonnummer());
+        //adresID`, `klantIDadres`, `straatnaam`, `huisnummer`, `toevoeging`, `postcode`, `woonplaats`, `adres_type
+        DBObject updatebezoekadres = new BasicDBObject();
+        updatebezoekadres.put("straatnaam", klant.getBezoekAdres().getStraatnaam());
+        updatebezoekadres.put("huisnummer", klant.getBezoekAdres().getHuisnummer());
+        updatebezoekadres.put("toevoeging", klant.getBezoekAdres().getToevoeging());
+        updatebezoekadres.put("postcode", klant.getBezoekAdres().getPostcode());
+        updatebezoekadres.put("woonplaats", klant.getBezoekAdres().getWoonplaats());
+        updatebezoekadres.put("adres_type", (klant.getBezoekAdres().getAdresType()).toString());
+
+        DBObject updatefactuuradres = new BasicDBObject();
+        updatefactuuradres.put("straatnaam", klant.getFactuurAdres().getStraatnaam());
+        updatefactuuradres.put("huisnummer", klant.getFactuurAdres().getHuisnummer());
+        updatefactuuradres.put("toevoeging", klant.getFactuurAdres().getToevoeging());
+        updatefactuuradres.put("postcode", klant.getFactuurAdres().getPostcode());
+        updatefactuuradres.put("woonplaats", klant.getFactuurAdres().getWoonplaats());
+        updatefactuuradres.put("adres_type", (klant.getFactuurAdres().getAdresType()).toString());
+
+        updateklant.put("bezoekadres", updatebezoekadres);
+        updateklant.put("factuuradres", updatefactuuradres);
+
+        DBObject updateObject = new BasicDBObject();
+        updateObject.put("$set", updateklant);
+        collection.update(query, updateObject);
     }
 
     @Override
     public void deleteKlant(Klant klant) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        DBObject deletequery = new BasicDBObject();
+        deletequery.put("id", klant.getKlantID());
+        collection.remove(deletequery);
     }
 
     @Override
@@ -96,59 +131,122 @@ public class KlantDAOMongo implements KlantDAOInterface {
         while (cursor.hasNext()) {
             DBObject object = cursor.next();
             BasicDBObject klantObj = (BasicDBObject) object;
+            //hieronder maak je een extra  dbobject aan voor factuur en bezoekadres.
+            //deze hebben namelijk embedded data, ofwel ze zijn te benaderen als een embedded document
+            DBObject bezoek = (BasicDBObject) object.get("bezoekadres");
+            DBObject factuur = (BasicDBObject) object.get("factuuradres");
+
             int id = klantObj.getInt("id");
             String voornaam = klantObj.getString("voornaam");
             String tussenvoegsel = klantObj.getString("tussenvoegsel");
             String achternaam = klantObj.getString("achternaam");
             String email = klantObj.getString("emailadres");
             String telefoon = klantObj.getString("telefoon");
-            String straatnaam = klantObj.getString("bezoekadres.straatnaam");
-            //int huisnummer = klantObj.getInt("bezoekadres.huisnummer");
-            String toevoeging = klantObj.getString("bezoekadres.toevoeging");
-            String postcode = klantObj.getString("bezoekadres.postcode");
-            String woonplaats = klantObj.getString("bezoekadres.woonplaats");
-            String straatnaamf = klantObj.getString("factuuradres.straatnaam");
-            //int huisnummerf = klantObj.getInt("factuuradres.huisnummer");
-            String toevoegingf = klantObj.getString("factuuradres.toevoeging");
-            String postcodef = klantObj.getString("factuuradres.postcode");
-            String woonplaatsf = klantObj.getString("factuuradres.woonplaats");
-           
+
+            String straatnaam = (String) bezoek.get("straatnaam");
+            int huisnummer = (int) bezoek.get("huisnummer");
+            String toevoeging = (String) bezoek.get("toevoeging");
+            String postcode = (String) bezoek.get("postcode");
+            String woonplaats = (String) bezoek.get("woonplaats");
+            String straatnaamf = (String) factuur.get("straatnaam");
+            int huisnummerf = (int) factuur.get("huisnummer");
+            String toevoegingf = (String) factuur.get("toevoeging");
+            String postcodef = (String) factuur.get("postcode");
+            String woonplaatsf = (String) factuur.get("woonplaats");
+
             Klant k = new Klant();
             Adres b = new Adres();
             Adres f = new Adres();
-            
-        k.setKlantID(id);
-        k.setVoornaam(voornaam);
-        k.setTussenvoegsel(tussenvoegsel);
-        k.setAchternaam(achternaam);
-        k.setEmail(email);
-        k.setTelefoonnummer(telefoon);
-        
-        
-        b.setStraatnaam(straatnaam);
-        b.setHuisnummer(2);
-        b.setToevoeging(toevoeging);
-        b.setPostcode(postcode);
-        b.setWoonplaats(woonplaats);
-        
-        f.setStraatnaam(straatnaamf);
-        f.setHuisnummer(3);
-        f.setToevoeging(toevoegingf);
-        f.setPostcode(postcodef);
-        f.setWoonplaats(woonplaatsf);
-        
-        k.setFactuurAdres(f);
-        k.setBezoekAdres(b);    
-            
+
+            k.setKlantID(id);
+            k.setVoornaam(voornaam);
+            k.setTussenvoegsel(tussenvoegsel);
+            k.setAchternaam(achternaam);
+            k.setEmail(email);
+            k.setTelefoonnummer(telefoon);
+
+            b.setStraatnaam(straatnaam);
+            b.setHuisnummer(huisnummer);
+            b.setToevoeging(toevoeging);
+            b.setPostcode(postcode);
+            b.setWoonplaats(woonplaats);
+
+            f.setStraatnaam(straatnaamf);
+            f.setHuisnummer(huisnummerf);
+            f.setToevoeging(toevoegingf);
+            f.setPostcode(postcodef);
+            f.setWoonplaats(woonplaatsf);
+
+            k.setFactuurAdres(f);
+            k.setBezoekAdres(b);
+
             klanten.add(k);
         }
         return klanten;
     }
-    
 
     @Override
-    public ArrayList<Klant> readKlantByAchternaam(String a) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Klant> readKlantByAchternaam(String a) {
+        List<Klant> klanten = new ArrayList<>();
+        DBObject query = new BasicDBObject();
+        query.put("achternaam", a);
+        DBCursor cursor = collection.find(query);
+
+        while (cursor.hasNext()) {
+            DBObject object = cursor.next();
+            BasicDBObject klantObj = (BasicDBObject) object;
+            //hieronder maak je een extra  dbobject aan voor factuur en bezoekadres.
+            //deze hebben namelijk embedded data, ofwel ze zijn te benaderen als een embedded document
+            DBObject bezoek = (BasicDBObject) object.get("bezoekadres");
+            DBObject factuur = (BasicDBObject) object.get("factuuradres");
+
+            int id = klantObj.getInt("id");
+            String voornaam = klantObj.getString("voornaam");
+            String tussenvoegsel = klantObj.getString("tussenvoegsel");
+            String achternaam = klantObj.getString("achternaam");
+            String email = klantObj.getString("emailadres");
+            String telefoon = klantObj.getString("telefoon");
+
+            String straatnaam = (String) bezoek.get("straatnaam");
+            int huisnummer = (int) bezoek.get("huisnummer");
+            String toevoeging = (String) bezoek.get("toevoeging");
+            String postcode = (String) bezoek.get("postcode");
+            String woonplaats = (String) bezoek.get("woonplaats");
+            String straatnaamf = (String) factuur.get("straatnaam");
+            int huisnummerf = (int) factuur.get("huisnummer");
+            String toevoegingf = (String) factuur.get("toevoeging");
+            String postcodef = (String) factuur.get("postcode");
+            String woonplaatsf = (String) factuur.get("woonplaats");
+
+            Klant k = new Klant();
+            Adres b = new Adres();
+            Adres f = new Adres();
+
+            k.setKlantID(id);
+            k.setVoornaam(voornaam);
+            k.setTussenvoegsel(tussenvoegsel);
+            k.setAchternaam(achternaam);
+            k.setEmail(email);
+            k.setTelefoonnummer(telefoon);
+
+            b.setStraatnaam(straatnaam);
+            b.setHuisnummer(huisnummer);
+            b.setToevoeging(toevoeging);
+            b.setPostcode(postcode);
+            b.setWoonplaats(woonplaats);
+
+            f.setStraatnaam(straatnaamf);
+            f.setHuisnummer(huisnummerf);
+            f.setToevoeging(toevoegingf);
+            f.setPostcode(postcodef);
+            f.setWoonplaats(woonplaatsf);
+
+            k.setFactuurAdres(f);
+            k.setBezoekAdres(b);
+
+            klanten.add(k);
+        }
+        return klanten;
     }
 
     public static Object getNextSequence(String name, String collection) throws Exception {

@@ -71,7 +71,7 @@ public class BestellingenController {
         }
     }
 
-    public ArrayList<BestelRegel> getBestelregelsByBestelling(Bestelling bestelling) {
+    public List<BestelRegel> getBestelregelsByBestelling(Bestelling bestelling) {
         BestelRegelDAO besteldao = new BestelRegelDAO();
         return besteldao.readBestelRegelsByBestelling(bestelling);
     }

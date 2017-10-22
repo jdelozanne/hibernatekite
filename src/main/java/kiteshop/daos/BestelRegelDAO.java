@@ -93,8 +93,8 @@ public class BestelRegelDAO implements BestelRegelDAOInterface {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public ArrayList<BestelRegel> readBestelRegelsByBestelling(Bestelling bestelling) {
-        ArrayList<BestelRegel> bestelregels = (ArrayList<BestelRegel>) bestelling.getBestelling();
+    public List<BestelRegel> readBestelRegelsByBestelling(Bestelling bestelling) {
+        List<BestelRegel> bestelregels = (ArrayList<BestelRegel>) bestelling.getBestelling();
         try {
             Statement statement = connection.createStatement();
             String query = "Select * from bestel_regel Where bestellingID =" + bestelling.getBestellingID();
