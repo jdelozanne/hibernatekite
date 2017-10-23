@@ -25,7 +25,7 @@ public class Test {
 
     public static void main(String[] args) {
 
-        BestelRegelDAOInterface m = new BestelRegelDAOMongo();
+        BestellingDAOInterface m = new BestellingDAOMongo();
 
      /*   Klant klanttobecreated = new Klant();
         klanttobecreated.setKlantID(5);
@@ -52,18 +52,18 @@ public class Test {
 
         m.createKlant(klanttobecreated);
 */
-     BestelRegel regel = new BestelRegel();
-     Product p = new Product();
-     p.setNaam("kite");
+    Klant k = new Klant();
+    k.setKlantID(5);
      Bestelling b = new Bestelling();
-     b.setBestellingID(4);
-     p.setProductID(3);
-     regel.setProduct(p);
-     regel.setAantal(2);
-     regel.setBestelling(b);
+     b.setTotaalprijs(new BigDecimal(5000.09));
+     b.setKlant(k);
      
-     m.createBestelRegel(regel);
-    m.readBestelRegel(4);
+     
+     
+     Bestelling x =  m.readBestellingByBestellingID(4);
+        System.out.println(x.getBestellingID() + " " + x.getTotaalprijs());
+    
+   
         }
     
     }

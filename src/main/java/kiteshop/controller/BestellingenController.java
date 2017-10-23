@@ -44,7 +44,7 @@ public class BestellingenController {
     }
 
     public void updateBestelling(int id) {
-        bestellingDAO.readBestelling(id);
+        bestellingDAO.readBestellingByBestellingID(id);
     }
 
     public List<Klant> getKlantByAchternaam(String klantachternaam) {
@@ -52,12 +52,12 @@ public class BestellingenController {
         return klantdao.readKlantByAchternaam(klantachternaam);
     }
 
-    public ArrayList<Bestelling> getBestellingByKlantID(int klantID) {
+    public List<Bestelling> getBestellingByKlantID(int klantID) {
         return bestellingDAO.readBestellingByKlantID(klantID);
     }
 
     public void showBestellingen() {
-        ArrayList<Bestelling> bestellingen = bestellingDAO.readAllBestelling();
+        List<Bestelling> bestellingen = bestellingDAO.readAllBestelling();
         displayBestelling(bestellingen);
     }
 
@@ -65,7 +65,7 @@ public class BestellingenController {
         bestellingDAO.deleteBestelling(bestellingId);
     }
 
-    public void displayBestelling(ArrayList<Bestelling> lijst) {
+    public void displayBestelling(List<Bestelling> lijst) {
         for (Bestelling b : lijst) {
             System.out.println(b.bestellingToString());
         }

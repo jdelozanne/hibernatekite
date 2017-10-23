@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import kiteshop.pojos.Bestelling;
@@ -79,7 +80,7 @@ public class BestellingDAO implements BestellingDAOInterface {
     }
 
     @Override
-    public Bestelling readBestelling(int bestellingID) {
+    public Bestelling readBestellingByBestellingID(int bestellingID) {
         Bestelling b = new Bestelling();
         try {
             String query = "Select * from bestelling where bestellingID = ?";
@@ -96,8 +97,8 @@ public class BestellingDAO implements BestellingDAOInterface {
         return b;
     }
 
-    public ArrayList<Bestelling> readBestellingByKlantID(int klantID) {
-        ArrayList<Bestelling> bestellingen = new ArrayList<>();
+    public List<Bestelling> readBestellingByKlantID(int klantID) {
+        List<Bestelling> bestellingen = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
             String query = "Select * from bestelling Where klantID =" + klantID;
@@ -115,8 +116,8 @@ public class BestellingDAO implements BestellingDAOInterface {
         return bestellingen;
     }
 
-    public ArrayList<Bestelling> readAllBestelling() {
-        ArrayList<Bestelling> bestellingen = new ArrayList<>();
+    public List<Bestelling> readAllBestelling() {
+        List<Bestelling> bestellingen = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
             String readAll = "Select * from bestelling";

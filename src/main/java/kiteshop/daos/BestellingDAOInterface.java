@@ -1,19 +1,20 @@
 package kiteshop.daos;
 
 import java.util.ArrayList;
+import java.util.List;
 import kiteshop.pojos.Bestelling;
 
 public interface BestellingDAOInterface {
 
     void createBestelling(Bestelling bestelling);
 
-    Bestelling readBestelling(int bestellingID);
+    Bestelling readBestellingByBestellingID(int bestellingID);
 
     void updateBestelling(Bestelling bestelling);
 
     void deleteBestelling(int bestellingID);
 
-    ArrayList<Bestelling> readBestellingByKlantID(int klantID);
+    List<Bestelling> readBestellingByKlantID(int klantID);
 
-    ArrayList<Bestelling> readAllBestelling();
+    List<Bestelling> readAllBestelling();
 }
