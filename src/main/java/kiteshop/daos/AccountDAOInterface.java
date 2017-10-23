@@ -8,8 +8,6 @@ import kiteshop.pojos.Account;
 public interface AccountDAOInterface {
 
 	void createAccount(Account account);
-
-	String givePassword(String gebruiker);
         
 	Account readAccountByGebruikersnaam(String gebruikersnaam);
 	

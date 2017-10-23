@@ -17,7 +17,7 @@ public class MySQLConnection {
 
     private Connection connection;
     private static final MySQLConnection INSTANCE = new MySQLConnection();
-    private static String pathOfActivePropopertyFile = "src/main/java/kiteshop/daos/connect.properties";
+    private static String pathOfActivePropopertyFile = "src/main/java/Connection/connect.properties";
 
     private MySQLConnection() {
     }
@@ -51,6 +51,6 @@ public class MySQLConnection {
 
     //Toegevoegd om voor het testen het pad te veranderen naar het de testdatabase, zodat de DAOs hier verbinding op maken
     public static void setPathOfActivePropopertyFiletoTest() {
-        pathOfActivePropopertyFile = "src/main/java/kiteshop/daos/connectTestDB.properties";
+        pathOfActivePropopertyFile = "src/main/java/Connection/connectTestDB.properties";
     }
 }

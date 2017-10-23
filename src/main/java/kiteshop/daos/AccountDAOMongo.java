@@ -52,12 +52,6 @@ public class AccountDAOMongo implements AccountDAOInterface {
     }
 
     @Override
-    public String givePassword(String gebruiker) {
-        Account a = readAccountByGebruikersnaam(gebruiker);
-        return a.getWachtwoord();
-    }
-
-    @Override
     public void createAccount(Account account) {
         document = new BasicDBObject();
         try {

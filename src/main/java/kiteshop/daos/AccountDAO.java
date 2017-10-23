@@ -26,21 +26,18 @@ public class AccountDAO implements AccountDAOInterface {
 
     private final Logger logger = ProjectLog.getLogger();
 
-    Connection connection;
-    PreparedStatement statement;
-    ResultSet result;
-
+ 
     public AccountDAO() {
-        this.connection = MySQLConnection.getConnection();
+       
     }
 
     @Override
     public void createAccount(Account account) {
-        try {
-            String sql = "INSERT INTO account"
-                    + "(accountID, gebruikersnaam, wachtwoord)"
-                    + "values (?,?,?)";
-            statement = connection.prepareStatement(sql);
+        String sql = "INSERT INTO account"
+                + "(accountID, gebruikersnaam, wachtwoord)"
+                + "values (?,?,?)";
+        try (Connection connection = MySQLConnection.getConnection(); 
+                PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, 0);
             statement.setString(2, account.getGebruikersnaam());
@@ -53,36 +50,15 @@ public class AccountDAO implements AccountDAOInterface {
         }
     }
 
-    public String givePassword(String gebruiker) {
-        String wwCheck = null;
-        try {
-            String sqlQuery = "SELECT * FROM account WHERE gebruikersnaam = ? ";
-
-            PreparedStatement prepstat = this.connection.prepareStatement(sqlQuery);
-            prepstat.setString(1, gebruiker);
-
-            ResultSet x = prepstat.executeQuery();
-
-            while (x.next()) {
-                wwCheck = x.getString("wachtwoord");
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return wwCheck;
-    }
-
     @Override
     public Account readAccountByGebruikersnaam(String gebruikersnaam) {
         Account account = new Account();
-        try {
-            String sqlQuery = "SELECT * FROM account WHERE gebruikersnaam = ? ";
-
-            PreparedStatement prepstat = connection.prepareStatement(sqlQuery);
-            prepstat.setString(1, gebruikersnaam);
-
+        String sqlQuery = "SELECT * FROM account WHERE gebruikersnaam = ? ";
+        try (Connection connection = MySQLConnection.getConnection();
+                PreparedStatement prepstat = connection.prepareStatement(sqlQuery)
+                ) {
             ResultSet result = prepstat.executeQuery();
-
+            prepstat.setString(1, gebruikersnaam);
             while (result.next()) {
                 account.setAccountID(result.getInt(1));
                 account.setGebruikersnaam(result.getString(2));
@@ -97,11 +73,10 @@ public class AccountDAO implements AccountDAOInterface {
 
     @Override
     public void updateAccount(Account account) {
-        try {
-            String sql = "UPDATE account SET gebruikersnaam=?,wachtwoord=?"
-                    + " WHERE accountID=?;";
-
-            PreparedStatement statement = connection.prepareStatement(sql);
+        String sql = "UPDATE account SET gebruikersnaam=?,wachtwoord=?"
+                + " WHERE accountID=?;";
+        try (Connection connection = MySQLConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, account.getGebruikersnaam());
             statement.setString(2, account.getWachtwoord());
             statement.setInt(3, account.getAccountID());
@@ -114,14 +89,11 @@ public class AccountDAO implements AccountDAOInterface {
 
     @Override
     public void deleteAccount(Account account) {
-        try {
-            Statement statement = connection.createStatement();
-
-            String sql = " DELETE FROM account "
-                    + " WHERE accountID = " + account.getAccountID();
-
+        String sql = " DELETE FROM account "
+                + " WHERE accountID = " + account.getAccountID();
+        try (Connection connection = MySQLConnection.getConnection();
+                Statement statement = connection.createStatement()) {
             statement.executeUpdate(sql);
-
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -130,11 +102,11 @@ public class AccountDAO implements AccountDAOInterface {
     @Override
     public List<Account> readAllAccounts() {
         List<Account> accounts = new ArrayList<Account>();
-        try {
-            String sqlQuery = "SELECT * FROM account";
-            PreparedStatement prepstat = connection.prepareStatement(sqlQuery);
+        String sqlQuery = "SELECT * FROM account";
+        try (Connection connection = MySQLConnection.getConnection();
+                PreparedStatement prepstat = connection.prepareStatement(sqlQuery);
+               ) { 
             ResultSet result = prepstat.executeQuery();
-
             while (result.next()) {
                 Account account = new Account();
                 account.setAccountID(result.getInt(1));
