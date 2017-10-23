@@ -1,5 +1,6 @@
 package kiteshop.View;
 
+import org.apache.commons.validator.routines.BigDecimalValidator;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.commons.validator.routines.RegexValidator;
 
@@ -8,6 +9,10 @@ public class Validator {
 	public static void main(String[] args) {
 
 
+	}
+        public static boolean isValidBigDecimal(String bigdecimal){
+		BigDecimalValidator bigDecimalValidator  = BigDecimalValidator.getInstance();
+		return bigDecimalValidator.isValid(bigdecimal);
 	}
 
 

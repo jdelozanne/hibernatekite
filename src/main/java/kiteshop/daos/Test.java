@@ -55,13 +55,14 @@ public class Test {
     Klant k = new Klant();
     k.setKlantID(5);
      Bestelling b = new Bestelling();
-     b.setTotaalprijs(new BigDecimal(5000.09));
+     b.setBestellingID(6);
+     b.setTotaalprijs(new BigDecimal(5000.99));
      b.setKlant(k);
+     m.updateBestelling(b);
      
      
-     
-     Bestelling x =  m.readBestellingByBestellingID(4);
-        System.out.println(x.getBestellingID() + " " + x.getTotaalprijs());
+    // Bestelling x =  m.readBestellingByBestellingID(4);
+    //    System.out.println(x.getBestellingID() + " " + x.getTotaalprijs());
     
    
         }

@@ -12,6 +12,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.client.MongoDatabase;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,8 +71,7 @@ public class ProductDAOMongo implements ProductDAOInterface {
             int id = productObj.getInt("id");
             String naam = productObj.getString("productnaam");
             int voorraad = productObj.getInt("voorraad");
-            BigDecimal prijs = new BigDecimal(productObj.getString("prijs"));
-
+            BigDecimal prijs = new BigDecimal(productObj.getString("prijs")).setScale(2, BigDecimal.ROUND_HALF_UP);
             p.setProductID(id);
             p.setNaam(naam);
             p.setVoorraad(voorraad);
@@ -89,7 +89,7 @@ public class ProductDAOMongo implements ProductDAOInterface {
         BasicDBObject newdoc = new BasicDBObject();
         newdoc.put("productnaam", product.getNaam());
         newdoc.put("voorraad", product.getVoorraad());
-        newdoc.put("prijs", product.getPrijs());
+        newdoc.put("prijs", product.getPrijs().toString());
         BasicDBObject updateObject = new BasicDBObject();
 
         updateObject.put("$set", newdoc);
@@ -113,8 +113,7 @@ public class ProductDAOMongo implements ProductDAOInterface {
             int id = productObj.getInt("id");
             String productnaam = productObj.getString("productnaam");
             int voorraad = productObj.getInt("voorraad");
-            BigDecimal prijs = new BigDecimal(productObj.getString("prijs"));
-
+            BigDecimal prijs = new BigDecimal(productObj.getString("prijs")).setScale(2, BigDecimal.ROUND_HALF_UP);
             Product p = new Product();
             p.setProductID(id);
             p.setNaam(productnaam);
@@ -138,7 +137,7 @@ public class ProductDAOMongo implements ProductDAOInterface {
             int id = productObj.getInt("id");
             String productnaam = productObj.getString("productnaam");
             int voorraad = productObj.getInt("voorraad");
-            BigDecimal prijs = new BigDecimal(productObj.getString("prijs"));
+            BigDecimal prijs = new BigDecimal(productObj.getString("prijs")).setScale(2, BigDecimal.ROUND_HALF_UP);
             p.setProductID(id);
             p.setNaam(productnaam);
             p.setVoorraad(voorraad);

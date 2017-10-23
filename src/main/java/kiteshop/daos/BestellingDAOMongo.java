@@ -77,21 +77,54 @@ public class BestellingDAOMongo implements BestellingDAOInterface {
 
     @Override
     public void updateBestelling(Bestelling bestelling) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int id = bestelling.getBestellingID();
+        BasicDBObject query = new BasicDBObject();
+        query.put("id", id);
+
+        DBObject newdoc = new BasicDBObject();
+        newdoc.put("klantID", bestelling.getKlant().getKlantID());
+        newdoc.put("totaalprijs", bestelling.getTotaalprijs().toString());
+        BasicDBObject updateObject = new BasicDBObject();
+
+        updateObject.put("$set", newdoc);
+        collection.update(query, updateObject);
+    }
+
+
+@Override
+        public void deleteBestelling(int bestellingID) {
+        DBObject deletequery = new BasicDBObject();
+        deletequery.put("id", bestellingID);
+        collection.remove(deletequery);
     }
 
     @Override
-    public void deleteBestelling(int bestellingID) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        public List<Bestelling> readBestellingByKlantID(int klantID) {
+        List<Bestelling> bestellingen = new ArrayList<>();
+        try {
+            DBObject query = new BasicDBObject();
+            query.put("klantID", klantID);
+            DBCursor cursor = collection.find(query);
+            while (cursor.hasNext()) {
+                DBObject object = cursor.next();
+                BasicDBObject bestellingObj = (BasicDBObject) object;
+                int bestellingid = bestellingObj.getInt("id");
+                int klantid = bestellingObj.getInt("klantID");
+                BigDecimal totaalprijs = new BigDecimal(bestellingObj.getString("totaalprijs")).setScale(2, BigDecimal.ROUND_HALF_UP);
+                Bestelling b = new Bestelling();
+                b.setBestellingID(bestellingid);
+                b.setTotaalprijs(totaalprijs);
+                bestellingen.add(b);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bestellingen;
     }
 
     @Override
-    public List<Bestelling> readBestellingByKlantID(int klantID) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Bestelling> readAllBestelling() {
+        public List<Bestelling> readAllBestelling() {
         List<Bestelling> bestellingen = new ArrayList<>();
         try {
             DBCursor cursor = collection.find();
@@ -100,8 +133,7 @@ public class BestellingDAOMongo implements BestellingDAOInterface {
                 BasicDBObject bestellingObj = (BasicDBObject) object;
                 int bestellingid = bestellingObj.getInt("id");
                 int klantid = bestellingObj.getInt("klantID");
-                BigDecimal totaalprijs = new BigDecimal(bestellingObj.getString("totaalprijs"));
-
+                BigDecimal totaalprijs = new BigDecimal(bestellingObj.getString("totaalprijs")).setScale(2, BigDecimal.ROUND_HALF_UP);
                 Bestelling b = new Bestelling();
                 b.setBestellingID(bestellingid);
                 b.setTotaalprijs(totaalprijs);

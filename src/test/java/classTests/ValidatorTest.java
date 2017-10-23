@@ -1,4 +1,4 @@
-package classTests;
+ package classTests;
 
 import static org.junit.Assert.*;
 
@@ -29,6 +29,21 @@ public class ValidatorTest {
 	@After
 	public void tearDown() throws Exception {
 	}
+        
+        @Test 
+        public final void testIsValidBigDecimal(){
+            String testBigDecimal1 = "500034.566567";
+            assertTrue(isValidBigDecimal(testBigDecimal1));
+            
+            String testBigDecimal2 = "adgfer";
+            assertFalse(isValidBigDecimal(testBigDecimal2));
+            
+            String testBigDecimal3 = "5*20";
+            assertFalse(isValidBigDecimal(testBigDecimal3));
+            
+            String testBigDecimal4 = "20000000034.566567";
+            assertTrue(isValidBigDecimal(testBigDecimal4));
+        }
 
 	@Test
 	public final void testIsValidEmail() {
