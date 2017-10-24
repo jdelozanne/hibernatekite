@@ -23,14 +23,14 @@ import kiteshop.pojos.Klant;
  *
  * @author julia
  */
-public class KlantDAOMongo implements KlantDAOInterface {
+public class KlantDaoMongo implements KlantDaoInterface {
 
 	DB database;
 	DBCollection collection;
 	BasicDBObject document;
 	MongoClient mongo;
 
-	public KlantDAOMongo() {
+	public KlantDaoMongo() {
 		this.mongo = new MongoDBConnection().connect();
 		this.database = mongo.getDB("kiteshop");
 		this.collection = database.getCollection("klant");
@@ -69,7 +69,7 @@ public class KlantDAOMongo implements KlantDAOInterface {
 			document.put("factuuradres", factuuradres);
 			collection.insert(document);
 		} catch (Exception ex) {
-			Logger.getLogger(KlantDAOMongo.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(KlantDaoMongo.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
 	}

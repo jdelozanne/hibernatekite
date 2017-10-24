@@ -22,14 +22,14 @@ import kiteshop.test.ProjectLog;
  *
  * @author julia
  */
-public class ProductDAO implements ProductDAOInterface {
+public class ProductDaoSql implements ProductDaoInterface {
 
     Connection connection;
     PreparedStatement statement;
     ResultSet result;
     private final Logger logger = ProjectLog.getLogger();
 
-    public ProductDAO() {
+    public ProductDaoSql() {
         this.connection = MySQLConnection.getConnection();
     }
 
@@ -175,7 +175,7 @@ public class ProductDAO implements ProductDAOInterface {
 
     public static void main(String[] args) {
         BestelRegel br = new BestelRegel();
-        br.setProduct(new ProductDAO().readProductByID(13));
+        br.setProduct(new ProductDaoSql().readProductByID(13));
         br.toString();
     }
 }

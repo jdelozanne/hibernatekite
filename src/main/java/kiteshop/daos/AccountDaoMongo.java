@@ -23,13 +23,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import kiteshop.pojos.Account;
 import org.bson.Document;
-import static kiteshop.daos.KlantDAOMongo.getNextSequence;
+import static kiteshop.daos.KlantDaoMongo.getNextSequence;
 
 /**
  *
  * @author julia
  */
-public class AccountDAOMongo implements AccountDAOInterface {
+public class AccountDaoMongo implements AccountDaoInterface {
 
     //set db
     DB database;
@@ -40,7 +40,7 @@ public class AccountDAOMongo implements AccountDAOInterface {
     //connection
     MongoClient mongo;
 
-    public AccountDAOMongo() {
+    public AccountDaoMongo() {
         //create a connection with mongodb database
         this.mongo = new MongoDBConnection().connect();
         this.database = mongo.getDB("kiteshop");
@@ -56,7 +56,7 @@ public class AccountDAOMongo implements AccountDAOInterface {
             document.put("wachtwoord", account.getWachtwoord());
             collection.insert(document);
         } catch (Exception ex) {
-            Logger.getLogger(AccountDAOMongo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AccountDaoMongo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -147,7 +147,7 @@ public class AccountDAOMongo implements AccountDAOInterface {
             document.append("gebruikersnaam", account.getGebruikersnaam());
             document.append("prijs", account.getWachtwoord());
         } catch (Exception ex) {
-            Logger.getLogger(AccountDAOMongo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AccountDaoMongo.class.getName()).log(Level.SEVERE, null, ex);
         }
         return document;
     }

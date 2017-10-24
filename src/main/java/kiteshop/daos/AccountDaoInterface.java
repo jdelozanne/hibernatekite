@@ -5,7 +5,7 @@ import java.util.List;
 import kiteshop.pojos.Account;
 
 
-public interface AccountDAOInterface {
+public interface AccountDaoInterface {
 
 	void createAccount(Account account);
         

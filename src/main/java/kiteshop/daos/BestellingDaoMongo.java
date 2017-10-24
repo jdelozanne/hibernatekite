@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static kiteshop.daos.KlantDAOMongo.getNextSequence;
+import static kiteshop.daos.KlantDaoMongo.getNextSequence;
 import kiteshop.pojos.BestelRegel;
 import kiteshop.pojos.Bestelling;
 
@@ -25,14 +25,14 @@ import kiteshop.pojos.Bestelling;
  *
  * @author julia
  */
-public class BestellingDAOMongo implements BestellingDAOInterface {
+public class BestellingDaoMongo implements BestellingDaoInterface {
 
     DB database;
     DBCollection collection;
     DBObject document;
     MongoClient mongo;
 
-    public BestellingDAOMongo() {
+    public BestellingDaoMongo() {
         //create a connection with mongodb database
         this.mongo = new MongoDBConnection().connect();
         //this.mongo = new MongoClient("localhost", 27017);
@@ -49,7 +49,7 @@ public class BestellingDAOMongo implements BestellingDAOInterface {
             document.put("totaalprijs", bestelling.getTotaalprijs().toString());
             collection.insert(document);
         } catch (Exception ex) {
-            Logger.getLogger(BestellingDAOMongo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BestellingDaoMongo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -67,6 +67,7 @@ public class BestellingDAOMongo implements BestellingDAOInterface {
                 int klantid = bestellingObj.getInt("klantID");
                 BigDecimal totaalprijs = new BigDecimal(bestellingObj.getString("totaalprijs"));
                 b.setBestellingID(bestellingID);
+                b.setKlant(new KlantDaoMongo().readKlantById(klantid));
                 b.setTotaalprijs(totaalprijs);
             }
         } catch (Exception e) {
@@ -113,6 +114,7 @@ public class BestellingDAOMongo implements BestellingDAOInterface {
                 BigDecimal totaalprijs = new BigDecimal(bestellingObj.getString("totaalprijs")).setScale(2, BigDecimal.ROUND_HALF_UP);
                 Bestelling b = new Bestelling();
                 b.setBestellingID(bestellingid);
+                b.setKlant(new KlantDaoMongo().readKlantById(klantid));
                 b.setTotaalprijs(totaalprijs);
                 bestellingen.add(b);
             }
@@ -136,6 +138,7 @@ public class BestellingDAOMongo implements BestellingDAOInterface {
                 BigDecimal totaalprijs = new BigDecimal(bestellingObj.getString("totaalprijs")).setScale(2, BigDecimal.ROUND_HALF_UP);
                 Bestelling b = new Bestelling();
                 b.setBestellingID(bestellingid);
+                b.setKlant(new KlantDaoMongo().readKlantById(klantid));
                 b.setTotaalprijs(totaalprijs);
                 bestellingen.add(b);
             }

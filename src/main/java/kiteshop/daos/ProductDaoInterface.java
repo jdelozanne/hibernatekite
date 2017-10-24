@@ -3,7 +3,7 @@ package kiteshop.daos;
 import java.util.List;
 import kiteshop.pojos.Product;
 
-public interface ProductDAOInterface {
+public interface ProductDaoInterface {
 
     void createProduct(Product product);
 

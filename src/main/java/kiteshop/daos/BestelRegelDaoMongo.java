@@ -17,21 +17,21 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import kiteshop.pojos.BestelRegel;
-import static kiteshop.daos.KlantDAOMongo.getNextSequence;
+import static kiteshop.daos.KlantDaoMongo.getNextSequence;
 import kiteshop.pojos.Bestelling;
 
 /**
  *
  * @author julia
  */
-public class BestelRegelDAOMongo implements BestelRegelDAOInterface {
+public class BestelRegelDaoMongo implements BestelRegelDaoInterface {
 
     DB database;
     DBCollection collection;
     DBObject document;
     MongoClient mongo;
 
-    public BestelRegelDAOMongo() {
+    public BestelRegelDaoMongo() {
         //create a connection with mongodb database
         this.mongo = new MongoDBConnection().connect();
         //this.mongo = new MongoClient("localhost", 27017);
@@ -49,7 +49,7 @@ public class BestelRegelDAOMongo implements BestelRegelDAOInterface {
             document.put("bestellingID", regel.getBestellingID());
             collection.insert(document);
         } catch (Exception ex) {
-            Logger.getLogger(BestelRegelDAOMongo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BestelRegelDaoMongo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -67,7 +67,7 @@ public class BestelRegelDAOMongo implements BestelRegelDAOInterface {
                 int product_id = (int) bestelregelObj.get("productID");
                 int aantal = (int) bestelregelObj.get("aantal");
                 br.setBestelRegelID(bestelregel_id);
-                br.setProduct(new ProductDAOMongo().readProductByID(product_id));
+                br.setProduct(new ProductDaoMongo().readProductByID(product_id));
                 br.setAantal(aantal);
                 bestelregels.add(br);
             }
@@ -87,7 +87,7 @@ public class BestelRegelDAOMongo implements BestelRegelDAOInterface {
             int product_id = (int) bestelregelObj.get("productID");
             int aantal = (int) bestelregelObj.get("aantal");
             br.setBestelRegelID(bestelregel_id);
-            br.setProduct(new ProductDAOMongo().readProductByID(product_id));
+            br.setProduct(new ProductDaoMongo().readProductByID(product_id));
             br.setAantal(aantal);
         }
         System.out.println(br.toString());

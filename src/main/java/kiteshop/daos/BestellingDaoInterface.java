@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import kiteshop.pojos.Bestelling;
 
-public interface BestellingDAOInterface {
+public interface BestellingDaoInterface {
 
     void createBestelling(Bestelling bestelling);
 

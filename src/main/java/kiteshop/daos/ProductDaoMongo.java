@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static kiteshop.daos.KlantDAOMongo.getNextSequence;
+import static kiteshop.daos.KlantDaoMongo.getNextSequence;
 import kiteshop.pojos.Account;
 import kiteshop.pojos.Product;
 
@@ -26,14 +26,14 @@ import kiteshop.pojos.Product;
  *
  * @author julia
  */
-public class ProductDAOMongo implements ProductDAOInterface {
+public class ProductDaoMongo implements ProductDaoInterface {
 
     DB database;
     DBCollection collection;
     BasicDBObject document;
     MongoClient mongo;
 
-    public ProductDAOMongo() {
+    public ProductDaoMongo() {
         this.mongo = new MongoDBConnection().connect();
         this.database = mongo.getDB("kiteshop");
         this.collection = database.getCollection("product");
@@ -55,7 +55,7 @@ public class ProductDAOMongo implements ProductDAOInterface {
                 System.out.println(cursor.next());
             }
         } catch (Exception ex) {
-            Logger.getLogger(AccountDAOMongo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AccountDaoMongo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

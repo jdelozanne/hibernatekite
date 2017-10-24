@@ -23,14 +23,14 @@ import kiteshop.test.ProjectLog;
  *
  * @author julia
  */
-public class BestelRegelDAO implements BestelRegelDAOInterface {
+public class BestelRegelDaoSql implements BestelRegelDaoInterface {
 
     Connection connection;
     PreparedStatement statement;
     ResultSet result;
     private final Logger logger = ProjectLog.getLogger();
 
-    public BestelRegelDAO() {
+    public BestelRegelDaoSql() {
         connection = MySQLConnection.getConnection();
     }
 
@@ -103,7 +103,7 @@ public class BestelRegelDAO implements BestelRegelDAOInterface {
                 BestelRegel r = new BestelRegel();
                 r.setBestelRegelID(result.getInt(1));
                 //r.getProduct().setProductID(result.getInt(2));
-                r.setProduct(new ProductDAO().readProductByID(result.getInt(2)));
+                r.setProduct(new ProductDaoSql().readProductByID(result.getInt(2)));
                 r.setAantal(result.getInt(3));
                 bestelregels.add(r);
             }

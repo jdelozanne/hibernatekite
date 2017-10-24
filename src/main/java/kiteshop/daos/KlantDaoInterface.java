@@ -4,7 +4,7 @@ import java.util.List;
 
 import kiteshop.pojos.Klant;
 
-public interface KlantDAOInterface {
+public interface KlantDaoInterface {
 
     void createKlant(Klant klant);
 

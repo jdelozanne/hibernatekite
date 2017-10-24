@@ -14,7 +14,7 @@ import kiteshop.pojos.Bestelling;
  *
  * @author julia
  */
-public interface BestelRegelDAOInterface {
+public interface BestelRegelDaoInterface {
     
     void createBestelRegel(BestelRegel regel);
 

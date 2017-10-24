@@ -22,14 +22,14 @@ import kiteshop.test.ProjectLog;
  *
  * @author julia
  */
-public class BestellingDAO implements BestellingDAOInterface {
+public class BestellingDaoSql implements BestellingDaoInterface {
 
     Connection connection;
     PreparedStatement statement;
     ResultSet result;
     private final Logger logger = ProjectLog.getLogger();
 
-    public BestellingDAO() {
+    public BestellingDaoSql() {
         connection = MySQLConnection.getConnection();
     }
 
@@ -89,6 +89,7 @@ public class BestellingDAO implements BestellingDAOInterface {
             result = statement.executeQuery();
             while (result.next()) {
                 b.setBestellingID(result.getInt(1));
+                b.setKlant(new KlantDaoSql().readKlantById(result.getInt(2)));
                 b.setTotaalprijs(result.getBigDecimal(3));
             }
         } catch (SQLException ex) {
@@ -106,6 +107,7 @@ public class BestellingDAO implements BestellingDAOInterface {
             while (result.next()) {
                 Bestelling b = new Bestelling();
                 b.setBestellingID(result.getInt(1));
+                b.setKlant(new KlantDaoSql().readKlantById(result.getInt(2)));
                 b.setTotaalprijs(result.getBigDecimal(3));
                 bestellingen.add(b);
             }
@@ -125,6 +127,7 @@ public class BestellingDAO implements BestellingDAOInterface {
             while (result.next()) {
                 Bestelling b = new Bestelling();
                 b.setBestellingID(result.getInt(1));
+                b.setKlant(new KlantDaoSql().readKlantById(result.getInt(2)));
                 b.setTotaalprijs(result.getBigDecimal(3));
                 bestellingen.add(b);
             }

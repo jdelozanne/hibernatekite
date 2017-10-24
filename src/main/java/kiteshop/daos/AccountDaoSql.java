@@ -22,12 +22,12 @@ import kiteshop.test.ProjectLog;
  *
  * @author julia en steef
  */
-public class AccountDAO implements AccountDAOInterface {
+public class AccountDaoSql implements AccountDaoInterface {
 
     private final Logger logger = ProjectLog.getLogger();
 
  
-    public AccountDAO() {
+    public AccountDaoSql() {
        
     }
 
