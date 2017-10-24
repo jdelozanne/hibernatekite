@@ -20,7 +20,11 @@ import java.util.Scanner;
 public class MenuKlanten {
 
 	Scanner input = new Scanner(System.in);
-	KlantenController controller = new KlantenController();
+	KlantenController controller;
+	
+	public MenuKlanten(KlantenController controller) {
+		this.controller = controller;
+	}
 
 	public void start() {
 		System.out.println("Kies wat je wilt doen:");
@@ -306,8 +310,5 @@ public class MenuKlanten {
 			System.out.println(element + "\n");
 		}
 	}
-
-	public static void main(String args[]) {
-		new MenuKlanten().start();
-	}
+	
 }
