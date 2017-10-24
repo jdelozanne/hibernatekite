@@ -23,8 +23,10 @@ private BestelRegelDAOInterface bestelregel;
 		switch(database.toLowerCase()){
 		case "mysql":
 			this.klant = new KlantDAO();
+                        break;
                 case "mongodb":
                     this.klant = new KlantDAOMongo();
+                    break;
 		default:
 		}
                 return klant;
@@ -34,8 +36,10 @@ private BestelRegelDAOInterface bestelregel;
       switch(database.toLowerCase()){
 		case "mysql":
 			this.account = new AccountDAO();
+                        break;
                 case "mongodb":
                     this.account = new AccountDAOMongo();
+                    break;
 		default:
 		}
                 return account;
@@ -44,8 +48,10 @@ private BestelRegelDAOInterface bestelregel;
       switch(database.toLowerCase()){
 		case "mysql":
 			this.product= new ProductDAO();
+                        break;
                 case "mongodb":
                     this.product = new ProductDAOMongo();
+                    break;
 		default:
 		}
                 return product;
@@ -55,8 +61,10 @@ private BestelRegelDAOInterface bestelregel;
       switch(database.toLowerCase()){
 		case "mysql":
 			this.bestelling= new BestellingDAO();
+                        break;
                 case "mongodb":
                     this.bestelling = new BestellingDAOMongo();
+                    break;
 		default:
 		}
                 return bestelling;
@@ -65,8 +73,10 @@ private BestelRegelDAOInterface bestelregel;
       switch(database.toLowerCase()){
 		case "mysql":
 			this.bestelregel= new BestelRegelDAO();
+                        break;
                 case "mongodb":
                     this.bestelregel = new BestelRegelDAOMongo();
+                    break;
 		default:
 		}
                 return bestelregel;

@@ -3,6 +3,7 @@ package kiteshop.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+import kiteshop.daos.DAOFactory;
 
 import kiteshop.daos.ProductDAO;
 import kiteshop.daos.ProductDAOInterface;
@@ -13,13 +14,18 @@ public class ProductenController {
 
     private final Logger logger = ProjectLog.getLogger();
     ProductDAOInterface productDAO;
+    DAOFactory factory = new DAOFactory();
+    HoofdController hoofdController;
 
-    public ProductenController() {
-        productDAO = new ProductDAO();
+    public ProductenController(String db) {
+       // productDAO = new ProductDAO();
+       hoofdController = new HoofdController(db);
     }
 
     public void createProduct(Product product) {
-        productDAO.createProduct(product);
+        //productDAO.createProduct(product);
+        productDAO = factory.createProductDAO(hoofdController.getCurrentDatabase());
+                productDAO.createProduct(product); 
     }
 
     public Product showSpecificProduct(String naam) {

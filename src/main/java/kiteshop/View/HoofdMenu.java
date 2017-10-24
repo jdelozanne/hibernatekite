@@ -29,15 +29,14 @@ public class HoofdMenu {
         
         switch (keuze) {
             case 1:
-                System.out.println("naar men4"
-                        + "u klanten");
+                System.out.println("naar menu klanten");
                 new MenuKlanten().start();
                 System.out.println("U bent terug in het startmenu");
                 start();
                 break;
             case 2:
                 System.out.println("naar menu producten");
-                new MenuProducten().start();
+                new MenuProducten().chooseDatabase();
                 System.out.println("U bent terug in het startmenu");
                 start();
                 break;

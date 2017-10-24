@@ -7,6 +7,7 @@ package kiteshop.View;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
+import kiteshop.controller.HoofdController;
 
 import kiteshop.controller.ProductenController;
 import kiteshop.pojos.Product;
@@ -17,9 +18,18 @@ import kiteshop.pojos.Product;
  */
 public class MenuProducten {
     Scanner input = new Scanner(System.in);
-    ProductenController controller = new ProductenController();
+    ProductenController controller;
+    HoofdController hoofdController;
+    
+    public void chooseDatabase(){
+        System.out.println("Kies de database waarin u wilt werken: mysql of mongoDB");
+        String db = input.nextLine();
+        controller = new ProductenController(db);
+        start();
+    }
 
     public void start() {
+        
         System.out.println("Kies wat je wilt doen:");
         System.out.println("Kies 1 voor Nieuwe product maken");
         System.out.println("Kies 2 voor Een product wijzigen");
@@ -59,7 +69,7 @@ public class MenuProducten {
         Product product = new Product();
         
         System.out.println("geef productnaam: ");
-        input.nextLine();
+        
         String productnaam = input.nextLine();
         product.setNaam(productnaam);
 
@@ -73,6 +83,7 @@ public class MenuProducten {
         product.setPrijs(prijs);
         input.nextLine();
 
+        
         controller.createProduct(product);
     }
 
@@ -123,6 +134,6 @@ public class MenuProducten {
     }
 
     public static void main(String[] args) {
-        new MenuProducten().start();
+        new MenuProducten().chooseDatabase();
     }
 }
