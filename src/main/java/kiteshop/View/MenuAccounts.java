@@ -8,11 +8,14 @@ package kiteshop.View;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 import kiteshop.controller.AccountController;
 import kiteshop.pojos.Account;
 import kiteshop.pojos.Adres;
 import kiteshop.pojos.AdresType;
+import kiteshop.test.ProjectLog;
+
 import static kiteshop.View.Validator.*;
 
 /**
@@ -20,9 +23,14 @@ import static kiteshop.View.Validator.*;
  * @author julia en steef
  */
 public class MenuAccounts {
-
+	private final Logger logger = ProjectLog.getLogger();
 	private Scanner input = new Scanner(System.in);
-	AccountController controller = new AccountController();
+	
+	AccountController controller;
+
+	public MenuAccounts(AccountController controller) {
+		this.controller = controller;
+	}
 
 	public void start() {
 		System.out.println("Kies wat u wilt doen:");
@@ -63,7 +71,6 @@ public class MenuAccounts {
 			start();
 			break;
 		case 5:
-			new HoofdMenu().start();
 			break;
 		default:
 			System.out.println("Probeer opnieuw");
@@ -180,7 +187,4 @@ public class MenuAccounts {
 		return wachtwoord;
 	}
 
-	public static void main(String[] args) {
-		new MenuAccounts().start();
-	}
 }
