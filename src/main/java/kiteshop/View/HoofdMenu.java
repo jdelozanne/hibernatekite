@@ -51,10 +51,14 @@ public class HoofdMenu {
             case 3:
                 System.out.println("naar menu bestellingen");
                 controller.startMenuBestellingen();
+                System.out.println("U bent terug in het startmenu");
+                start();
                 break;
             case 4:
                 System.out.println("naar menu account");
                 controller.startMenuAccounts();
+                System.out.println("U bent terug in het startmenu");
+                start();
                 break;
             case 5:
                 System.out.println("uitloggen");
