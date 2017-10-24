@@ -55,7 +55,7 @@ public class MenuProducten {
                 start();
                 break;
             case 5:
-
+            	break;
             default:
                 System.out.println("Probeer opnieuw");
                 start();
