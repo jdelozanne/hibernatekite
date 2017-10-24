@@ -87,29 +87,6 @@ public class KlantDAO implements KlantDAOInterface {
     //Deze is volgens mij niet nodig wordt 100% afgedekt door ArrayList<Klant> readKlantByAchternaam(String achternaam) 
 
     @Override
-    public Klant readKlant(String achternaam) {
-        Klant klant = new Klant();
-        try {
-            String query = "Select * from klant where achternaam = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, achternaam);
-            ResultSet result = statement.executeQuery();
-            while (result.next()) {
-                klant.setKlantID(result.getInt(1));
-                klant.setVoornaam(result.getString(2));
-                klant.setTussenvoegsel(result.getString(3));
-                klant.setAchternaam(result.getString(4));
-                klant.setEmail(result.getString(5));
-                klant.setTelefoonnummer(result.getString(6));
-                logger.info("In first loop");
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return klant;
-    }
-
-    @Override
     public void updateKlant(Klant klant) {
         try {
             String sql = "UPDATE klant SET voornaam=?,tussenvoegsel=?,achternaam=?,emailadres=?,"
@@ -292,4 +269,10 @@ public class KlantDAO implements KlantDAOInterface {
     public static void main(String args[]) {
         new KlantDAO().readKlantByAchternaam("Lol2");
     }
+
+	@Override
+	public Klant readKlantById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

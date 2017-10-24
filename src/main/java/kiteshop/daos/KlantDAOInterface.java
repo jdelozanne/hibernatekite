@@ -8,8 +8,8 @@ public interface KlantDAOInterface {
 
     void createKlant(Klant klant);
 
-    Klant readKlant(String achternaam);
-
+    Klant readKlantById(int id);
+    
     void updateKlant(Klant klant);
 
     void deleteKlant(Klant klant);

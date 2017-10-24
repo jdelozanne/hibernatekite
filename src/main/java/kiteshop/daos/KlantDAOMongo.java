@@ -73,12 +73,7 @@ public class KlantDAOMongo implements KlantDAOInterface {
         }
 
     }
-
-    @Override
-    public Klant readKlant(String achternaam) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+   
     @Override
     public void updateKlant(Klant klant) {
         int id = klant.getKlantID();
@@ -265,5 +260,11 @@ public class KlantDAOMongo implements KlantDAOInterface {
         DBObject obj = c.findAndModify(find, update);
         return obj.get("seq");
     }
+
+	@Override
+	public Klant readKlantById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

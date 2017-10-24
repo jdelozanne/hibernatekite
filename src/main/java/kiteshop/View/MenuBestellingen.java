@@ -80,7 +80,7 @@ public class MenuBestellingen {
 
     public void createBestelling(String achternaam) {
         KlantDAO k = new KlantDAO();
-        Klant klant = k.readKlant(achternaam);
+        Klant klant = k.readKlantByAchternaam(achternaam).get(0);
         Bestelling bestelling = new Bestelling(klant);
 
         System.out.println("Wilt u iets toevoegen aan de bestelling? J/N");
