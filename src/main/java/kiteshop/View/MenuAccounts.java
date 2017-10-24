@@ -81,7 +81,7 @@ public class MenuAccounts {
 	public void maakNieuwAccount() {
 		Account account = new Account();
 		System.out.println("Gebruikersnaam?");
-		String gebruiker = input.next();
+		String gebruiker = input.nextLine();
 		account.setGebruikersnaam(gebruiker);
 
 		String wachtwoord = vraagWachtwoord();
@@ -109,7 +109,7 @@ public class MenuAccounts {
 
 	public void wijzigAccount() {
 		System.out.println("Geef de gebruikersnaam van het account dat je wilt wijzigen?");
-		String gebruikernaam = input.next();
+		String gebruikernaam = input.nextLine();
 		Account account = controller.readAccountByGebruikersnaam(gebruikernaam);
 		if (account.getAccountID() == 0) {
 			System.out.println("Deze gebruikersnaam is niet bekend");
@@ -125,7 +125,7 @@ public class MenuAccounts {
 			switch (keuze) {
 			case 1:
 				System.out.println("geef nieuwe gebruikersnaam");
-				String nieuwegebruikersnaam = input.next();
+				String nieuwegebruikersnaam = input.nextLine();
 				account.setGebruikersnaam(nieuwegebruikersnaam);
 				controller.updateAccount(account);
 				System.out.println("De gebruikersnaam is aangepast, het account is nu: " + account);
@@ -148,7 +148,7 @@ public class MenuAccounts {
 
 	public void verwijderAccount() {
 		System.out.println("Geef de gebruikersnaam van het account dat je wilt verwijderen?");
-		String gebruikernaam = input.next();
+		String gebruikernaam = input.nextLine();
 		Account account = controller.readAccountByGebruikersnaam(gebruikernaam);
 		if (account.getAccountID() == 0) {
 			System.out.println("Deze gebruikersnaam is niet bekend");
@@ -172,7 +172,7 @@ public class MenuAccounts {
 		String wachtwoord = null;
 		while(!isValidWachtwoord(wachtwoord)){
 			System.out.println("Wachtwoord?");
-			wachtwoord = input.next();
+			wachtwoord = input.nextLine();
 			if(!isValidWachtwoord(wachtwoord)){
 				System.out.println("Dit is geen geldig wachtwoord, een wachtwoord bestaat uit minimaal 4 tekens en bevat minstens 1 cijfer");	
 			}

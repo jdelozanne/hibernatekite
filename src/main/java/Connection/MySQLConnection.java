@@ -40,7 +40,7 @@ public class MySQLConnection {
 
     public static Connection getConnection() {
         try {
-            if (INSTANCE.connection == null) {
+            if (INSTANCE.connection == null|| INSTANCE.connection.isClosed()) {
                 INSTANCE.connect();
             }
         } catch (Exception e) {

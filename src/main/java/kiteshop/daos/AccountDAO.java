@@ -57,8 +57,9 @@ public class AccountDAO implements AccountDAOInterface {
         try (Connection connection = MySQLConnection.getConnection();
                 PreparedStatement prepstat = connection.prepareStatement(sqlQuery)
                 ) {
-            ResultSet result = prepstat.executeQuery();
             prepstat.setString(1, gebruikersnaam);
+            ResultSet result = prepstat.executeQuery();
+            
             while (result.next()) {
                 account.setAccountID(result.getInt(1));
                 account.setGebruikersnaam(result.getString(2));
@@ -91,8 +92,9 @@ public class AccountDAO implements AccountDAOInterface {
     public void deleteAccount(Account account) {
         String sql = " DELETE FROM account "
                 + " WHERE accountID = " + account.getAccountID();
-        try (Connection connection = MySQLConnection.getConnection();
-                Statement statement = connection.createStatement()) {
+        try (Connection connection = MySQLConnection.getConnection()
+                ) {
+            Statement statement = connection.createStatement();
             statement.executeUpdate(sql);
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -104,7 +106,7 @@ public class AccountDAO implements AccountDAOInterface {
         List<Account> accounts = new ArrayList<Account>();
         String sqlQuery = "SELECT * FROM account";
         try (Connection connection = MySQLConnection.getConnection();
-                PreparedStatement prepstat = connection.prepareStatement(sqlQuery);
+                PreparedStatement prepstat = connection.prepareStatement(sqlQuery)
                ) { 
             ResultSet result = prepstat.executeQuery();
             while (result.next()) {
