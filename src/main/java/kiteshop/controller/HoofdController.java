@@ -5,19 +5,49 @@
  */
 package kiteshop.controller;
 
+import kiteshop.daos.DaoFactoryInterface;
+
 /**
  *
  * @author julia
  */
 public class HoofdController {
 
-    private String database;
+     public DaoFactoryInterface DaoFactory;
 
-    public HoofdController(String db) {
-        this.database = db;
-    }
+	public HoofdController(DaoFactoryInterface daoFactory) {
+		DaoFactory = daoFactory;
+	}
+
+	public void start() {
+		InlogMenu inlogMenu = new InlogMenu(new AccountController(DaoFactory.createAccountDao()));
+		boolean inlogSuccesfull = inlogMenu.inloggen();
+		
+		if(inlogSuccesfull){
+			HoofdMenu hoofdMenu = new HoofdMenu(this);
+			hoofdMenu.start();
+		} 
+	}
+
+	public void startMenuKlanten() {
+		MenuKlanten menuklanten = new MenuKlanten(new KlantenController(DaoFactory.createKlantDao()));
+		menuklanten.start();
+		
+	}
+
+	public void startMenuProducten() {
+		MenuProducten menuProducten = new MenuProducten(new ProductenController(DaoFactory.createProductDao()));
+		menuProducten.start();
+	}
+
+	public void startMenuBestellingen() {
+		MenuBestellingen menuBestellingen = new MenuBestellingen(new BestellingenController(DaoFactory.createBestellingDao(), DaoFactory.createBestelregelDao()));
+		menuBestellingen.start();
+	}
+
+	public void startMenuAccounts() {
+		MenuAccounts menuAccounts = new MenuAccounts(new AccountController(DaoFactory.createAccountDao()));
+		menuAccounts.start();
+	}
     
-    public String getCurrentDatabase(){
-        return this.database;
-    }
 }
