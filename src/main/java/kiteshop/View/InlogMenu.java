@@ -20,12 +20,16 @@ import kiteshop.pojos.Account;
  * @author julia
  */
 public class InlogMenu {
-
     private final Logger logger = ProjectLog.getLogger();
-    AccountController controller = new AccountController();
     private Scanner input = new Scanner(System.in);
 
-    public void inloggen() {
+    AccountController controller;
+    
+    public InlogMenu(AccountController controller) {
+		this.controller = controller;
+	}    
+
+    public boolean inloggen() {
         System.out.println("Geef uw gebruikersnaam: ");
         String user = input.nextLine();
 
@@ -34,14 +38,16 @@ public class InlogMenu {
 
         logger.info("Gebruikersnaam en wachtwoord ingegeven");
         if (controller.checkLogin(user, ww)) {
-            new HoofdMenu().start();
+            return true;
         } else {
             System.out.println("Onjuiste gegevens, probeer opnieuw");
-            inloggen();
+            return false;
         }
     }
 
-    public static void main(String args[]) {
-        new InlogMenu().inloggen();
-    }
+
+
+
+	
+    
 }
