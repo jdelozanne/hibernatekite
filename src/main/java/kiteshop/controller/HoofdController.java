@@ -5,7 +5,9 @@
  */
 package kiteshop.controller;
 
-import kiteshop.daos.DaoFactoryInterface;
+import kiteshop.View.*;
+
+import kiteshop.daos.*;
 
 /**
  *

@@ -50,7 +50,7 @@ public class HoofdMenu {
                 break;
             case 3:
                 System.out.println("naar menu bestellingen");
-                new MenuBestellingen().start();
+                controller.startMenuBestellingen();
                 break;
             case 4:
                 System.out.println("naar menu account");

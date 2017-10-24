@@ -29,7 +29,7 @@ public class MenuBestellingen {
     private final Logger logger = ProjectLog.getLogger();
     private Scanner input = new Scanner(System.in);
     
-    BestellingenController controller = new BestellingenController();
+    BestellingenController controller;
     
     public MenuBestellingen(BestellingenController controller) {
 		this.controller = controller;

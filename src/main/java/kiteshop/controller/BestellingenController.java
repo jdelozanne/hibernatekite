@@ -23,12 +23,13 @@ public class BestellingenController {
     BestellingDaoInterface bestellingDAO;
     BestelRegelDaoInterface bestelRegelDAO;
 
-    public BestellingenController() {
-        bestellingDAO = new BestellingDaoSql();
-        bestelRegelDAO = new BestelRegelDaoSql();
-    }
+      public BestellingenController(BestellingDaoInterface bestellingDAO, BestelRegelDaoInterface bestelRegelDAO) {
+		this.bestellingDAO = bestellingDAO;
+		this.bestelRegelDAO = bestelRegelDAO;
+	}
 
-    public void createBestelling(Bestelling bestelling) {
+      
+	public void createBestelling(Bestelling bestelling) {
         bestellingDAO.createBestelling(bestelling);
         createBestelRegels(bestelling);
         logger.info("nieuwe bestelling gemaakt");

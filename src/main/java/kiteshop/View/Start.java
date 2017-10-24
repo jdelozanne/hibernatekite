@@ -5,6 +5,9 @@
  */
 package kiteshop.View;
 
+import kiteshop.controller.HoofdController;
+import kiteshop.daos.DaoFactorySql;
+
 /**
  *
  * @author Steef P
