@@ -14,18 +14,14 @@ public class ProductenController {
 
     private final Logger logger = ProjectLog.getLogger();
     ProductDaoInterface productDAO;
-    DAOFactory factory = new DAOFactory();
-    HoofdController hoofdController;
+    
 
-    public ProductenController(String db) {
-       // productDAO = new ProductDaoSql();
-       hoofdController = new HoofdController(db);
+    public ProductenController(ProductDaoInterface productDAO) {
+      this.productDAO = productDAO;
     }
 
     public void createProduct(Product product) {
-        //productDAO.createProduct(product);
-        productDAO = factory.createProductDAO(hoofdController.getCurrentDatabase());
-                productDAO.createProduct(product); 
+             productDAO.createProduct(product); 
     }
 
     public Product showSpecificProduct(String naam) {
