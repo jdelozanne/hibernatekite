@@ -11,4 +11,19 @@ package kiteshop.daos;
  */
 public abstract class DAOFactory {
     
-}
+	
+	
+    
+  private void createDao(String database){
+		switch(database.toLowerCase()){
+		case "mysql":
+			new SQLDAOFactory();
+                case "mongodb":
+		default:
+			new MongoDAOFactory();
+		}
+	}
+
+       
+   }
+
