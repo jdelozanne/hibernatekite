@@ -28,10 +28,14 @@ public class MenuBestellingen {
 
     private final Logger logger = ProjectLog.getLogger();
     private Scanner input = new Scanner(System.in);
+    
     BestellingenController controller = new BestellingenController();
-    BestelRegelController controller2 = new BestelRegelController();
+    
+    public MenuBestellingen(BestellingenController controller) {
+		this.controller = controller;
+	}
 
-    public void start() {
+	public void start() {
         System.out.println("Kies wat je wilt doen:");
         System.out.println("Kies 1 voor een nieuwe bestelling maken");
         System.out.println("Kies 2 voor een bestelling wijzigen");
@@ -70,7 +74,7 @@ public class MenuBestellingen {
                 start();
                 break;
             case 5:
-                new HoofdMenu().start();
+
                 break;
             default:
                 System.out.println("Probeer opnieuw");
@@ -181,7 +185,6 @@ public class MenuBestellingen {
                 break;
             case 3:
                 System.out.println("bestelling is geupdate, terug naar Hoofdmenu");
-                new HoofdMenu().start();
                 break;
         }
     }
