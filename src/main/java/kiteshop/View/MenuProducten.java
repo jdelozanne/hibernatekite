@@ -19,14 +19,11 @@ import kiteshop.pojos.Product;
 public class MenuProducten {
     Scanner input = new Scanner(System.in);
     ProductenController controller;
-    HoofdController hoofdController;
-    
-    public void chooseDatabase(){
-        System.out.println("Kies de database waarin u wilt werken: mysql of mongoDB");
-        String db = input.nextLine();
-        controller = new ProductenController(db);
-        start();
-    }
+
+    public MenuProducten(ProductenController controller) {
+		this.controller = controller;
+	}
+   
 
     public void start() {
         
@@ -58,7 +55,7 @@ public class MenuProducten {
                 start();
                 break;
             case 5:
-                new HoofdMenu().start();
+
             default:
                 System.out.println("Probeer opnieuw");
                 start();
@@ -133,7 +130,7 @@ public class MenuProducten {
         controller.deleteProduct(p);
     }
 
-    public static void main(String[] args) {
-        new MenuProducten().chooseDatabase();
-    }
+
+
+	
 }
