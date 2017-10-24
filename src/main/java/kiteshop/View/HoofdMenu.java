@@ -7,6 +7,7 @@ package kiteshop.View;
 
 import java.util.Scanner;
 
+import kiteshop.controller.HoofdController;
 import kiteshop.pojos.Account;
 
 /**
@@ -17,7 +18,14 @@ public class HoofdMenu {
 
     Scanner input = new Scanner(System.in);
 
-    public void start() {
+    
+    HoofdController controller;
+    
+    public HoofdMenu(HoofdController hoofdController) {
+		controller = hoofdController;
+	}
+
+	public void start() {
         System.out.println("Maak uw keuze:");
         System.out.println("Kies 1 Klanten");
         System.out.println("Kies 2 Producten");
@@ -30,13 +38,13 @@ public class HoofdMenu {
         switch (keuze) {
             case 1:
                 System.out.println("naar menu klanten");
-                new MenuKlanten().start();
+                controller.startMenuKlanten();
                 System.out.println("U bent terug in het startmenu");
                 start();
                 break;
             case 2:
                 System.out.println("naar menu producten");
-                new MenuProducten().chooseDatabase();
+                controller.startMenuProducten();
                 System.out.println("U bent terug in het startmenu");
                 start();
                 break;
@@ -46,7 +54,7 @@ public class HoofdMenu {
                 break;
             case 4:
                 System.out.println("naar menu account");
-                new MenuAccounts().start();
+                controller.startMenuAccounts();
                 break;
             case 5:
                 System.out.println("uitloggen");
@@ -67,7 +75,5 @@ public class HoofdMenu {
         }
     }
 
-    public static void main(String[] args) {
-        new HoofdMenu().start();
-    }
+  
 }
