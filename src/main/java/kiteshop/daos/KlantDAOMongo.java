@@ -244,23 +244,6 @@ public class KlantDAOMongo implements KlantDAOInterface {
 		return klanten;
 	}
 
-	public static Object getNextSequence(String name, String collection) throws Exception {
-		//voor aparte id autoincrement,  invoern in shell
-		// db.collection.insert{
-		// _id: "klantid",
-		//seq: 0
-		//}
-		MongoClient mongoClient = new MongoClient("localhost", 27017);
-		DB db = mongoClient.getDB("kiteshop");
-		DBCollection c = db.getCollection(collection);
-		BasicDBObject find = new BasicDBObject();
-		find.put("_id", name);
-		BasicDBObject update = new BasicDBObject();
-		update.put("$inc", new BasicDBObject("seq", 1));
-		DBObject obj = c.findAndModify(find, update);
-		return obj.get("seq");
-	}
-
 	@Override
 	public Klant readKlantById(int klantID) {
 		Klant k = new Klant();
@@ -318,5 +301,22 @@ public class KlantDAOMongo implements KlantDAOInterface {
 			k.setBezoekAdres(b);
 		}
 		return k;
+	}
+	
+	public static Object getNextSequence(String name, String collection) throws Exception {
+		//voor aparte id autoincrement,  invoern in shell
+		// db.collection.insert{
+		// _id: "klantid",
+		//seq: 0
+		//}
+		MongoClient mongoClient = new MongoClient("localhost", 27017);
+		DB db = mongoClient.getDB("kiteshop");
+		DBCollection c = db.getCollection(collection);
+		BasicDBObject find = new BasicDBObject();
+		find.put("_id", name);
+		BasicDBObject update = new BasicDBObject();
+		update.put("$inc", new BasicDBObject("seq", 1));
+		DBObject obj = c.findAndModify(find, update);
+		return obj.get("seq");
 	}
 }
