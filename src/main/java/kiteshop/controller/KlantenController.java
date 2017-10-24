@@ -14,8 +14,8 @@ public class KlantenController {
     private final Logger logger = ProjectLog.getLogger();
     private KlantDaoInterface klantDAO;
 
-    public KlantenController() {
-        klantDAO = new KlantDaoSql();
+    public KlantenController(KlantDaoInterface klantDAO) {
+        this.klantDAO = klantDAO;
     }
 
     public void createKlant(Klant klant) {
