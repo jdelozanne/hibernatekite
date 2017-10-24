@@ -14,8 +14,8 @@ public class AccountController {
     private final Logger logger = ProjectLog.getLogger();
     AccountDaoInterface accountDAO;
 
-    public AccountController() {
-        accountDAO = new AccountDaoSql();
+    public AccountController(AccountDaoInterface accountDao) {
+        this.accountDAO = accountDao;
     }
 
     public void createAccount(Account account) {
