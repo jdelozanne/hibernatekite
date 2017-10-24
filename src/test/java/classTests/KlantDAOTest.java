@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import kiteshop.daos.KlantDAO;
+import kiteshop.daos.KlantDaoSql;
 import kiteshop.pojos.Adres;
 import kiteshop.pojos.Klant;
 import setup.SetUpTestDatabase;
@@ -45,9 +45,9 @@ public class KlantDAOTest {
 		klanttobecreated.setBezoekAdres(new Adres());
 		klanttobecreated.setFactuurAdres(new Adres());
 		
-		new KlantDAO().createKlant(klanttobecreated);
+		new KlantDaoSql().createKlant(klanttobecreated);
 
-		Klant result = new KlantDAO().readKlantByAchternaam("Pelgrom").get(0);
+		Klant result = new KlantDaoSql().readKlantByAchternaam("Pelgrom").get(0);
 
 		assertEquals(klanttobecreated, result);
 	}
@@ -65,11 +65,11 @@ public class KlantDAOTest {
 		klanttobeupdated.setBezoekAdres(new Adres());
 		klanttobeupdated.setFactuurAdres(new Adres());
 		
-		new KlantDAO().updateKlant(klanttobeupdated);
+		new KlantDaoSql().updateKlant(klanttobeupdated);
 		
-		Klant result = new KlantDAO().readKlantByAchternaam("Lozanne").get(0);
+		Klant result = new KlantDaoSql().readKlantByAchternaam("Lozanne").get(0);
 		
-		int klantenwithachternaampelgrom = new KlantDAO().readKlantByAchternaam("Pelgrom").size();
+		int klantenwithachternaampelgrom = new KlantDaoSql().readKlantByAchternaam("Pelgrom").size();
 	
 		assertEquals(klanttobeupdated, result);
 		
@@ -79,12 +79,12 @@ public class KlantDAOTest {
 	public final void testDeleteKlant() {
 		new SetUpTestDatabase().populateDatabase();
 
-		int klantenindatabase = new KlantDAO().readAllKlanten().size();
+		int klantenindatabase = new KlantDaoSql().readAllKlanten().size();
 		Klant klanttobedeleted = new Klant();
 		klanttobedeleted.setKlantID(1);
 
-		new KlantDAO().deleteKlant(klanttobedeleted);
-		int klantenindatabaseafterdelete = new KlantDAO().readAllKlanten().size();
+		new KlantDaoSql().deleteKlant(klanttobedeleted);
+		int klantenindatabaseafterdelete = new KlantDaoSql().readAllKlanten().size();
 
 		assertTrue(klantenindatabaseafterdelete == klantenindatabase -1);
 	}
@@ -102,7 +102,7 @@ public class KlantDAOTest {
 		verwachtResultKlant.setBezoekAdres(new Adres());
 		verwachtResultKlant.setFactuurAdres(new Adres());
 
-		Klant result = new KlantDAO().readKlantByAchternaam("Pelgrom").get(0);
+		Klant result = new KlantDaoSql().readKlantByAchternaam("Pelgrom").get(0);
 
 		assertEquals(verwachtResultKlant, result);
 	}
@@ -120,7 +120,7 @@ public class KlantDAOTest {
 		verwachtResultKlant.setBezoekAdres(new Adres());
 		verwachtResultKlant.setFactuurAdres(new Adres());
 
-		Klant result = new KlantDAO().readAllKlanten().get(0);
+		Klant result = new KlantDaoSql().readAllKlanten().get(0);
 
 		assertEquals(verwachtResultKlant, result);
 	}

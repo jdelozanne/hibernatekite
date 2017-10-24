@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import kiteshop.daos.ProductDAO;
+import kiteshop.daos.ProductDaoSql;
 import kiteshop.pojos.Product;
 import setup.SetUpTestDatabase;
 
@@ -42,9 +42,9 @@ public class ProductDAOTest {
 		expectedresult.setVoorraad(10);
 		expectedresult.setPrijs(new BigDecimal("999.00"));
 		
-		new ProductDAO().createProduct(expectedresult);
+		new ProductDaoSql().createProduct(expectedresult);
 		
-		Product result = new ProductDAO().readAllProducten().get(0);
+		Product result = new ProductDaoSql().readAllProducten().get(0);
 		
 		System.out.println("Expeted product "+expectedresult);
 		System.out.println("Result product "+result);
@@ -62,7 +62,7 @@ public class ProductDAOTest {
 		expectedresult.setVoorraad(8);
 		expectedresult.setPrijs(new BigDecimal("719.00"));
 		
-		Product result = new ProductDAO().readProduct("Cabrinha Chaos");
+		Product result = new ProductDaoSql().readProduct("Cabrinha Chaos");
 		
 		
 		assertEquals(expectedresult, result);
@@ -71,7 +71,7 @@ public class ProductDAOTest {
 	@Test
 	public final void testShowProducten() {
 		new SetUpTestDatabase().populateDatabase();
-		int productenindatabase = new ProductDAO().readAllProducten().size();
+		int productenindatabase = new ProductDaoSql().readAllProducten().size();
 		assertTrue(productenindatabase == 3);
 		
 
@@ -82,7 +82,7 @@ public class ProductDAOTest {
 		expectedresult.setVoorraad(8);
 		expectedresult.setPrijs(new BigDecimal("719.00"));
 		
-		Product result = new ProductDAO().readAllProducten().get(1);
+		Product result = new ProductDaoSql().readAllProducten().get(1);
 		
 		assertEquals(expectedresult, result);
 		
@@ -90,7 +90,7 @@ public class ProductDAOTest {
 
 	@Test
 	public final void testUpdateProduct() {
-		Product resultbefore = new ProductDAO().readAllProducten().get(1); // ik pak hier de tweede (arraylist begint op 0 database op 1, omdat ik ook de tweede ga vervangen
+		Product resultbefore = new ProductDaoSql().readAllProducten().get(1); // ik pak hier de tweede (arraylist begint op 0 database op 1, omdat ik ook de tweede ga vervangen
 		
 		Product expectedresult = new Product();
 		expectedresult.setProductID(2);
@@ -98,9 +98,9 @@ public class ProductDAOTest {
 		expectedresult.setVoorraad(10);
 		expectedresult.setPrijs(new BigDecimal("999.00"));
 		
-		new ProductDAO().updateProduct(expectedresult);
+		new ProductDaoSql().updateProduct(expectedresult);
 		
-		Product result = new ProductDAO().readAllProducten().get(1);
+		Product result = new ProductDaoSql().readAllProducten().get(1);
 		System.out.println("Expeted product "+expectedresult);
 		System.out.println("Result product "+result);
 		
@@ -111,15 +111,15 @@ public class ProductDAOTest {
 	@Test
 	public final void testDeleteProduct() {
 		new SetUpTestDatabase().populateDatabase();
-		int productenindatabase = new ProductDAO().readAllProducten().size();
+		int productenindatabase = new ProductDaoSql().readAllProducten().size();
 		assertTrue(productenindatabase == 3);
 		Product producttobedeleted = new Product();
 		producttobedeleted.setProductID(2);
 		producttobedeleted.setNaam("Cabrinha Chaos");
 		producttobedeleted.setVoorraad(8);
 		producttobedeleted.setPrijs(new BigDecimal("719.00"));
-		new ProductDAO().deleteProduct(producttobedeleted);
-		int productenindatabaseafterdelete = new ProductDAO().readAllProducten().size();
+		new ProductDaoSql().deleteProduct(producttobedeleted);
+		int productenindatabaseafterdelete = new ProductDaoSql().readAllProducten().size();
 		assertTrue(productenindatabaseafterdelete == 2);
 		
 	}

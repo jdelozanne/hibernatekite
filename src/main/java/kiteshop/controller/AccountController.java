@@ -3,19 +3,19 @@ package kiteshop.controller;
 import java.util.List;
 import java.util.logging.Logger;
 
-import kiteshop.daos.AccountDAO;
-import kiteshop.daos.AccountDAOInterface;
-import kiteshop.daos.AccountDAOMongo;
+import kiteshop.daos.AccountDaoSql;
+import kiteshop.daos.AccountDaoMongo;
 import kiteshop.pojos.Account;
 import kiteshop.test.ProjectLog;
+import kiteshop.daos.AccountDaoInterface;
 
 public class AccountController {
 
     private final Logger logger = ProjectLog.getLogger();
-    AccountDAOInterface accountDAO;
+    AccountDaoInterface accountDAO;
 
     public AccountController() {
-        accountDAO = new AccountDAO();
+        accountDAO = new AccountDaoSql();
     }
 
     public void createAccount(Account account) {
@@ -44,7 +44,7 @@ public class AccountController {
     }
     
     public List<Account> readAllAccountsMongo() {
-        return new AccountDAOMongo().readAllAccounts();
+        return new AccountDaoMongo().readAllAccounts();
     }
     
 }

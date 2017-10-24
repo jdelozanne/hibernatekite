@@ -12,7 +12,7 @@ import kiteshop.test.ProjectLog;
 import kiteshop.test.ProjectLog.*;
 
 import kiteshop.controller.*;
-import kiteshop.daos.AccountDAO;
+import kiteshop.daos.AccountDaoSql;
 import kiteshop.pojos.Account;
 
 /**

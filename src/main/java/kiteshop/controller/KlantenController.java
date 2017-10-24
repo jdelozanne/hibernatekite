@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import kiteshop.daos.KlantDAO;
-import kiteshop.daos.KlantDAOInterface;
+import kiteshop.daos.KlantDaoSql;
 import kiteshop.pojos.Klant;
 import kiteshop.test.ProjectLog;
+import kiteshop.daos.KlantDaoInterface;
 
 public class KlantenController {
 
     private final Logger logger = ProjectLog.getLogger();
-    private KlantDAOInterface klantDAO;
+    private KlantDaoInterface klantDAO;
 
     public KlantenController() {
-        klantDAO = new KlantDAO();
+        klantDAO = new KlantDaoSql();
     }
 
     public void createKlant(Klant klant) {

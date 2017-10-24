@@ -3,29 +3,29 @@ package kiteshop.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import kiteshop.daos.BestelRegelDAO;
-import kiteshop.daos.BestelRegelDAOInterface;
-import kiteshop.daos.BestellingDAO;
+import kiteshop.daos.BestelRegelDaoSql;
+import kiteshop.daos.BestellingDaoSql;
 
-import kiteshop.daos.BestellingDAOInterface;
-import kiteshop.daos.KlantDAO;
-import kiteshop.daos.ProductDAO;
+import kiteshop.daos.KlantDaoSql;
+import kiteshop.daos.ProductDaoSql;
 import kiteshop.pojos.BestelRegel;
 import kiteshop.pojos.Bestelling;
 import kiteshop.pojos.Klant;
 import kiteshop.pojos.Product;
 import kiteshop.test.ProjectLog;
+import kiteshop.daos.BestelRegelDaoInterface;
+import kiteshop.daos.BestellingDaoInterface;
 
 public class BestellingenController {
 
     private final Logger logger = ProjectLog.getLogger();
 
-    BestellingDAOInterface bestellingDAO;
-    BestelRegelDAOInterface bestelRegelDAO;
+    BestellingDaoInterface bestellingDAO;
+    BestelRegelDaoInterface bestelRegelDAO;
 
     public BestellingenController() {
-        bestellingDAO = new BestellingDAO();
-        bestelRegelDAO = new BestelRegelDAO();
+        bestellingDAO = new BestellingDaoSql();
+        bestelRegelDAO = new BestelRegelDaoSql();
     }
 
     public void createBestelling(Bestelling bestelling) {
@@ -48,7 +48,7 @@ public class BestellingenController {
     }
 
     public List<Klant> getKlantByAchternaam(String klantachternaam) {
-        KlantDAO klantdao = new KlantDAO();
+        KlantDaoSql klantdao = new KlantDaoSql();
         return klantdao.readKlantByAchternaam(klantachternaam);
     }
 
@@ -72,7 +72,7 @@ public class BestellingenController {
     }
 
     public List<BestelRegel> getBestelregelsByBestelling(Bestelling bestelling) {
-        BestelRegelDAO besteldao = new BestelRegelDAO();
+        BestelRegelDaoSql besteldao = new BestelRegelDaoSql();
         return besteldao.readBestelRegelsByBestelling(bestelling);
     }
 }

@@ -15,8 +15,8 @@ import java.util.logging.Logger;
 
 import kiteshop.controller.BestelRegelController;
 import kiteshop.controller.BestellingenController;
-import kiteshop.daos.KlantDAO;
-import kiteshop.daos.ProductDAO;
+import kiteshop.daos.KlantDaoSql;
+import kiteshop.daos.ProductDaoSql;
 import kiteshop.pojos.*;
 import kiteshop.test.ProjectLog;
 
@@ -79,7 +79,7 @@ public class MenuBestellingen {
     }
 
     public void createBestelling(String achternaam) {
-        KlantDAO k = new KlantDAO();
+        KlantDaoSql k = new KlantDaoSql();
         Klant klant = k.readKlantByAchternaam(achternaam).get(0);
         Bestelling bestelling = new Bestelling(klant);
 
@@ -101,7 +101,7 @@ public class MenuBestellingen {
     public BestelRegel createBestelRegel(Bestelling bestelling) {
         System.out.println("Welk product wilt u toevoegen aan de bestelling");
         String productnaam = input.nextLine();
-        Product p = new ProductDAO().readProduct(productnaam);
+        Product p = new ProductDaoSql().readProduct(productnaam);
 
         System.out.println("Hoeveel stuks wilt u van dit specifieke product toevoegen?");
         int aantal = input.nextInt();
@@ -159,7 +159,7 @@ public class MenuBestellingen {
             case 1:
                 System.out.println("Geef de naam van het nieuwe product");
                 String productnaam = input.nextLine();
-                br.setProduct(new ProductDAO().readProduct(productnaam));
+                br.setProduct(new ProductDaoSql().readProduct(productnaam));
                 break;
             case 2:
                 System.out.println("Geef het nieuwe aantal");

@@ -6,10 +6,10 @@
 package kiteshop.controller;
 
 import java.util.logging.Logger;
-import kiteshop.daos.BestelRegelDAO;
-import kiteshop.daos.BestelRegelDAOInterface;
+import kiteshop.daos.BestelRegelDaoSql;
 import kiteshop.pojos.BestelRegel;
 import kiteshop.test.ProjectLog;
+import kiteshop.daos.BestelRegelDaoInterface;
 
 /**
  *
@@ -18,10 +18,10 @@ import kiteshop.test.ProjectLog;
 public class BestelRegelController {
 
     private final Logger logger = ProjectLog.getLogger();
-    BestelRegelDAOInterface bestelRegelDAO;
+    BestelRegelDaoInterface bestelRegelDAO;
 
     public BestelRegelController() {
-        bestelRegelDAO = new BestelRegelDAO();
+        bestelRegelDAO = new BestelRegelDaoSql();
     }
 
     public void createBestelRegel(BestelRegel regel) {

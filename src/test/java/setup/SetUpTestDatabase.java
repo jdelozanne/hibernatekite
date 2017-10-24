@@ -12,7 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import kiteshop.daos.KlantDAO;
+import kiteshop.daos.KlantDaoSql;
 import kiteshop.pojos.Klant;
 import kiteshop.test.ProjectLog;
 
@@ -185,7 +185,7 @@ public class SetUpTestDatabase {
 		new SetUpTestDatabase().initializeDatabase();
 		new SetUpTestDatabase().populateDatabase();
 
-		KlantDAO klantDAO = new KlantDAO();
+		KlantDaoSql klantDAO = new KlantDaoSql();
 
 		logger.info("Beginning klantDAO readselectedklantenAchternaam");
 		ArrayList<Klant> testKlant = klantDAO.readKlantByAchternaam("Pelgrom");

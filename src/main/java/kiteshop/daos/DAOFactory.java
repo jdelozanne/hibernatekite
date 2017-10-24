@@ -11,71 +11,71 @@ package kiteshop.daos;
  */
 public class DAOFactory {
     
-private KlantDAOInterface klant;
-private AccountDAOInterface account;
-private ProductDAOInterface product;
-private BestellingDAOInterface bestelling;
-private BestelRegelDAOInterface bestelregel;
+private KlantDaoInterface klant;
+private AccountDaoInterface account;
+private ProductDaoInterface product;
+private BestellingDaoInterface bestelling;
+private BestelRegelDaoInterface bestelregel;
 
 	
     
-  public KlantDAOInterface createKlantDAO(String database){
+  public KlantDaoInterface createKlantDAO(String database){
 		switch(database.toLowerCase()){
 		case "mysql":
-			this.klant = new KlantDAO();
+			this.klant = new KlantDaoSql();
                         break;
                 case "mongodb":
-                    this.klant = new KlantDAOMongo();
+                    this.klant = new KlantDaoMongo();
                     break;
 		default:
 		}
                 return klant;
 	}
   
-  public AccountDAOInterface createAccountDAO(String database){
+  public AccountDaoInterface createAccountDAO(String database){
       switch(database.toLowerCase()){
 		case "mysql":
-			this.account = new AccountDAO();
+			this.account = new AccountDaoSql();
                         break;
                 case "mongodb":
-                    this.account = new AccountDAOMongo();
+                    this.account = new AccountDaoMongo();
                     break;
 		default:
 		}
                 return account;
 	}
-  public ProductDAOInterface createProductDAO(String database){
+  public ProductDaoInterface createProductDAO(String database){
       switch(database.toLowerCase()){
 		case "mysql":
-			this.product= new ProductDAO();
+			this.product= new ProductDaoSql();
                         break;
                 case "mongodb":
-                    this.product = new ProductDAOMongo();
+                    this.product = new ProductDaoMongo();
                     break;
 		default:
 		}
                 return product;
 	}
   
-  public BestellingDAOInterface createBestellingDAO(String database){
+  public BestellingDaoInterface createBestellingDAO(String database){
       switch(database.toLowerCase()){
 		case "mysql":
-			this.bestelling= new BestellingDAO();
+			this.bestelling= new BestellingDaoSql();
                         break;
                 case "mongodb":
-                    this.bestelling = new BestellingDAOMongo();
+                    this.bestelling = new BestellingDaoMongo();
                     break;
 		default:
 		}
                 return bestelling;
 	}
-  public BestelRegelDAOInterface createBestelRegelDAO(String database){
+  public BestelRegelDaoInterface createBestelRegelDAO(String database){
       switch(database.toLowerCase()){
 		case "mysql":
-			this.bestelregel= new BestelRegelDAO();
+			this.bestelregel= new BestelRegelDaoSql();
                         break;
                 case "mongodb":
-                    this.bestelregel = new BestelRegelDAOMongo();
+                    this.bestelregel = new BestelRegelDaoMongo();
                     break;
 		default:
 		}

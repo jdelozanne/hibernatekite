@@ -6,15 +6,10 @@ import org.apache.commons.validator.routines.RegexValidator;
 
 public class Validator {
 
-	public static void main(String[] args) {
-
-
-	}
         public static boolean isValidBigDecimal(String bigdecimal){
 		BigDecimalValidator bigDecimalValidator  = BigDecimalValidator.getInstance();
 		return bigDecimalValidator.isValid(bigdecimal);
 	}
-
 
 	public static boolean isValidEmail(String email){
 		EmailValidator emailValidator  = EmailValidator.getInstance();
@@ -42,21 +37,18 @@ public class Validator {
 		 * hetzelfde voor land lijn , evt kan regio code ook 4 getallen hebben
 		 * ik ga er niet vanuit dat mensen haakjes gaan invoeren ((026) 1234567 is niet toegestaan
 		 */
-
 		String regex = "(0|0031|\\+31)( )?(\\d{1}( |-)?\\d{8}|\\d{2}( |-)?\\d{7}|\\d{3}( |-)?\\d{6})";
 		RegexValidator regexValidator = new RegexValidator(regex, true);
 		return regexValidator.isValid(telefoonnummer);
 	}
 
 	public static boolean isValidPostcode(String postcode){
-
 		String regex = "\\d{4}[A-Z]{2}";
 		RegexValidator regexValidator = new RegexValidator(regex, true);
 		return regexValidator.isValid(postcode);
 	}
 
 	public static boolean isValidHuisnummer(String huisnummer){
-
 		String regex = "[1-9]\\d{0,4}";  //grootste huisnummer in NL  heeft 5 getallen
 		RegexValidator regexValidator = new RegexValidator(regex, true);
 		return regexValidator.isValid(huisnummer);
@@ -78,7 +70,4 @@ public class Validator {
 		RegexValidator regexValidator2 = new RegexValidator(regex2, true);
 		return (regexValidator.isValid(wachtwoord) && regexValidator2.isValid(wachtwoord));
 	}
-
-
-
 }

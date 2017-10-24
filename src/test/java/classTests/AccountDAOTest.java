@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import kiteshop.daos.AccountDAO;
+import kiteshop.daos.AccountDaoSql;
 import kiteshop.pojos.Account;
 import setup.SetUpTestDatabase;
 
@@ -37,7 +37,7 @@ public class AccountDAOTest {
 		new SetUpTestDatabase().populateDatabase();
 
 		Account expectedResult = new Account(1, "Steef", "Cola");
-		Account result = new AccountDAO().readAllAccounts().get(0);
+		Account result = new AccountDaoSql().readAllAccounts().get(0);
 
 		assertEquals(expectedResult, result);
 
@@ -48,7 +48,7 @@ public class AccountDAOTest {
 		new SetUpTestDatabase().populateDatabase();
 
 		Account expectedResult = new Account(1, "Steef", "Cola");
-		Account result = new AccountDAO().readAccountByGebruikersnaam("Steef");
+		Account result = new AccountDaoSql().readAccountByGebruikersnaam("Steef");
 
 		assertEquals(expectedResult, result);
 	}
@@ -56,8 +56,8 @@ public class AccountDAOTest {
 	@Test
 	public final void testCreateAccount() {
 		Account accounttobecreated = new Account(1, "Julia", "Moezel");
-		new AccountDAO().createAccount(accounttobecreated);
-		Account accountfromdatabase = new AccountDAO().readAccountByGebruikersnaam("Julia");
+		new AccountDaoSql().createAccount(accounttobecreated);
+		Account accountfromdatabase = new AccountDaoSql().readAccountByGebruikersnaam("Julia");
 
 		assertEquals(accounttobecreated, accountfromdatabase);
 
@@ -67,7 +67,7 @@ public class AccountDAOTest {
 	public final void testGivePassword() {
 		new SetUpTestDatabase().populateDatabase();
 		String password = "Cola";
-		String returnedpassword = new AccountDAO().givePassword("Steef");
+		String returnedpassword = new AccountDaoSql().givePassword("Steef");
 		
 		assertEquals(password, returnedpassword);
 		
@@ -79,8 +79,8 @@ public class AccountDAOTest {
 	public final void testUpdateAccount() {
 		new SetUpTestDatabase().populateDatabase();
 		Account expectedResult = new Account(1, "Julia", "Chablis");
-		new AccountDAO().updateAccount(expectedResult);
-		Account result = new AccountDAO().readAccountByGebruikersnaam("Julia");
+		new AccountDaoSql().updateAccount(expectedResult);
+		Account result = new AccountDaoSql().readAccountByGebruikersnaam("Julia");
 		
 		assertEquals(expectedResult, result);
 	}
@@ -89,8 +89,8 @@ public class AccountDAOTest {
 	public final void testDeleteAccount() {
 		new SetUpTestDatabase().populateDatabase();
 		Account accounttobedeleted = new Account(1, "Steef", "Cola");
-		new AccountDAO().deleteAccount(accounttobedeleted);
-		int numberofaccounts = new AccountDAO().readAllAccounts().size();
+		new AccountDaoSql().deleteAccount(accounttobedeleted);
+		int numberofaccounts = new AccountDaoSql().readAllAccounts().size();
 		
 		assertTrue(numberofaccounts == 0);
 	}
