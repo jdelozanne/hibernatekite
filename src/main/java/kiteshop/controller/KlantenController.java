@@ -23,8 +23,8 @@ public class KlantenController {
         klantDAO.createKlant(klant);
     }
 
-    public Klant readKlanten(String achternaam) {
-        return klantDAO.readKlant(achternaam);
+    public Klant readKlantenByID(int id) {
+        return klantDAO.readKlantById(id);
     }
 
     public List<Klant> showKlantenAchternaam(String achternaam) {
