@@ -77,11 +77,9 @@ public class MenuProducten {
         product.setVoorraad(voorraad);
         
         System.out.println("geef prijs ");
-        BigDecimal prijs = input.nextBigDecimal();
+        BigDecimal prijs = vraagBigDecimal();
         product.setPrijs(prijs);
-        input.nextLine();
-
-        
+                
         controller.createProduct(product);
     }
 
