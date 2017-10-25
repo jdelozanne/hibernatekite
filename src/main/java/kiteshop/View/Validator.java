@@ -11,12 +11,20 @@ public class Validator {
 		BigDecimalValidator bigDecimalValidator  = BigDecimalValidator.getInstance();
 		return bigDecimalValidator.isValid(bigdecimal);
 	}
-	
-	public static boolean isValidInteger(String integer){
-		IntegerValidator integerValidator  = IntegerValidator.getInstance();
-		return integerValidator.isValid(integer);
+
+	public static boolean isValidInt(String integer){
+		// de standaard Integer validator gebruikt amerikaanse notatie, "." wordt niet gelezen, maar hier faalt een int wel op
+		// vandaar deze zelfgemaakte
+		boolean validInt = false;
+		try{
+			Integer.parseInt(integer);
+			validInt = true;
+		} catch (Exception ex) {
+			validInt = false;
+		}
+		return validInt;
 	}
-	
+
 	public static boolean isValidValue(String integer, int min, int max){
 		return (Integer.parseInt(integer)>= min && Integer.parseInt(integer)<= max);
 	}

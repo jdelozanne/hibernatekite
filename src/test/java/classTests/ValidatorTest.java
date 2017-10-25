@@ -48,17 +48,17 @@ public class ValidatorTest {
 	
 	@Test 
 	public final void testIsValidInteger(){
-		String testInteger1 = "0.566567";
-		assertTrue(isValidInteger(testInteger1));
+		String testInteger1 = "566567";
+		assertTrue(isValidInt(testInteger1));
 
-		String testInteger2 = "adgfer";
-		assertFalse(isValidInteger(testInteger2));
+		String testInteger2 = "5665.67";   // Blijkbaar doen punten niets
+		assertFalse(isValidInt(testInteger2));
 
-		String testInteger3 = "5*20";
-		assertFalse(isValidInteger(testInteger3));
+		String testInteger3 = "15,565";
+		assertFalse(isValidInt(testInteger3));
 
-		String testInteger4 = "2000000034";
-		assertTrue(isValidInteger(testInteger4));
+		String testInteger4 = "200006034";
+		assertTrue(isValidInt(testInteger4));
 		
 	}
 

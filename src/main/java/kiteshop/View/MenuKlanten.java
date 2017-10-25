@@ -300,10 +300,10 @@ public class MenuKlanten {
 
 	private int vraagInteger() {
 		String integer = null;
-		while(!isValidInteger(integer)){
+		while(!isValidInt(integer)){
 			System.out.println("geef nummer: ");
 			integer = input.nextLine();
-			if(!isValidInteger(integer)){
+			if(!isValidInt(integer)){
 				System.out.println("Dit is geen nummer, probeer opnieuw");
 			}
 		}
@@ -312,10 +312,10 @@ public class MenuKlanten {
 
 	private int vraagIntegerMinMax(int min, int max) {
 		String integer = null;
-		while(!isValidInteger(integer)|| !isValidValue(integer, min,max)){
+		while(!isValidInt(integer)|| !isValidValue(integer, min,max)){
 			System.out.println("geef nummer: ");
 			integer = input.nextLine();
-			if(!isValidInteger(integer)){
+			if(!isValidInt(integer)){
 				System.out.println("Dit is geen nummer, probeer opnieuw");
 			} else if(!isValidValue(integer, min,max)){
 				System.out.println("Dit nummer behoort niet tot de mogelijkheden, probeer opnieuw");
