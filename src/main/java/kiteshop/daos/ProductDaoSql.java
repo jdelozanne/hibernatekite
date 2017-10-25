@@ -5,6 +5,7 @@
  */
 package kiteshop.daos;
 
+import Connection.ConnectionFactory;
 import Connection.JDBC;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,22 +25,20 @@ import kiteshop.test.ProjectLog;
  */
 public class ProductDaoSql implements ProductDaoInterface {
 
-    Connection connection;
-    PreparedStatement statement;
-    ResultSet result;
+    ConnectionFactory factory = new ConnectionFactory();
     private final Logger logger = ProjectLog.getLogger();
 
     public ProductDaoSql() {
-        this.connection = JDBC.getConnection();
     }
 
     @Override
     public void createProduct(Product product) {
-        try {
-            String sql = "INSERT INTO product"
-                    + "(productID, productnaam, voorraad, prijs)"
-                    + "values (?,?,?,?)";
-            statement = connection.prepareStatement(sql);
+        String sql = "INSERT INTO product"
+                + "(productID, productnaam, voorraad, prijs)"
+                + "values (?,?,?,?)";
+        try (Connection connection = factory.createConnection(factory.getConnectorType());
+                PreparedStatement statement = connection.prepareStatement(sql);) {
+
             statement.setInt(1, 0);
             statement.setString(2, product.getNaam());
             statement.setInt(3, product.getVoorraad());
@@ -54,11 +53,12 @@ public class ProductDaoSql implements ProductDaoInterface {
     @Override
     public Product readProduct(String productnaam) {
         Product p = new Product();
-        try {
-            String query = "Select * from product where productnaam = ?";
-            this.statement = this.connection.prepareStatement(query);
+        String query = "Select * from product where productnaam = ?";
+        try (Connection connection = factory.createConnection(factory.getConnectorType());
+                PreparedStatement statement = connection.prepareStatement(query);
+                ResultSet result = statement.executeQuery()) {
+
             statement.setString(1, productnaam);
-            result = statement.executeQuery();
             while (result.next()) {
                 p.setProductID(result.getInt(1));
                 p.setNaam(result.getString(2));
@@ -74,11 +74,12 @@ public class ProductDaoSql implements ProductDaoInterface {
 
     public String readProduct(int productID) {
         Product p = new Product();
-        try {
-            String query = "Select productnaam from product where productID = ?";
-            statement = this.connection.prepareStatement(query);
+        String query = "Select productnaam from product where productID = ?";
+        try (Connection connection = factory.createConnection(factory.getConnectorType());
+                PreparedStatement statement = connection.prepareStatement(query);
+                ResultSet result = statement.executeQuery()) {
+
             statement.setInt(1, productID);
-            result = statement.executeQuery();
             while (result.next()) {
                 p.setProductID(result.getInt(1));
                 p.setNaam(result.getString(2));
@@ -94,11 +95,12 @@ public class ProductDaoSql implements ProductDaoInterface {
     @Override
     public Product readProductByID(int productID) {
         Product p = new Product();
-        try {
-            String query = "Select * from product where productID = ?";
-            statement = this.connection.prepareStatement(query);
+        String query = "Select * from product where productID = ?";
+        try (Connection connection = factory.createConnection(factory.getConnectorType());
+                PreparedStatement statement = connection.prepareStatement(query);
+                ResultSet result = statement.executeQuery()) {
+
             statement.setInt(1, productID);
-            result = statement.executeQuery();
             while (result.next()) {
                 p.setProductID(result.getInt(1));
                 p.setNaam(result.getString(2));
@@ -114,10 +116,11 @@ public class ProductDaoSql implements ProductDaoInterface {
     @Override
     public List<Product> readAllProducten() {
         List<Product> producten = new ArrayList<>();
-        try {
-            String query = "Select * from product";
-            Statement statement = this.connection.createStatement();
-            result = statement.executeQuery(query);
+        String query = "Select * from product";
+        try (Connection connection = factory.createConnection(factory.getConnectorType());
+                Statement statement = connection.createStatement();
+                ResultSet result = statement.executeQuery(query)) {
+
             while (result.next()) {
                 Product p = new Product();
                 p.setProductID(result.getInt(1));
@@ -136,8 +139,9 @@ public class ProductDaoSql implements ProductDaoInterface {
     public void updateProduct(Product product) {
         System.out.println("updaten naar database");
         String update = "UPDATE product SET productnaam = ?, voorraad = ?, prijs = ? where productID = ?";
-        try {
-            statement = this.connection.prepareStatement(update);
+        try (Connection connection = factory.createConnection(factory.getConnectorType());
+                PreparedStatement statement = connection.prepareStatement(update)) {
+
             statement.setString(1, product.getNaam());
             statement.setInt(2, product.getVoorraad());
             statement.setBigDecimal(3, product.getPrijs());
@@ -150,26 +154,20 @@ public class ProductDaoSql implements ProductDaoInterface {
 
     @Override
     public void deleteProduct(Product product) {
-        try {
+        String query1 = " DELETE FROM product "
+                + " WHERE productID = " + product.getProductID();
+        String query = " DELETE FROM bestel_regel "
+                + " WHERE productID = " + product.getProductID();
+        try (Connection connection = factory.createConnection(factory.getConnectorType());
+                Statement statement = connection.createStatement();) {
             //First delete 'children' dwz bestelregel
-            Statement statement = connection.createStatement();
-            String query = " DELETE FROM bestel_regel "
-                    + " WHERE productID = " + product.getProductID();
             statement.executeUpdate(query);
             //Then delete 'mother' dwz product
-            Statement statement1 = connection.createStatement();
+            statement.executeUpdate(query1);
             logger.info("Deleting");
-            String query1 = " DELETE FROM product "
-                    + " WHERE productID = " + product.getProductID();
-            statement1.executeUpdate(query1);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
 
-    public void displayProducten(ArrayList<Product> producten) {
-        for (Product p : producten) {
-            System.out.println(p.toString());
-        }
-    }
 }

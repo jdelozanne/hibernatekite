@@ -13,32 +13,30 @@ import java.util.Properties;
  *
  * @author julia
  */
-public class JDBC {
+public class JDBC implements ConnectionInterface{
 
     private Connection connection;
     private static final JDBC INSTANCE = new JDBC();
     private static String pathOfActivePropopertyFile = "src/main/java/Connection/connect.properties";
 
-    private JDBC() {
-    }
-
     public void createConnectionJDBC() {
         try {
-            //load properties file
+            
             Properties props = new Properties();
             props.load(new FileInputStream(pathOfActivePropopertyFile));
-            //read props
+            
             String probsUser = props.getProperty("user");
             String probsWW = props.getProperty("password");
             String probsUrl = props.getProperty("dburl");
-            //connect to database
+            
             connection = DriverManager.getConnection(probsUrl, probsUser, probsWW);
         } catch (Exception ex) {
             System.out.println("geen connectie gemaakt:" + ex);
         }
     }
 
-    public static Connection getConnection() {
+    @Override
+    public Connection getConnection() {
         try {
             if (INSTANCE.connection == null|| INSTANCE.connection.isClosed()) {
                 INSTANCE.createConnectionJDBC();

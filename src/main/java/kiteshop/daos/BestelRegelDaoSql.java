@@ -5,6 +5,7 @@
  */
 package kiteshop.daos;
 
+import Connection.ConnectionFactory;
 import Connection.JDBC;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,22 +26,20 @@ import kiteshop.test.ProjectLog;
  */
 public class BestelRegelDaoSql implements BestelRegelDaoInterface {
 
-    Connection connection;
-    PreparedStatement statement;
-    ResultSet result;
+    ConnectionFactory factory = new ConnectionFactory();
     private final Logger logger = ProjectLog.getLogger();
 
     public BestelRegelDaoSql() {
-        connection = JDBC.getConnection();
+
     }
 
     @Override
     public void createBestelRegel(BestelRegel regel) {
-        try {
-            String sql = "INSERT INTO Bestel_regel"
-                    + "(bestel_regelID, productID, aantal, bestellingID)"
-                    + "values (?,?,?,?)";
-            this.statement = connection.prepareStatement(sql);
+        String sql = "INSERT INTO Bestel_regel"
+                + "(bestel_regelID, productID, aantal, bestellingID)"
+                + "values (?,?,?,?)";
+        try (Connection connection = factory.createConnection(factory.getConnectorType());
+                PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, 0);
             statement.setInt(2, regel.getProduct().getProductID());
@@ -55,11 +54,13 @@ public class BestelRegelDaoSql implements BestelRegelDaoInterface {
     @Override
     public void readBestelRegel(int bestellingID) {
         BestelRegel r = new BestelRegel();
-        try {
-            String query = "Select * from bestel_regel where bestellingID = ?";
-            this.statement = connection.prepareStatement(query);
+        String query = "Select * from bestel_regel where bestellingID = ?";
+        try (Connection connection = factory.createConnection(factory.getConnectorType());
+                PreparedStatement statement = connection.prepareStatement(query); 
+                ResultSet result = statement.executeQuery()) {
+
             statement.setInt(1, bestellingID);
-            result = statement.executeQuery();
+            
             while (result.next()) {
                 r.setBestelRegelID(result.getInt(1));
                 r.getProduct().setProductID(result.getInt(2));
@@ -75,8 +76,8 @@ public class BestelRegelDaoSql implements BestelRegelDaoInterface {
     public void updateBestelRegel(BestelRegel regel) {
         System.out.println("updaten naar database");
         String update = "UPDATE bestel_regel SET bestel_regelID = ?, productID = ?, aantal = ?, bestellingID =? where bestellingID = ?";
-        try {
-            statement = this.connection.prepareStatement(update);
+        try (Connection connection = factory.createConnection(factory.getConnectorType());
+                PreparedStatement statement = connection.prepareStatement(update)) {
             statement.setInt(1, regel.getBestelRegelID());
             statement.setInt(2, regel.getProduct().getProductID());
             statement.setInt(3, regel.getAantal());
@@ -95,10 +96,11 @@ public class BestelRegelDaoSql implements BestelRegelDaoInterface {
 
     public List<BestelRegel> readBestelRegelsByBestelling(Bestelling bestelling) {
         List<BestelRegel> bestelregels = (ArrayList<BestelRegel>) bestelling.getBestelling();
-        try {
-            Statement statement = connection.createStatement();
-            String query = "Select * from bestel_regel Where bestellingID =" + bestelling.getBestellingID();
-            result = statement.executeQuery(query);
+        String query = "Select * from bestel_regel Where bestellingID =" + bestelling.getBestellingID();
+
+        try (Connection connection = factory.createConnection(factory.getConnectorType());
+                Statement statement = connection.createStatement(); ResultSet result = statement.executeQuery(query)) {
+
             while (result.next()) {
                 BestelRegel r = new BestelRegel();
                 r.setBestelRegelID(result.getInt(1));

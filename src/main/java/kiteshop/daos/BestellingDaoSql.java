@@ -5,6 +5,7 @@
  */
 package kiteshop.daos;
 
+import Connection.ConnectionFactory;
 import Connection.JDBC;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,27 +25,27 @@ import kiteshop.test.ProjectLog;
  */
 public class BestellingDaoSql implements BestellingDaoInterface {
 
-    Connection connection;
-    PreparedStatement statement;
-    ResultSet result;
+    ConnectionFactory factory = new ConnectionFactory();
     private final Logger logger = ProjectLog.getLogger();
 
     public BestellingDaoSql() {
-        connection = JDBC.getConnection();
+
     }
 
     @Override
     public void createBestelling(Bestelling bestelling) {
-        try {
-            String sql = "INSERT INTO bestelling"
-                    + "(bestellingID, klantID, totaalprijs)"
-                    + "values (?,?,?)";
-            this.statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        String sql = "INSERT INTO bestelling"
+                + "(bestellingID, klantID, totaalprijs)"
+                + "values (?,?,?)";
+        try (Connection connection = factory.createConnection(factory.getConnectorType());
+                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                ResultSet result = statement.getGeneratedKeys();) {
+
             statement.setInt(1, 0);
             statement.setInt(2, bestelling.getKlant().getKlantID());
             statement.setBigDecimal(3, bestelling.getTotaalprijs());
             statement.execute();
-            result = statement.getGeneratedKeys();
+
             if (result.isBeforeFirst()) {
                 result.next();
                 bestelling.setBestellingID(result.getInt(1));
@@ -62,14 +63,15 @@ public class BestellingDaoSql implements BestellingDaoInterface {
 
     @Override
     public void deleteBestelling(int bestellingID) {
-        try {
+        try (Connection connection = factory.createConnection(factory.getConnectorType());
+                Statement statement = connection.createStatement();
+                Statement statement1 = connection.createStatement();) {
             //First delete 'children' dwz bestelregel
-            Statement statement = connection.createStatement();
             String deleteRegels = " DELETE FROM bestel_regel "
                     + " WHERE bestellingID =" + bestellingID;
             statement.executeUpdate(deleteRegels);
             //Then delete 'mother' dwz bestelling
-            Statement statement1 = connection.createStatement();
+
             String delete = " DELETE FROM bestelling "
                     + " WHERE bestellingID = " + bestellingID;
             statement1.executeUpdate(delete);
@@ -82,11 +84,12 @@ public class BestellingDaoSql implements BestellingDaoInterface {
     @Override
     public Bestelling readBestellingByBestellingID(int bestellingID) {
         Bestelling b = new Bestelling();
-        try {
-            String query = "Select * from bestelling where bestellingID = ?";
-            this.statement = this.connection.prepareStatement(query);
+        String query = "Select * from bestelling where bestellingID = ?";
+        try (Connection connection = factory.createConnection(factory.getConnectorType());
+                PreparedStatement statement = connection.prepareStatement(query);
+                ResultSet result = statement.executeQuery()) {
+
             statement.setInt(1, bestellingID);
-            result = statement.executeQuery();
             while (result.next()) {
                 b.setBestellingID(result.getInt(1));
                 b.setKlant(new KlantDaoSql().readKlantById(result.getInt(2)));
@@ -100,10 +103,10 @@ public class BestellingDaoSql implements BestellingDaoInterface {
 
     public List<Bestelling> readBestellingByKlantID(int klantID) {
         List<Bestelling> bestellingen = new ArrayList<>();
-        try {
-            Statement statement = connection.createStatement();
-            String query = "Select * from bestelling Where klantID =" + klantID;
-            result = statement.executeQuery(query);
+        String query = "Select * from bestelling Where klantID =" + klantID;
+        try (Connection connection = factory.createConnection(factory.getConnectorType());
+                Statement statement = connection.createStatement();
+                ResultSet result = statement.executeQuery(query)) {
             while (result.next()) {
                 Bestelling b = new Bestelling();
                 b.setBestellingID(result.getInt(1));
@@ -120,10 +123,11 @@ public class BestellingDaoSql implements BestellingDaoInterface {
 
     public List<Bestelling> readAllBestelling() {
         List<Bestelling> bestellingen = new ArrayList<>();
-        try {
-            Statement statement = connection.createStatement();
-            String readAll = "Select * from bestelling";
-            result = statement.executeQuery(readAll);
+        String readAll = "Select * from bestelling";
+        try (Connection connection = factory.createConnection(factory.getConnectorType());
+                Statement statement = connection.createStatement();
+                ResultSet result = statement.executeQuery(readAll)) {
+
             while (result.next()) {
                 Bestelling b = new Bestelling();
                 b.setBestellingID(result.getInt(1));

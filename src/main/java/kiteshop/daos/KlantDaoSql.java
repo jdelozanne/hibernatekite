@@ -5,6 +5,7 @@
  */
 package kiteshop.daos;
 
+import Connection.ConnectionFactory;
 import Connection.JDBC;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,19 +30,26 @@ import kiteshop.test.ProjectLog;
 public class KlantDaoSql implements KlantDaoInterface {
 
     private final Logger logger = ProjectLog.getLogger();
-    Connection connection;
+    ConnectionFactory factory = new ConnectionFactory();
 
     public KlantDaoSql() {
-        this.connection = JDBC.getConnection();
     }
 
     @Override
     public void createKlant(Klant klant) {
-        try {
-            String sql1 = "INSERT INTO klant" + "(KlantID, voornaam, tussenvoegsel, achternaam, "
-                    + "emailadres, telefoonnummer)"
-                    + "values (?,?,?,?,?,?)";
-            PreparedStatement statement1 = connection.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
+        String sql1 = "INSERT INTO klant" + "(KlantID, voornaam, tussenvoegsel, achternaam, "
+                + "emailadres, telefoonnummer)"
+                + "values (?,?,?,?,?,?)";
+        String sql2 = "INSERT INTO `juliaworkshop`.`adres` (`adresID`, `klantIDadres`, `straatnaam`, `huisnummer`, `toevoeging`, `postcode`, `woonplaats`, `adres_type` ) "
+                + "VALUES (?,?,?,?, ?,?, ?, ?)";
+        String sql3 = "INSERT INTO `juliaworkshop`.`adres` (`klantIDadres`, `straatnaam`, `huisnummer`, `toevoeging`, `postcode`, `woonplaats`, `adres_type`) "
+                + "VALUES (?,?,?,?,?,?, ?)";
+        try (Connection connection = factory.createConnection(factory.getConnectorType());
+                PreparedStatement statement1 = connection.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement statement2 = connection.prepareStatement(sql2);
+                PreparedStatement statement3 = connection.prepareStatement(sql3);
+                ResultSet result = statement1.getGeneratedKeys();) {
+            //creeeren klant
             statement1.setInt(1, 0);
             statement1.setString(2, klant.getVoornaam());
             statement1.setString(3, klant.getTussenvoegsel());
@@ -49,7 +57,7 @@ public class KlantDaoSql implements KlantDaoInterface {
             statement1.setString(5, klant.getEmail());
             statement1.setString(6, klant.getTelefoonnummer());
             statement1.execute();
-            ResultSet result = statement1.getGeneratedKeys();
+
             int generatedkey = 0;
             if (result.isBeforeFirst()) {
                 result.next();
@@ -57,9 +65,7 @@ public class KlantDaoSql implements KlantDaoInterface {
                 logger.info("Klant gegevens verwerkt, key gegenereerd: " + generatedkey);
             }
             //Creeeren van het bezoekadres
-            String sql2 = "INSERT INTO `juliaworkshop`.`adres` (`adresID`, `klantIDadres`, `straatnaam`, `huisnummer`, `toevoeging`, `postcode`, `woonplaats`, `adres_type` ) "
-                    + "VALUES (?,?,?,?, ?,?, ?, ?)";
-            PreparedStatement statement2 = connection.prepareStatement(sql2);
+
             statement2.setInt(1, 0);
             statement2.setInt(2, generatedkey);
             statement2.setString(3, klant.getBezoekAdres().getStraatnaam());
@@ -70,19 +76,17 @@ public class KlantDaoSql implements KlantDaoInterface {
             statement2.setString(8, klant.getBezoekAdres().getAdresType().toString());
             statement2.execute();
             //Creeeren van het factuuradres
-            
-            if(klant.getFactuurAdres()!=null){
-            String sql3 = "INSERT INTO `juliaworkshop`.`adres` (`klantIDadres`, `straatnaam`, `huisnummer`, `toevoeging`, `postcode`, `woonplaats`, `adres_type`) "
-                    + "VALUES (?,?,?,?,?,?, ?)";
-            PreparedStatement statement3 = connection.prepareStatement(sql3);
-            statement3.setInt(1, generatedkey);
-            statement3.setString(2, klant.getFactuurAdres().getStraatnaam());
-            statement3.setInt(3, klant.getFactuurAdres().getHuisnummer());
-            statement3.setString(4, klant.getFactuurAdres().getToevoeging());
-            statement3.setString(5, klant.getFactuurAdres().getPostcode());
-            statement3.setString(6, klant.getFactuurAdres().getWoonplaats());
-            statement3.setString(7, klant.getFactuurAdres().getAdresType().toString());
-            statement3.execute();
+
+            if (klant.getFactuurAdres() != null) {
+
+                statement3.setInt(1, generatedkey);
+                statement3.setString(2, klant.getFactuurAdres().getStraatnaam());
+                statement3.setInt(3, klant.getFactuurAdres().getHuisnummer());
+                statement3.setString(4, klant.getFactuurAdres().getToevoeging());
+                statement3.setString(5, klant.getFactuurAdres().getPostcode());
+                statement3.setString(6, klant.getFactuurAdres().getWoonplaats());
+                statement3.setString(7, klant.getFactuurAdres().getAdresType().toString());
+                statement3.execute();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -91,10 +95,17 @@ public class KlantDaoSql implements KlantDaoInterface {
 
     @Override
     public void updateKlant(Klant klant) {
-        try {
-            String sql = "UPDATE klant SET voornaam=?,tussenvoegsel=?,achternaam=?,emailadres=?,"
-                    + "telefoonnummer=? WHERE KlantID=?;";
-            PreparedStatement statement = connection.prepareStatement(sql);
+        String sql = "UPDATE klant SET voornaam=?,tussenvoegsel=?,achternaam=?,emailadres=?,"
+                + "telefoonnummer=? WHERE KlantID=?;";
+        String sql2 = "UPDATE adres SET straatnaam=?, huisnummer=?, toevoeging=?, postcode=?,"
+                + "woonplaats = ? WHERE KlantIDadres=? and adres_type = ?";
+        String sql3 = "UPDATE adres SET straatnaam=?, huisnummer=?, toevoeging=?, postcode=?,"
+                + "woonplaats = ? WHERE KlantIDadres=? and adres_type = ?";
+        try (Connection connection = factory.createConnection(factory.getConnectorType());
+                PreparedStatement statement = connection.prepareStatement(sql);
+                PreparedStatement statement2 = connection.prepareStatement(sql2);
+                PreparedStatement statement3 = connection.prepareStatement(sql3);) {
+
             statement.setString(1, klant.getVoornaam());
             statement.setString(2, klant.getTussenvoegsel());
             statement.setString(3, klant.getAchternaam());
@@ -102,9 +113,7 @@ public class KlantDaoSql implements KlantDaoInterface {
             statement.setString(5, klant.getTelefoonnummer());
             statement.setInt(6, klant.getKlantID());
             statement.execute();
-            String sql2 = "UPDATE adres SET straatnaam=?, huisnummer=?, toevoeging=?, postcode=?,"
-                    + "woonplaats = ? WHERE KlantIDadres=? and adres_type = ?";
-            PreparedStatement statement2 = connection.prepareStatement(sql2);
+
             statement2.setString(1, klant.getBezoekAdres().getStraatnaam());
             statement2.setInt(2, klant.getBezoekAdres().getHuisnummer());
             statement2.setString(3, klant.getBezoekAdres().getToevoeging());
@@ -113,9 +122,7 @@ public class KlantDaoSql implements KlantDaoInterface {
             statement2.setInt(6, klant.getKlantID());
             statement2.setString(7, "BEZOEKADRES");
             statement2.execute();
-            String sql3 = "UPDATE adres SET straatnaam=?, huisnummer=?, toevoeging=?, postcode=?,"
-                    + "woonplaats = ? WHERE KlantIDadres=? and adres_type = ?";
-            PreparedStatement statement3 = connection.prepareStatement(sql3);
+
             statement3.setString(1, klant.getFactuurAdres().getStraatnaam());
             statement3.setInt(2, klant.getFactuurAdres().getHuisnummer());
             statement3.setString(3, klant.getFactuurAdres().getToevoeging());
@@ -131,18 +138,18 @@ public class KlantDaoSql implements KlantDaoInterface {
 
     @Override
     public void deleteKlant(Klant klant) {
-        try {
+        String sql1 = " DELETE FROM adres "
+                + " WHERE KlantIDadres = " + klant.getKlantID();
+        String sql2 = " DELETE FROM klant "
+                + " WHERE KlantID = " + klant.getKlantID();
+        try (Connection connection = factory.createConnection(factory.getConnectorType());
+                Statement statement = connection.createStatement();) {
             //First delete 'children' dwz adres
-            Statement statement1 = connection.createStatement();
-            String sql1 = " DELETE FROM adres "
-                    + " WHERE KlantIDadres = " + klant.getKlantID();
-            statement1.executeUpdate(sql1);
+
+            statement.executeUpdate(sql1);
             //Then delete 'mother' dwz klant
-            Statement statement2 = connection.createStatement();
             logger.info("Deleting");
-            String sql2 = " DELETE FROM klant "
-                    + " WHERE KlantID = " + klant.getKlantID();
-            statement2.executeUpdate(sql2);
+            statement.executeUpdate(sql2);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -151,11 +158,20 @@ public class KlantDaoSql implements KlantDaoInterface {
     @Override
     public List<Klant> readKlantByAchternaam(String achternaam) {
         ArrayList<Klant> selectionKlanten = new ArrayList<Klant>();
-        try {
-            String query = "Select * from klant where achternaam = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        String query = "Select * from klant where achternaam = ?";
+        String query2 = "Select * from adres where klantIDadres = ? and adres_type = ?";
+        String query3 = "Select * from adres where klantIDadres = ? and adres_type = ?";
+
+        try (Connection connection = factory.createConnection(factory.getConnectorType());
+                PreparedStatement statement = connection.prepareStatement(query);
+                PreparedStatement statement2 = connection.prepareStatement(query2);
+                PreparedStatement statement3 = connection.prepareStatement(query3);
+                ResultSet result = statement.executeQuery();
+                ResultSet result2 = statement2.executeQuery();
+                ResultSet result3 = statement3.executeQuery();) {
+
             statement.setString(1, achternaam);
-            ResultSet result = statement.executeQuery();
+
             while (result.next()) {
                 Klant klant = new Klant();
                 klant.setKlantID(result.getInt(1));
@@ -170,11 +186,10 @@ public class KlantDaoSql implements KlantDaoInterface {
             for (int i = 0; i < selectionKlanten.size(); i++) {
                 Adres bezoekAdres = new Adres();
                 Adres factuurAdres = new Adres();
-                String query2 = "Select * from adres where klantIDadres = ? and adres_type = ?";
-                PreparedStatement statement2 = connection.prepareStatement(query2);
+
                 statement2.setInt(1, selectionKlanten.get(i).getKlantID());
                 statement2.setString(2, "BEZOEKADRES");
-                ResultSet result2 = statement2.executeQuery();
+
                 while (result2.next()) {
                     logger.info("In while loop voor bezoekadres, " + result2.getString(3));
                     bezoekAdres.setStraatnaam(result2.getString(3));
@@ -185,11 +200,10 @@ public class KlantDaoSql implements KlantDaoInterface {
                     bezoekAdres.setAdresType(AdresType.BEZOEKADRES);
                 }
                 selectionKlanten.get(i).setBezoekAdres(bezoekAdres);
-                String query3 = "Select * from adres where klantIDadres = ? and adres_type = ?";
-                PreparedStatement statement3 = connection.prepareStatement(query3);
+
                 statement3.setInt(1, selectionKlanten.get(i).getKlantID());
                 statement3.setString(2, "FACTUURADRES");
-                ResultSet result3 = statement3.executeQuery();
+
                 while (result3.next()) {
                     factuurAdres.setStraatnaam(result3.getString(3));
                     factuurAdres.setHuisnummer(result3.getInt(4));
@@ -209,11 +223,18 @@ public class KlantDaoSql implements KlantDaoInterface {
     @Override
     public List<Klant> readAllKlanten() {
         ArrayList<Klant> allKlanten = new ArrayList<Klant>();
-        try {
-            String query = "Select * from klant";
-            PreparedStatement statement = connection.prepareStatement(query);
+        String query = "Select * from klant";
+        String query2 = "Select * from adres where klantIDadres = ? and adres_type = ?";
+        try (Connection connection = factory.createConnection(factory.getConnectorType());
+                PreparedStatement statement = connection.prepareStatement(query);
+                PreparedStatement statement2 = connection.prepareStatement(query2);
+                PreparedStatement statement3 = connection.prepareStatement(query2);
+                ){
+
             ResultSet result = statement.executeQuery();
-            while (result.next()) {
+                ResultSet result2 = statement2.executeQuery();
+                ResultSet result3 = statement3.executeQuery();
+                while (result.next()) {
                 Klant klant = new Klant();
                 klant.setKlantID(result.getInt(1));
                 klant.setVoornaam(result.getString(2));
@@ -226,11 +247,10 @@ public class KlantDaoSql implements KlantDaoInterface {
             for (int i = 0; i < allKlanten.size(); i++) {
                 Adres bezoekAdres = new Adres();
                 Adres factuurAdres = new Adres();
-                String query2 = "Select * from adres where klantIDadres = ? and adres_type = ?";
-                PreparedStatement statement2 = connection.prepareStatement(query2);
+
                 statement2.setInt(1, allKlanten.get(i).getKlantID());
                 statement2.setString(2, "BEZOEKADRES");
-                ResultSet result2 = statement2.executeQuery();
+
                 while (result2.next()) {
                     logger.info("In while loop voor bezoekadres, " + result2.getString(3));
                     bezoekAdres.setStraatnaam(result2.getString(3));
@@ -241,10 +261,10 @@ public class KlantDaoSql implements KlantDaoInterface {
                     bezoekAdres.setAdresType(AdresType.BEZOEKADRES);
                 }
                 allKlanten.get(i).setBezoekAdres(bezoekAdres);
-                PreparedStatement statement3 = connection.prepareStatement(query2);
+
                 statement3.setInt(1, allKlanten.get(i).getKlantID());
                 statement3.setString(2, "FACTUURADRES");
-                ResultSet result3 = statement3.executeQuery();
+
                 while (result3.next()) {
                     factuurAdres.setStraatnaam(result3.getString(3));
                     factuurAdres.setHuisnummer(result3.getInt(4));
@@ -274,10 +294,16 @@ public class KlantDaoSql implements KlantDaoInterface {
         Adres factuurAdres = new Adres();
         String query = "Select * from klant where klantID = ?";
         String query2 = "Select * from adres where klantIDadres = ? and adres_type = ?";
-        try {
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = factory.createConnection(factory.getConnectorType());
+                PreparedStatement statement = connection.prepareStatement(query);
+                PreparedStatement statement2 = connection.prepareStatement(query2);
+                PreparedStatement statement3 = connection.prepareStatement(query2);
+                ResultSet result = statement.executeQuery();
+                ResultSet result2 = statement2.executeQuery();
+                ResultSet result3 = statement3.executeQuery();) {
+
             statement.setInt(1, id);
-            ResultSet result = statement.executeQuery();
+
             while (result.next()) {
                 Klant klant = new Klant();
                 klant.setKlantID(result.getInt(1));
@@ -288,10 +314,10 @@ public class KlantDaoSql implements KlantDaoInterface {
                 klant.setTelefoonnummer(result.getString(6));
                 logger.info("In first loop");
             }
-            PreparedStatement statement2 = connection.prepareStatement(query2);
+
             statement2.setInt(1, id);
             statement2.setString(2, "BEZOEKADRES");
-            ResultSet result2 = statement2.executeQuery();
+
             while (result2.next()) {
                 logger.info("In while loop voor bezoekadres, " + result2.getString(3));
                 bezoekAdres.setStraatnaam(result2.getString(3));
@@ -301,18 +327,18 @@ public class KlantDaoSql implements KlantDaoInterface {
                 bezoekAdres.setWoonplaats(result2.getString(7));
                 bezoekAdres.setAdresType(AdresType.BEZOEKADRES);
             }
-            PreparedStatement statement3 = connection.prepareStatement(query2);
-                statement3.setInt(1, id);
-                statement3.setString(2, "FACTUURADRES");
-                ResultSet result3 = statement3.executeQuery();
-                while (result3.next()) {
-                    factuurAdres.setStraatnaam(result3.getString(3));
-                    factuurAdres.setHuisnummer(result3.getInt(4));
-                    factuurAdres.setToevoeging(result3.getString(5));
-                    factuurAdres.setPostcode(result3.getString(6));
-                    factuurAdres.setWoonplaats(result3.getString(7));
-                    factuurAdres.setAdresType(AdresType.FACTUURADRES);
-                }
+
+            statement3.setInt(1, id);
+            statement3.setString(2, "FACTUURADRES");
+
+            while (result3.next()) {
+                factuurAdres.setStraatnaam(result3.getString(3));
+                factuurAdres.setHuisnummer(result3.getInt(4));
+                factuurAdres.setToevoeging(result3.getString(5));
+                factuurAdres.setPostcode(result3.getString(6));
+                factuurAdres.setWoonplaats(result3.getString(7));
+                factuurAdres.setAdresType(AdresType.FACTUURADRES);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(KlantDaoSql.class.getName()).log(Level.SEVERE, null, ex);
         }

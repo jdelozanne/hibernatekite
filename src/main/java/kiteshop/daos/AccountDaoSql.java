@@ -5,6 +5,7 @@
  */
 package kiteshop.daos;
 
+import Connection.ConnectionFactory;
 import Connection.HikariCP;
 import Connection.JDBC;
 import java.sql.Connection;
@@ -26,7 +27,8 @@ import kiteshop.test.ProjectLog;
 public class AccountDaoSql implements AccountDaoInterface {
 
     private final Logger logger = ProjectLog.getLogger();
-
+    ConnectionFactory factory = new ConnectionFactory();
+    
  
     public AccountDaoSql() {
        
@@ -37,7 +39,7 @@ public class AccountDaoSql implements AccountDaoInterface {
         String sql = "INSERT INTO account"
                 + "(accountID, gebruikersnaam, wachtwoord)"
                 + "values (?,?,?)";
-        try (Connection connection = JDBC.getConnection(); 
+        try (Connection connection =factory.createConnection(factory.getConnectorType()); 
                 PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, 0);
@@ -55,7 +57,7 @@ public class AccountDaoSql implements AccountDaoInterface {
     public Account readAccountByGebruikersnaam(String gebruikersnaam) {
         Account account = new Account();
         String sqlQuery = "SELECT * FROM account WHERE gebruikersnaam = ? ";
-        try (Connection connection = JDBC.getConnection();
+        try (Connection connection =factory.createConnection(factory.getConnectorType());
                 PreparedStatement prepstat = connection.prepareStatement(sqlQuery)
                 ) {
             prepstat.setString(1, gebruikersnaam);
@@ -77,7 +79,7 @@ public class AccountDaoSql implements AccountDaoInterface {
     public void updateAccount(Account account) {
         String sql = "UPDATE account SET gebruikersnaam=?,wachtwoord=?"
                 + " WHERE accountID=?;";
-        try (Connection connection = JDBC.getConnection();
+        try (Connection connection =factory.createConnection(factory.getConnectorType());
                 PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, account.getGebruikersnaam());
             statement.setString(2, account.getWachtwoord());
@@ -93,8 +95,7 @@ public class AccountDaoSql implements AccountDaoInterface {
     public void deleteAccount(Account account) {
         String sql = " DELETE FROM account "
                 + " WHERE accountID = " + account.getAccountID();
-        try (Connection connection = JDBC.getConnection()
-                ) {
+        try (Connection connection =factory.createConnection(factory.getConnectorType())) {
             Statement statement = connection.createStatement();
             statement.executeUpdate(sql);
         } catch (SQLException ex) {
@@ -106,7 +107,7 @@ public class AccountDaoSql implements AccountDaoInterface {
     public List<Account> readAllAccounts() {
         List<Account> accounts = new ArrayList<Account>();
         String sqlQuery = "SELECT * FROM account";
-        try (Connection connection = JDBC.getConnection();
+        try (Connection connection =factory.createConnection(factory.getConnectorType());
                 PreparedStatement prepstat = connection.prepareStatement(sqlQuery)
                ) { 
             ResultSet result = prepstat.executeQuery();
