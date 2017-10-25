@@ -28,7 +28,9 @@ public class HoofdController {
 		if(inlogSuccesfull){
 			HoofdMenu hoofdMenu = new HoofdMenu(this);
 			hoofdMenu.start();
-		} 
+		} else {
+			start();
+		}
 	}
 
 	public void startMenuKlanten() {

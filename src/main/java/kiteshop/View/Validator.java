@@ -17,6 +17,10 @@ public class Validator {
 		return integerValidator.isValid(integer);
 	}
 	
+	public static boolean isValidValue(String integer, int min, int max){
+		return (Integer.parseInt(integer)>= min && Integer.parseInt(integer)<= max);
+	}
+	
 
 	public static boolean isValidEmail(String email){
 		EmailValidator emailValidator  = EmailValidator.getInstance();
@@ -63,7 +67,7 @@ public class Validator {
 
 	public static boolean isValidToevoeging(String toevoeging){
 		// een toevoeging mag nu geen getal bevatten wel bijv II
-		String regex = "[A-Za-z]{1,5}";
+		String regex = "[A-Za-z]{0,5}";
 		RegexValidator regexValidator = new RegexValidator(regex, true);
 		return regexValidator.isValid(toevoeging);
 	}

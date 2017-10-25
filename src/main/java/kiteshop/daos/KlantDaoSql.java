@@ -70,6 +70,8 @@ public class KlantDaoSql implements KlantDaoInterface {
             statement2.setString(8, klant.getBezoekAdres().getAdresType().toString());
             statement2.execute();
             //Creeeren van het factuuradres
+            
+            if(klant.getFactuurAdres()!=null){
             String sql3 = "INSERT INTO `juliaworkshop`.`adres` (`klantIDadres`, `straatnaam`, `huisnummer`, `toevoeging`, `postcode`, `woonplaats`, `adres_type`) "
                     + "VALUES (?,?,?,?,?,?, ?)";
             PreparedStatement statement3 = connection.prepareStatement(sql3);
@@ -81,6 +83,7 @@ public class KlantDaoSql implements KlantDaoInterface {
             statement3.setString(6, klant.getFactuurAdres().getWoonplaats());
             statement3.setString(7, klant.getFactuurAdres().getAdresType().toString());
             statement3.execute();
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
