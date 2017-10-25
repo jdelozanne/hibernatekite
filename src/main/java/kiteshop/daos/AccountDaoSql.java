@@ -5,6 +5,7 @@
  */
 package kiteshop.daos;
 
+import Connection.HikariCP;
 import Connection.MySQLConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -54,7 +55,7 @@ public class AccountDaoSql implements AccountDaoInterface {
     public Account readAccountByGebruikersnaam(String gebruikersnaam) {
         Account account = new Account();
         String sqlQuery = "SELECT * FROM account WHERE gebruikersnaam = ? ";
-        try (Connection connection = MySQLConnection.getConnection();
+        try (Connection connection = new HikariCP().getConnection();
                 PreparedStatement prepstat = connection.prepareStatement(sqlQuery)
                 ) {
             prepstat.setString(1, gebruikersnaam);
