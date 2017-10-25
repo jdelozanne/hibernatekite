@@ -88,8 +88,8 @@ public class AccountDaoMongo implements AccountDaoInterface {
         DBCursor cursor = collection.find(query);
         while (cursor.hasNext()) {
             DBObject object = cursor.next();
-            DBObject accountObj = (BasicDBObject) object;
-            int id = (int) accountObj.get("id");
+            BasicDBObject accountObj = (BasicDBObject) object;
+            int id = (int) accountObj.getInt("id");
             String user = (String)accountObj.get("gebruikersnaam");
             String ww = (String)accountObj.get("wachtwoord");
 
