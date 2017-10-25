@@ -63,15 +63,7 @@ public class AccountDAOTest {
 
 	}
 
-	@Test
-	public final void testGivePassword() {
-		new SetUpTestDatabase().populateDatabase();
-		String password = "Cola";
-		String returnedpassword = new AccountDaoSql().givePassword("Steef");
-		
-		assertEquals(password, returnedpassword);
-		
-	}
+	
 
 
 
