@@ -22,7 +22,7 @@ public class DBConnectInit {
     private Connection connection;
     private static final DBConnectInit INSTANCE = new DBConnectInit();
     
-    public static String pathOfActivePropopertyFile = "src/test/java/testConnection/connectInit.properties";
+    public static String pathOfActivePropopertyFile = "src/test/java/setup/connectInit.properties";
     
     public static void setPathOfActivePropopertyFile (String path){
     	pathOfActivePropopertyFile = path;

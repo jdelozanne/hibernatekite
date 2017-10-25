@@ -2,14 +2,21 @@ package kiteshop.View;
 
 import org.apache.commons.validator.routines.BigDecimalValidator;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.apache.commons.validator.routines.IntegerValidator;
 import org.apache.commons.validator.routines.RegexValidator;
 
 public class Validator {
 
-        public static boolean isValidBigDecimal(String bigdecimal){
+	public static boolean isValidBigDecimal(String bigdecimal){
 		BigDecimalValidator bigDecimalValidator  = BigDecimalValidator.getInstance();
 		return bigDecimalValidator.isValid(bigdecimal);
 	}
+	
+	public static boolean isValidInteger(String integer){
+		IntegerValidator integerValidator  = IntegerValidator.getInstance();
+		return integerValidator.isValid(integer);
+	}
+	
 
 	public static boolean isValidEmail(String email){
 		EmailValidator emailValidator  = EmailValidator.getInstance();
@@ -65,7 +72,7 @@ public class Validator {
 		//minimaal 8 karakters lang en een getal bevatten
 		String regex = "[^\\-]{4,}";
 		String regex2 = "[^\\-]{0,}[0-9]{1}[^\\-]{0,}";
-		
+
 		RegexValidator regexValidator = new RegexValidator(regex, true);
 		RegexValidator regexValidator2 = new RegexValidator(regex2, true);
 		return (regexValidator.isValid(wachtwoord) && regexValidator2.isValid(wachtwoord));

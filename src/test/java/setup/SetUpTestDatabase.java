@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import kiteshop.daos.KlantDaoSql;
@@ -188,7 +189,7 @@ public class SetUpTestDatabase {
 		KlantDaoSql klantDAO = new KlantDaoSql();
 
 		logger.info("Beginning klantDAO readselectedklantenAchternaam");
-		ArrayList<Klant> testKlant = klantDAO.readKlantByAchternaam("Pelgrom");
+		List<Klant> testKlant = klantDAO.readKlantByAchternaam("Pelgrom");
 		System.out.println(testKlant);
 
 	}
