@@ -84,9 +84,4 @@ public class HikariCP {
         return null;
 
     }
-
-    public static void main(String[] args) {
-        new HikariCP().getConnection();
-    }
-
 }

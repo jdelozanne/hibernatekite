@@ -6,7 +6,7 @@
 package kiteshop.daos;
 
 import Connection.HikariCP;
-import Connection.MySQLConnection;
+import Connection.JDBC;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,7 +37,7 @@ public class AccountDaoSql implements AccountDaoInterface {
         String sql = "INSERT INTO account"
                 + "(accountID, gebruikersnaam, wachtwoord)"
                 + "values (?,?,?)";
-        try (Connection connection = MySQLConnection.getConnection(); 
+        try (Connection connection = JDBC.getConnection(); 
                 PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, 0);
@@ -55,7 +55,7 @@ public class AccountDaoSql implements AccountDaoInterface {
     public Account readAccountByGebruikersnaam(String gebruikersnaam) {
         Account account = new Account();
         String sqlQuery = "SELECT * FROM account WHERE gebruikersnaam = ? ";
-        try (Connection connection = MySQLConnection.getConnection();
+        try (Connection connection = JDBC.getConnection();
                 PreparedStatement prepstat = connection.prepareStatement(sqlQuery)
                 ) {
             prepstat.setString(1, gebruikersnaam);
@@ -77,7 +77,7 @@ public class AccountDaoSql implements AccountDaoInterface {
     public void updateAccount(Account account) {
         String sql = "UPDATE account SET gebruikersnaam=?,wachtwoord=?"
                 + " WHERE accountID=?;";
-        try (Connection connection = MySQLConnection.getConnection();
+        try (Connection connection = JDBC.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, account.getGebruikersnaam());
             statement.setString(2, account.getWachtwoord());
@@ -93,7 +93,7 @@ public class AccountDaoSql implements AccountDaoInterface {
     public void deleteAccount(Account account) {
         String sql = " DELETE FROM account "
                 + " WHERE accountID = " + account.getAccountID();
-        try (Connection connection = MySQLConnection.getConnection()
+        try (Connection connection = JDBC.getConnection()
                 ) {
             Statement statement = connection.createStatement();
             statement.executeUpdate(sql);
@@ -106,7 +106,7 @@ public class AccountDaoSql implements AccountDaoInterface {
     public List<Account> readAllAccounts() {
         List<Account> accounts = new ArrayList<Account>();
         String sqlQuery = "SELECT * FROM account";
-        try (Connection connection = MySQLConnection.getConnection();
+        try (Connection connection = JDBC.getConnection();
                 PreparedStatement prepstat = connection.prepareStatement(sqlQuery)
                ) { 
             ResultSet result = prepstat.executeQuery();

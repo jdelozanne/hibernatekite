@@ -5,7 +5,7 @@
  */
 package setup;
 
-import Connection.MySQLConnection;
+import Connection.JDBC;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -28,8 +28,8 @@ public class SetUpTestDatabase {
 	Connection connection;
 
 	public SetUpTestDatabase() {
-		MySQLConnection.setPathOfActivePropopertyFiletoTest();
-		this.connection = MySQLConnection.getConnection();
+		JDBC.setPathOfActivePropopertyFiletoTest();
+		this.connection = JDBC.getConnection();
 	}
 
 	private static final String DATABASE = "TestKiteshop";

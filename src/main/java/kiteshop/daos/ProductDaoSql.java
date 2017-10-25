@@ -5,7 +5,7 @@
  */
 package kiteshop.daos;
 
-import Connection.MySQLConnection;
+import Connection.JDBC;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,7 +30,7 @@ public class ProductDaoSql implements ProductDaoInterface {
     private final Logger logger = ProjectLog.getLogger();
 
     public ProductDaoSql() {
-        this.connection = MySQLConnection.getConnection();
+        this.connection = JDBC.getConnection();
     }
 
     @Override

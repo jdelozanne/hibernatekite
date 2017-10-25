@@ -5,7 +5,7 @@
  */
 package kiteshop.daos;
 
-import Connection.MySQLConnection;
+import Connection.JDBC;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,7 +32,7 @@ public class KlantDaoSql implements KlantDaoInterface {
     Connection connection;
 
     public KlantDaoSql() {
-        this.connection = MySQLConnection.getConnection();
+        this.connection = JDBC.getConnection();
     }
 
     @Override

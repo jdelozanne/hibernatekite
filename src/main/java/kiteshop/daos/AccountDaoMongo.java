@@ -6,7 +6,7 @@
 package kiteshop.daos;
 
 import Connection.MongoDBConnection;
-import Connection.MySQLConnection;
+import Connection.JDBC;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;

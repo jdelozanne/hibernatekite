@@ -13,16 +13,16 @@ import java.util.Properties;
  *
  * @author julia
  */
-public class MySQLConnection {
+public class JDBC {
 
     private Connection connection;
-    private static final MySQLConnection INSTANCE = new MySQLConnection();
+    private static final JDBC INSTANCE = new JDBC();
     private static String pathOfActivePropopertyFile = "src/main/java/Connection/connect.properties";
 
-    private MySQLConnection() {
+    private JDBC() {
     }
 
-    public void connect() {
+    public void createConnectionJDBC() {
         try {
             //load properties file
             Properties props = new Properties();
@@ -41,7 +41,7 @@ public class MySQLConnection {
     public static Connection getConnection() {
         try {
             if (INSTANCE.connection == null|| INSTANCE.connection.isClosed()) {
-                INSTANCE.connect();
+                INSTANCE.createConnectionJDBC();
             }
         } catch (Exception e) {
             e.printStackTrace();

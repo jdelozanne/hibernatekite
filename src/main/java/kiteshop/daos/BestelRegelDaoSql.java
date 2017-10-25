@@ -5,7 +5,7 @@
  */
 package kiteshop.daos;
 
-import Connection.MySQLConnection;
+import Connection.JDBC;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,7 +31,7 @@ public class BestelRegelDaoSql implements BestelRegelDaoInterface {
     private final Logger logger = ProjectLog.getLogger();
 
     public BestelRegelDaoSql() {
-        connection = MySQLConnection.getConnection();
+        connection = JDBC.getConnection();
     }
 
     @Override
