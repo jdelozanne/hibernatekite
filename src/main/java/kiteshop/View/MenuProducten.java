@@ -5,6 +5,8 @@
  */
 package kiteshop.View;
 
+import static kiteshop.View.Validator.*;
+
 import java.math.BigDecimal;
 import java.util.Scanner;
 import kiteshop.controller.HoofdController;
@@ -71,10 +73,9 @@ public class MenuProducten {
         product.setNaam(productnaam);
 
         System.out.println("geef voorraad");
-        int voorraad = input.nextInt();
+        int voorraad = vraagInteger();
         product.setVoorraad(voorraad);
-        input.nextLine();
-
+        
         System.out.println("geef prijs ");
         BigDecimal prijs = input.nextBigDecimal();
         product.setPrijs(prijs);
@@ -130,6 +131,27 @@ public class MenuProducten {
         controller.deleteProduct(p);
     }
 
+	private int vraagInteger() {
+		String integer = null;
+		while(!isValidInt(integer)){
+			integer = input.nextLine();
+			if(!isValidInt(integer)){
+				System.out.println("Dit is geen nummer, probeer opnieuw");
+			}
+		}
+		return Integer.parseInt(integer);
+	}
+	
+	private BigDecimal vraagBigDecimal() {
+		String bigDecimal = null;
+		while(!isValidBigDecimal(bigDecimal)){
+			bigDecimal = input.nextLine();
+			if(!isValidBigDecimal(bigDecimal)){
+				System.out.println("Dit is geen geldige waarde voor een prijs, decimale getallen zijn toegestaan, met een punt als scheidingsteken, probeer opnieuw");
+			}
+		}
+		return new BigDecimal(bigDecimal);
+	}
 
 
 	
