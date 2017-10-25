@@ -9,7 +9,6 @@ import static kiteshop.View.Validator.*;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
-import kiteshop.controller.HoofdController;
 
 import kiteshop.controller.ProductenController;
 import kiteshop.pojos.Product;
@@ -35,8 +34,7 @@ public class MenuProducten {
         System.out.println("Kies 3 voor Een product verwijderen");
         System.out.println("Kies 4 voor Overzicht producten");
         System.out.println("Kies 5 voor terug naar Hoofdmenu");
-        int keuze = input.nextInt();
-        input.nextLine();
+        int keuze = vraagInteger();
         switch (keuze) {
             case 1:
                 createProduct();
@@ -97,8 +95,7 @@ public class MenuProducten {
         System.out.println("Kies 1 voor de productnaam");
         System.out.println("Kies 2 voor de voorraad");
         System.out.println("Kies 3 voor de prijs");
-        int keuze = input.nextInt();
-        input.nextLine();
+        int keuze = vraagInteger();
         
         switch (keuze) {
             case 1:
