@@ -34,8 +34,9 @@ import static sun.security.krb5.SCDynamicStoreConfig.getConfig;
 public class HikariCP {
 
     private HikariDataSource hikari;
+    private Connection connection;
 
-    private HikariDataSource connectToDatabase() {
+    private HikariDataSource createHikariPool() {
 
         try {
 
@@ -44,16 +45,15 @@ public class HikariCP {
             props.load(new FileInputStream("src/main/java/Connection/connect.properties"));
 
             HikariConfig config = new HikariConfig();
-
+            //config.setDataSourceClassName("com.mysql.jdbc.Driver");
             config.setJdbcUrl(props.getProperty("dburl"));
-
             config.setUsername(props.getProperty("user"));
-
             config.setPassword(props.getProperty("password"));
-
             config.setMaximumPoolSize(10);
-
-            //config.setAutoCommit(true);
+            config.setAutoCommit(true);
+            config.addDataSourceProperty("cachePrepStmts", "true");
+            config.addDataSourceProperty("prepStmtCacheSize", "250");
+            config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
 
             hikari = new HikariDataSource(config);
 
@@ -69,16 +69,10 @@ public class HikariCP {
 
     public Connection getConnection() {
 
-        Connection connection = null;
-
         try {
-
             if (hikari == null || hikari.isClosed()) {
-
-                return connection = new HikariCP().connectToDatabase().getConnection();
-
+                return connection = createHikariPool().getConnection();
             }
-
             return connection = hikari.getConnection();
 
         } catch (SQLException ex) {
@@ -89,6 +83,10 @@ public class HikariCP {
 
         return null;
 
+    }
+
+    public static void main(String[] args) {
+        new HikariCP().getConnection();
     }
 
 }

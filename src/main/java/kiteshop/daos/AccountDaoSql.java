@@ -55,7 +55,7 @@ public class AccountDaoSql implements AccountDaoInterface {
     public Account readAccountByGebruikersnaam(String gebruikersnaam) {
         Account account = new Account();
         String sqlQuery = "SELECT * FROM account WHERE gebruikersnaam = ? ";
-        try (Connection connection = new HikariCP().getConnection();
+        try (Connection connection = MySQLConnection.getConnection();
                 PreparedStatement prepstat = connection.prepareStatement(sqlQuery)
                 ) {
             prepstat.setString(1, gebruikersnaam);

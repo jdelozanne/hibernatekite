@@ -172,10 +172,4 @@ public class ProductDaoSql implements ProductDaoInterface {
             System.out.println(p.toString());
         }
     }
-
-    public static void main(String[] args) {
-        BestelRegel br = new BestelRegel();
-        br.setProduct(new ProductDaoSql().readProductByID(13));
-        br.toString();
-    }
 }
