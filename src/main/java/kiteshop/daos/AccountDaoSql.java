@@ -36,14 +36,15 @@ public class AccountDaoSql implements AccountDaoInterface {
     @Override
     public void createAccount(Account account) {
         String sql = "INSERT INTO account"
-                + "(accountID, gebruikersnaam, wachtwoord)"
-                + "values (?,?,?)";
+                + "(accountID, gebruikersnaam, wachtwoord, salt)"
+                + "values (?,?,?, ?)";
         try (Connection connection = factory.createConnection(factory.getConnectorType()); 
                 PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, 0);
             statement.setString(2, account.getGebruikersnaam());
             statement.setString(3, account.getWachtwoord());
+            statement.setString(4, account.getSalt());
             statement.execute();
 
         } catch (SQLException ex) {
@@ -66,6 +67,7 @@ public class AccountDaoSql implements AccountDaoInterface {
                 account.setAccountID(result.getInt(1));
                 account.setGebruikersnaam(result.getString(2));
                 account.setWachtwoord(result.getString(3));
+                account.setSalt(result.getString(4));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -76,23 +78,24 @@ public class AccountDaoSql implements AccountDaoInterface {
 
     @Override
     public void updateAccount(Account account) {
-        String sql = "UPDATE account SET gebruikersnaam=?,wachtwoord=?"
-                + " WHERE accountID=?;";
-        try (Connection connection =factory.createConnection(factory.getConnectorType());
-                PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, account.getGebruikersnaam());
-            statement.setString(2, account.getWachtwoord());
-            statement.setInt(3, account.getAccountID());
-            statement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        logger.info("Updating account :" + account);
+    	String sql = "UPDATE account SET gebruikersnaam=?,wachtwoord=?, salt=?"
+    			+ " WHERE accountID=?;";
+    	try (Connection connection =factory.createConnection(factory.getConnectorType());
+    			PreparedStatement statement = connection.prepareStatement(sql)) {
+    		statement.setString(1, account.getGebruikersnaam());
+    		statement.setString(2, account.getWachtwoord());
+    		statement.setString(3, account.getSalt());
+    		statement.setInt(4, account.getAccountID());
+    		statement.execute();
+    	} catch (SQLException e) {
+    		e.printStackTrace();
+    	}
+    	logger.info("Updating account :" + account);
     }
 
     @Override
     public void deleteAccount(Account account) {
-        String sql = " DELETE FROM account "
+    	String sql = " DELETE FROM account "
                 + " WHERE accountID = " + account.getAccountID();
         try (Connection connection =factory.createConnection(factory.getConnectorType())) {
             Statement statement = connection.createStatement();
@@ -115,6 +118,7 @@ public class AccountDaoSql implements AccountDaoInterface {
                 account.setAccountID(result.getInt(1));
                 account.setGebruikersnaam(result.getString(2));
                 account.setWachtwoord(result.getString(3));
+                account.setSalt(result.getString(4));
                 accounts.add(account);
             }
             
