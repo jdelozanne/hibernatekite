@@ -54,6 +54,8 @@ public class AccountDaoMongo implements AccountDaoInterface {
             document.put("id", getNextSequence("userid", "countersAccount"));
             document.put("gebruikersnaam", account.getGebruikersnaam());
             document.put("wachtwoord", account.getWachtwoord());
+            document.put("salt", account.getSalt());
+            
             collection.insert(document);
         } catch (Exception ex) {
             Logger.getLogger(AccountDaoMongo.class.getName()).log(Level.SEVERE, null, ex);
@@ -70,11 +72,13 @@ public class AccountDaoMongo implements AccountDaoInterface {
             int id = accountObj.getInt("id");
             String user = accountObj.getString("gebruikersnaam");
             String ww = accountObj.getString("wachtwoord");
+            String salt = accountObj.getString("salt");
 
             Account a = new Account();
             a.setAccountID(id);
             a.setGebruikersnaam(user);
             a.setWachtwoord(ww);
+            a.setSalt(salt);
             accounts.add(a);
         }
         return accounts;
@@ -92,10 +96,12 @@ public class AccountDaoMongo implements AccountDaoInterface {
             int id = (int) accountObj.getInt("id");
             String user = (String)accountObj.get("gebruikersnaam");
             String ww = (String)accountObj.get("wachtwoord");
+            String salt = accountObj.getString("salt");
 
             a.setAccountID(id);
             a.setGebruikersnaam(user);
             a.setWachtwoord(ww);
+            a.setSalt(salt);
         }
         return a;
     }
@@ -110,10 +116,12 @@ public class AccountDaoMongo implements AccountDaoInterface {
             BasicDBObject accountObj = (BasicDBObject) object;
             String user = accountObj.getString("gebruikersnaam");
             String ww = accountObj.getString("wachtwoord");
-
+            String salt = accountObj.getString("salt");
+            
             a.setAccountID(id);
             a.setGebruikersnaam(user);
             a.setWachtwoord(ww);
+            a.setSalt(salt);
         }
         return a;
     }
@@ -127,6 +135,7 @@ public class AccountDaoMongo implements AccountDaoInterface {
         DBObject newdoc = new BasicDBObject();
         newdoc.put("gebruikersnaam", account.getGebruikersnaam());
         newdoc.put("wachtwoord", account.getWachtwoord());
+        newdoc.put("salt", account.getSalt());
         DBObject updateObject = new BasicDBObject();
 
         updateObject.put("$set", newdoc);
