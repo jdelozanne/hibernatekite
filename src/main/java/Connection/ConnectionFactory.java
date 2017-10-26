@@ -16,7 +16,7 @@ public class ConnectionFactory {
     HikariCP hikariConnection = new HikariCP();
     JDBC jdbcConnection = new JDBC();
     Connection connection;
-    String connectorType = "jdbc";
+    static String connectorType = "jdbc";
     
     public Connection createConnection(String connectorType){
         switch(connectorType.toLowerCase()){
@@ -31,7 +31,7 @@ public class ConnectionFactory {
     }
     
     public String getConnectorType(){
-        return this.connectorType;
+        return connectorType;
     }
 
    

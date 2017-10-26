@@ -16,7 +16,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-
 import kiteshop.pojos.Account;
 import kiteshop.test.ProjectLog;
 
@@ -39,18 +38,18 @@ public class AccountDaoSql implements AccountDaoInterface {
         String sql = "INSERT INTO account"
                 + "(accountID, gebruikersnaam, wachtwoord)"
                 + "values (?,?,?)";
-        try (Connection connection =factory.createConnection(factory.getConnectorType()); 
+        try (Connection connection = factory.createConnection(factory.getConnectorType()); 
                 PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, 0);
             statement.setString(2, account.getGebruikersnaam());
             statement.setString(3, account.getWachtwoord());
-
             statement.execute();
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        logger.info("creating account :" + account);
     }
 
     @Override
@@ -86,9 +85,9 @@ public class AccountDaoSql implements AccountDaoInterface {
             statement.setInt(3, account.getAccountID());
             statement.execute();
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        logger.info("Updating account :" + account);
     }
 
     @Override
@@ -118,10 +117,11 @@ public class AccountDaoSql implements AccountDaoInterface {
                 account.setWachtwoord(result.getString(3));
                 accounts.add(account);
             }
+            
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        logger.info("Returning accounts :" + accounts);
+        logger.info("Returning all accounts :" + accounts);
         return accounts;
     }
 }

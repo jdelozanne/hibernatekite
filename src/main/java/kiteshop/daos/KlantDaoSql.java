@@ -229,11 +229,10 @@ public class KlantDaoSql implements KlantDaoInterface {
                 PreparedStatement statement = connection.prepareStatement(query);
                 PreparedStatement statement2 = connection.prepareStatement(query2);
                 PreparedStatement statement3 = connection.prepareStatement(query2);
-                ){
-
-            ResultSet result = statement.executeQuery();
+                ResultSet result = statement.executeQuery();
                 ResultSet result2 = statement2.executeQuery();
-                ResultSet result3 = statement3.executeQuery();
+                ResultSet result3 = statement3.executeQuery();){
+
                 while (result.next()) {
                 Klant klant = new Klant();
                 klant.setKlantID(result.getInt(1));
@@ -277,7 +276,9 @@ public class KlantDaoSql implements KlantDaoInterface {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+            
         }
+        logger.info("Klant gegevens verwerkt, alle klanten uitgelezen");
         return allKlanten;
     }
 
