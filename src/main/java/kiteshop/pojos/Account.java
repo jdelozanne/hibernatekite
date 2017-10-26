@@ -17,6 +17,8 @@ public class Account {
     private int accountID;
     private String gebruikersnaam;
     private String wachtwoord;
+    private String salt;
+    
     private AccountType type;
 
     public Account() {
@@ -60,7 +62,15 @@ public class Account {
         this.accountID = accountID;
     }
 
-    @Override
+    public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+
+	@Override
     public String toString() {
         return "Account [accountID=" + accountID + ", gebruikersnaam=" + gebruikersnaam + ", wachtwoord=" + wachtwoord
                 + ", type=" + type + "]";
