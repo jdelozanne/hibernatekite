@@ -44,11 +44,12 @@ public class BestellingDaoSql implements BestellingDaoInterface {
             statement.setInt(2, bestelling.getKlant().getKlantID());
             statement.setBigDecimal(3, bestelling.getTotaalprijs());
             statement.execute();
-            ResultSet result = statement.getGeneratedKeys();
+            try(ResultSet result = statement.getGeneratedKeys();){
             if (result.isBeforeFirst()) {
                 result.next();
                 bestelling.setBestellingID(result.getInt(1));
                 System.out.println("Nieuwe bestelling aangemaakt met bestelling id: " + bestelling.getBestellingID());
+            }
             }
         } catch (SQLException ex) {
         }
@@ -88,11 +89,12 @@ public class BestellingDaoSql implements BestellingDaoInterface {
                 PreparedStatement statement = connection.prepareStatement(query);) {
 
             statement.setInt(1, bestellingID);
-            ResultSet result = statement.executeQuery();
+            try(ResultSet result = statement.executeQuery()){
             while (result.next()) {
                 b.setBestellingID(result.getInt(1));
                 b.setKlant(new KlantDaoSql().readKlantById(result.getInt(2)));
                 b.setTotaalprijs(result.getBigDecimal(3));
+            }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -106,13 +108,14 @@ public class BestellingDaoSql implements BestellingDaoInterface {
         try (Connection connection = factory.createConnection(factory.getConnectorType());
                 Statement statement = connection.createStatement()) {
 
-            ResultSet result = statement.executeQuery(query);
+            try(ResultSet result = statement.executeQuery(query);){
             while (result.next()) {
                 Bestelling b = new Bestelling();
                 b.setBestellingID(result.getInt(1));
                 b.setKlant(new KlantDaoSql().readKlantById(result.getInt(2)));
                 b.setTotaalprijs(result.getBigDecimal(3));
                 bestellingen.add(b);
+            }
             }
             logger.info("reading from bestelling with specific klantID");
         } catch (SQLException ex) {
@@ -125,16 +128,17 @@ public class BestellingDaoSql implements BestellingDaoInterface {
         List<Bestelling> bestellingen = new ArrayList<>();
         String readAll = "Select * from bestelling";
         try (Connection connection = factory.createConnection(factory.getConnectorType());
-                PreparedStatement statement = connection.prepareStatement(readAll);) {
+                Statement statement = connection.createStatement();) {
             
-            ResultSet result = statement.executeQuery();
+           try( ResultSet result = statement.executeQuery(readAll);){
             while (result.next()) {
                 Bestelling b = new Bestelling();
                 b.setBestellingID(result.getInt(1));
                 b.setKlant(new KlantDaoSql().readKlantById(result.getInt(2)));
-              //  b.setTotaalprijs(result.getBigDecimal(3));
+               b.setTotaalprijs(result.getBigDecimal(3));
                 bestellingen.add(b);
             }
+           }
             logger.info("reading all bestelling");
         } catch (SQLException ex) {
             ex.printStackTrace();

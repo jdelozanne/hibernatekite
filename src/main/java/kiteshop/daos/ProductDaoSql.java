@@ -58,12 +58,13 @@ public class ProductDaoSql implements ProductDaoInterface {
                 PreparedStatement statement = connection.prepareStatement(query);) {
 
             statement.setString(1, productnaam);
-            ResultSet result = statement.executeQuery();
+            try(ResultSet result = statement.executeQuery();){
             while (result.next()) {
                 p.setProductID(result.getInt(1));
                 p.setNaam(result.getString(2));
                 p.setVoorraad(result.getInt(3));
                 p.setPrijs(result.getBigDecimal(4));
+            }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -79,12 +80,13 @@ public class ProductDaoSql implements ProductDaoInterface {
                 PreparedStatement statement = connection.prepareStatement(query);) {
 
             statement.setInt(1, productID);
-            ResultSet result = statement.executeQuery();
+            try(ResultSet result = statement.executeQuery();){
             while (result.next()) {
                 p.setProductID(result.getInt(1));
                 p.setNaam(result.getString(2));
                 p.setVoorraad(result.getInt(3));
                 p.setPrijs(result.getBigDecimal(4));
+            }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -100,12 +102,13 @@ public class ProductDaoSql implements ProductDaoInterface {
                 PreparedStatement statement = connection.prepareStatement(query);) {
 
             statement.setInt(1, productID);
-            ResultSet result = statement.executeQuery();
+            try(ResultSet result = statement.executeQuery();){
             while (result.next()) {
                 p.setProductID(result.getInt(1));
                 p.setNaam(result.getString(2));
                 p.setVoorraad(result.getInt(3));
                 p.setPrijs(result.getBigDecimal(4));
+            }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -120,7 +123,7 @@ public class ProductDaoSql implements ProductDaoInterface {
         try (Connection connection = factory.createConnection(factory.getConnectorType());
                 Statement statement = connection.createStatement();) {
             
-            ResultSet result = statement.executeQuery(query);
+            try(ResultSet result = statement.executeQuery(query);){
             while (result.next()) {
                 Product p = new Product();
                 p.setProductID(result.getInt(1));
@@ -128,6 +131,7 @@ public class ProductDaoSql implements ProductDaoInterface {
                 p.setVoorraad(result.getInt(3));
                 p.setPrijs(result.getBigDecimal(4));
                 producten.add(p);
+            }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

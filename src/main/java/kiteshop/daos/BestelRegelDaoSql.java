@@ -59,12 +59,13 @@ public class BestelRegelDaoSql implements BestelRegelDaoInterface {
                 PreparedStatement statement = connection.prepareStatement(query);) {
 
             statement.setInt(1, bestellingID);
-            ResultSet result = statement.executeQuery();
+            try(ResultSet result = statement.executeQuery();){
             while (result.next()) {
                 r.setBestelRegelID(result.getInt(1));
                 r.getProduct().setProductID(result.getInt(2));
                 r.setAantal(result.getInt(3));
                 r.getBestelling().setBestellingID(result.getInt(4));
+            }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -100,7 +101,7 @@ public class BestelRegelDaoSql implements BestelRegelDaoInterface {
         try (Connection connection = factory.createConnection(factory.getConnectorType());
                 Statement statement = connection.createStatement();) {
             
-            ResultSet result = statement.executeQuery(query);
+            try(ResultSet result = statement.executeQuery(query);){
             while (result.next()) {
                 BestelRegel r = new BestelRegel();
                 r.setBestelRegelID(result.getInt(1));
@@ -108,6 +109,7 @@ public class BestelRegelDaoSql implements BestelRegelDaoInterface {
                 r.setProduct(new ProductDaoSql().readProductByID(result.getInt(2)));
                 r.setAantal(result.getInt(3));
                 bestelregels.add(r);
+            }
             }
             logger.info("reading from bestelregel with specific bestellingID");
         } catch (SQLException ex) {

@@ -8,9 +8,13 @@ package kiteshop.test;
 import java.util.List;
 import kiteshop.controller.HoofdController;
 import kiteshop.daos.AccountDaoSql;
+import kiteshop.daos.BestelRegelDaoSql;
+import kiteshop.daos.BestellingDaoSql;
 import kiteshop.daos.DaoFactorySql;
 import kiteshop.daos.KlantDaoSql;
 import kiteshop.pojos.Account;
+import kiteshop.pojos.BestelRegel;
+import kiteshop.pojos.Bestelling;
 import kiteshop.pojos.Klant;
 
 /**
@@ -21,6 +25,12 @@ public class CheckConnection {
     public static void main(String[] args) {
        
         
-		new HoofdController(new DaoFactorySql()).startMenuBestellingen();
+		//new HoofdController(new DaoFactorySql()).startMenuBestellingen();
+                System.out.println(new BestellingDaoSql().readBestellingByBestellingID(4));
+                /*List<BestelRegel> bestelregels = new BestelRegelDaoSql().readBestelRegelsByBestelling(b);
+                for(Bestelling x : k){
+                    System.out.println(x.toString());
+
+                }*/
     }
 }

@@ -58,11 +58,12 @@ public class KlantDaoSql implements KlantDaoInterface {
             statement1.execute();
 
             int generatedkey = 0;
-            ResultSet result = statement1.getGeneratedKeys();
+            try(ResultSet result = statement1.getGeneratedKeys();){
             if (result.isBeforeFirst()) {
                 result.next();
                 generatedkey = result.getInt(1);
                 logger.info("Klant gegevens verwerkt, key gegenereerd: " + generatedkey);
+            }
             }
             //Creeeren van het bezoekadres
 
@@ -167,25 +168,27 @@ public class KlantDaoSql implements KlantDaoInterface {
                 PreparedStatement statement3 = connection.prepareStatement(query3);) {
 
             statement.setString(1, achternaam);
-            ResultSet result = statement.executeQuery();
-            while (result.next()) {
-                Klant klant = new Klant();
-                klant.setKlantID(result.getInt(1));
-                klant.setVoornaam(result.getString(2));
-                klant.setTussenvoegsel(result.getString(3));
-                klant.setAchternaam(result.getString(4));
-                klant.setEmail(result.getString(5));
-                klant.setTelefoonnummer(result.getString(6));
-                logger.info("In first loop");
-                selectionKlanten.add(klant);
+            try (ResultSet result = statement.executeQuery();) {
+                while (result.next()) {
+                    Klant klant = new Klant();
+                    klant.setKlantID(result.getInt(1));
+                    klant.setVoornaam(result.getString(2));
+                    klant.setTussenvoegsel(result.getString(3));
+                    klant.setAchternaam(result.getString(4));
+                    klant.setEmail(result.getString(5));
+                    klant.setTelefoonnummer(result.getString(6));
+                    logger.info("In first loop");
+                    selectionKlanten.add(klant);
+                }
             }
+            
             for (int i = 0; i < selectionKlanten.size(); i++) {
                 Adres bezoekAdres = new Adres();
                 Adres factuurAdres = new Adres();
 
                 statement2.setInt(1, selectionKlanten.get(i).getKlantID());
                 statement2.setString(2, "BEZOEKADRES");
-                ResultSet result2 = statement2.executeQuery();
+                try(ResultSet result2 = statement2.executeQuery();){
                 while (result2.next()) {
                     logger.info("In while loop voor bezoekadres, " + result2.getString(3));
                     bezoekAdres.setStraatnaam(result2.getString(3));
@@ -195,11 +198,12 @@ public class KlantDaoSql implements KlantDaoInterface {
                     bezoekAdres.setWoonplaats(result2.getString(7));
                     bezoekAdres.setAdresType(AdresType.BEZOEKADRES);
                 }
+                }
                 selectionKlanten.get(i).setBezoekAdres(bezoekAdres);
 
                 statement3.setInt(1, selectionKlanten.get(i).getKlantID());
                 statement3.setString(2, "FACTUURADRES");
-                ResultSet result3 = statement3.executeQuery();
+                try(ResultSet result3 = statement3.executeQuery();){
                 while (result3.next()) {
                     factuurAdres.setStraatnaam(result3.getString(3));
                     factuurAdres.setHuisnummer(result3.getInt(4));
@@ -208,7 +212,9 @@ public class KlantDaoSql implements KlantDaoInterface {
                     factuurAdres.setWoonplaats(result3.getString(7));
                     factuurAdres.setAdresType(AdresType.FACTUURADRES);
                 }
+                }
                 selectionKlanten.get(i).setFactuurAdres(factuurAdres);
+
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -226,7 +232,7 @@ public class KlantDaoSql implements KlantDaoInterface {
                 PreparedStatement statement2 = connection.prepareStatement(query2);
                 PreparedStatement statement3 = connection.prepareStatement(query2);) {
 
-            ResultSet result = statement.executeQuery();
+            try(ResultSet result = statement.executeQuery();){
             while (result.next()) {
                 Klant klant = new Klant();
                 klant.setKlantID(result.getInt(1));
@@ -237,13 +243,14 @@ public class KlantDaoSql implements KlantDaoInterface {
                 klant.setTelefoonnummer(result.getString(6));
                 allKlanten.add(klant);
             }
+            }
             for (int i = 0; i < allKlanten.size(); i++) {
                 Adres bezoekAdres = new Adres();
                 Adres factuurAdres = new Adres();
 
                 statement2.setInt(1, allKlanten.get(i).getKlantID());
                 statement2.setString(2, "BEZOEKADRES");
-                ResultSet result2 = statement2.executeQuery();
+                try(ResultSet result2 = statement2.executeQuery();){
                 while (result2.next()) {
                     logger.info("In while loop voor bezoekadres, " + result2.getString(3));
                     bezoekAdres.setStraatnaam(result2.getString(3));
@@ -253,11 +260,12 @@ public class KlantDaoSql implements KlantDaoInterface {
                     bezoekAdres.setWoonplaats(result2.getString(7));
                     bezoekAdres.setAdresType(AdresType.BEZOEKADRES);
                 }
+                }
                 allKlanten.get(i).setBezoekAdres(bezoekAdres);
 
                 statement3.setInt(1, allKlanten.get(i).getKlantID());
                 statement3.setString(2, "FACTUURADRES");
-                ResultSet result3 = statement3.executeQuery();
+                try(ResultSet result3 = statement3.executeQuery();){
                 while (result3.next()) {
                     factuurAdres.setStraatnaam(result3.getString(3));
                     factuurAdres.setHuisnummer(result3.getInt(4));
@@ -265,6 +273,7 @@ public class KlantDaoSql implements KlantDaoInterface {
                     factuurAdres.setPostcode(result3.getString(6));
                     factuurAdres.setWoonplaats(result3.getString(7));
                     factuurAdres.setAdresType(AdresType.FACTUURADRES);
+                }
                 }
                 allKlanten.get(i).setFactuurAdres(factuurAdres);
             }
@@ -289,31 +298,31 @@ public class KlantDaoSql implements KlantDaoInterface {
                 PreparedStatement statement3 = connection.prepareStatement(query2);) {
 
             statement.setInt(1, id);
-            ResultSet result = statement.executeQuery();
-            while (result.next()) {
-                Klant klant = new Klant();
-                klant.setKlantID(result.getInt(1));
-                klant.setVoornaam(result.getString(2));
-                klant.setTussenvoegsel(result.getString(3));
-                klant.setAchternaam(result.getString(4));
-                klant.setEmail(result.getString(5));
-                klant.setTelefoonnummer(result.getString(6));
-                logger.info("In first loop");
+            try (ResultSet result = statement.executeQuery();) {
+                while (result.next()) {
+                    Klant klant = new Klant();
+                    klant.setKlantID(result.getInt(1));
+                    klant.setVoornaam(result.getString(2));
+                    klant.setTussenvoegsel(result.getString(3));
+                    klant.setAchternaam(result.getString(4));
+                    klant.setEmail(result.getString(5));
+                    klant.setTelefoonnummer(result.getString(6));
+                    logger.info("In first loop");
+                }
             }
-
             statement2.setInt(1, id);
             statement2.setString(2, "BEZOEKADRES");
-            ResultSet result2 = statement2.executeQuery();
-            while (result2.next()) {
-                logger.info("In while loop voor bezoekadres, " + result2.getString(3));
-                bezoekAdres.setStraatnaam(result2.getString(3));
-                bezoekAdres.setHuisnummer(result2.getInt(4));
-                bezoekAdres.setToevoeging(result2.getString(5));
-                bezoekAdres.setPostcode(result2.getString(6));
-                bezoekAdres.setWoonplaats(result2.getString(7));
-                bezoekAdres.setAdresType(AdresType.BEZOEKADRES);
+            try (ResultSet result2 = statement2.executeQuery();) {
+                while (result2.next()) {
+                    logger.info("In while loop voor bezoekadres, " + result2.getString(3));
+                    bezoekAdres.setStraatnaam(result2.getString(3));
+                    bezoekAdres.setHuisnummer(result2.getInt(4));
+                    bezoekAdres.setToevoeging(result2.getString(5));
+                    bezoekAdres.setPostcode(result2.getString(6));
+                    bezoekAdres.setWoonplaats(result2.getString(7));
+                    bezoekAdres.setAdresType(AdresType.BEZOEKADRES);
+                }
             }
-
             statement3.setInt(1, id);
             statement3.setString(2, "FACTUURADRES");
 
