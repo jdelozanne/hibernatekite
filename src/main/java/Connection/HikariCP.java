@@ -55,7 +55,6 @@ public class HikariCP implements ConnectionInterface {
             Logger.getLogger(HikariCP.class.getName()).log(Level.SEVERE, null, ex);
         }
         return hikari;
-
     }
 
     @Override

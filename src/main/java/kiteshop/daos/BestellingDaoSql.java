@@ -38,14 +38,13 @@ public class BestellingDaoSql implements BestellingDaoInterface {
                 + "(bestellingID, klantID, totaalprijs)"
                 + "values (?,?,?)";
         try (Connection connection = factory.createConnection(factory.getConnectorType());
-                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                ResultSet result = statement.getGeneratedKeys();) {
+                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
 
             statement.setInt(1, 0);
             statement.setInt(2, bestelling.getKlant().getKlantID());
             statement.setBigDecimal(3, bestelling.getTotaalprijs());
             statement.execute();
-
+            ResultSet result = statement.getGeneratedKeys();
             if (result.isBeforeFirst()) {
                 result.next();
                 bestelling.setBestellingID(result.getInt(1));
@@ -64,8 +63,8 @@ public class BestellingDaoSql implements BestellingDaoInterface {
     @Override
     public void deleteBestelling(int bestellingID) {
         try (Connection connection = factory.createConnection(factory.getConnectorType());
-                Statement statement = connection.createStatement();
-                Statement statement1 = connection.createStatement();) {
+                Statement statement = connection.createStatement(); //Statement statement1 = connection.createStatement();
+                ) {
             //First delete 'children' dwz bestelregel
             String deleteRegels = " DELETE FROM bestel_regel "
                     + " WHERE bestellingID =" + bestellingID;
@@ -74,7 +73,7 @@ public class BestellingDaoSql implements BestellingDaoInterface {
 
             String delete = " DELETE FROM bestelling "
                     + " WHERE bestellingID = " + bestellingID;
-            statement1.executeUpdate(delete);
+            statement.executeUpdate(delete); //zelfde statement hergebruiken, kan dat?
             logger.info("Deleting");
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -86,10 +85,10 @@ public class BestellingDaoSql implements BestellingDaoInterface {
         Bestelling b = new Bestelling();
         String query = "Select * from bestelling where bestellingID = ?";
         try (Connection connection = factory.createConnection(factory.getConnectorType());
-                PreparedStatement statement = connection.prepareStatement(query);
-                ResultSet result = statement.executeQuery()) {
+                PreparedStatement statement = connection.prepareStatement(query);) {
 
             statement.setInt(1, bestellingID);
+            ResultSet result = statement.executeQuery();
             while (result.next()) {
                 b.setBestellingID(result.getInt(1));
                 b.setKlant(new KlantDaoSql().readKlantById(result.getInt(2)));
@@ -105,8 +104,9 @@ public class BestellingDaoSql implements BestellingDaoInterface {
         List<Bestelling> bestellingen = new ArrayList<>();
         String query = "Select * from bestelling Where klantID =" + klantID;
         try (Connection connection = factory.createConnection(factory.getConnectorType());
-                Statement statement = connection.createStatement();
-                ResultSet result = statement.executeQuery(query)) {
+                Statement statement = connection.createStatement()) {
+
+            ResultSet result = statement.executeQuery(query);
             while (result.next()) {
                 Bestelling b = new Bestelling();
                 b.setBestellingID(result.getInt(1));
@@ -125,14 +125,14 @@ public class BestellingDaoSql implements BestellingDaoInterface {
         List<Bestelling> bestellingen = new ArrayList<>();
         String readAll = "Select * from bestelling";
         try (Connection connection = factory.createConnection(factory.getConnectorType());
-                Statement statement = connection.createStatement();
-                ResultSet result = statement.executeQuery(readAll)) {
-
+                PreparedStatement statement = connection.prepareStatement(readAll);) {
+            
+            ResultSet result = statement.executeQuery();
             while (result.next()) {
                 Bestelling b = new Bestelling();
                 b.setBestellingID(result.getInt(1));
                 b.setKlant(new KlantDaoSql().readKlantById(result.getInt(2)));
-                b.setTotaalprijs(result.getBigDecimal(3));
+              //  b.setTotaalprijs(result.getBigDecimal(3));
                 bestellingen.add(b);
             }
             logger.info("reading all bestelling");

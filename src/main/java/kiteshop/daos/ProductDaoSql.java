@@ -55,10 +55,10 @@ public class ProductDaoSql implements ProductDaoInterface {
         Product p = new Product();
         String query = "Select * from product where productnaam = ?";
         try (Connection connection = factory.createConnection(factory.getConnectorType());
-                PreparedStatement statement = connection.prepareStatement(query);
-                ResultSet result = statement.executeQuery()) {
+                PreparedStatement statement = connection.prepareStatement(query);) {
 
             statement.setString(1, productnaam);
+            ResultSet result = statement.executeQuery();
             while (result.next()) {
                 p.setProductID(result.getInt(1));
                 p.setNaam(result.getString(2));
@@ -76,10 +76,10 @@ public class ProductDaoSql implements ProductDaoInterface {
         Product p = new Product();
         String query = "Select productnaam from product where productID = ?";
         try (Connection connection = factory.createConnection(factory.getConnectorType());
-                PreparedStatement statement = connection.prepareStatement(query);
-                ResultSet result = statement.executeQuery()) {
+                PreparedStatement statement = connection.prepareStatement(query);) {
 
             statement.setInt(1, productID);
+            ResultSet result = statement.executeQuery();
             while (result.next()) {
                 p.setProductID(result.getInt(1));
                 p.setNaam(result.getString(2));
@@ -97,10 +97,10 @@ public class ProductDaoSql implements ProductDaoInterface {
         Product p = new Product();
         String query = "Select * from product where productID = ?";
         try (Connection connection = factory.createConnection(factory.getConnectorType());
-                PreparedStatement statement = connection.prepareStatement(query);
-                ResultSet result = statement.executeQuery()) {
+                PreparedStatement statement = connection.prepareStatement(query);) {
 
             statement.setInt(1, productID);
+            ResultSet result = statement.executeQuery();
             while (result.next()) {
                 p.setProductID(result.getInt(1));
                 p.setNaam(result.getString(2));
@@ -118,9 +118,9 @@ public class ProductDaoSql implements ProductDaoInterface {
         List<Product> producten = new ArrayList<>();
         String query = "Select * from product";
         try (Connection connection = factory.createConnection(factory.getConnectorType());
-                Statement statement = connection.createStatement();
-                ResultSet result = statement.executeQuery(query)) {
-
+                Statement statement = connection.createStatement();) {
+            
+            ResultSet result = statement.executeQuery(query);
             while (result.next()) {
                 Product p = new Product();
                 p.setProductID(result.getInt(1));
