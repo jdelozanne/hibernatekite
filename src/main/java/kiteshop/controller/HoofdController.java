@@ -53,5 +53,14 @@ public class HoofdController {
 		MenuAccounts menuAccounts = new MenuAccounts(new AccountController(DaoFactory.createAccountDao()));
 		menuAccounts.start();
 	}
+
+	public void setDatabase(int keuze) {  
+		if(keuze==1){
+			DaoFactory = new DaoFactorySql(); // hier zou je ook de juiste connectie in de factory kunnen injecteren
+		} else {
+			DaoFactory = new DaoFactoryMongo();
+		}
+		
+	}
     
 }

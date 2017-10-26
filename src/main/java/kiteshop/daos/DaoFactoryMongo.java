@@ -37,4 +37,9 @@ public class DaoFactoryMongo implements DaoFactoryInterface {
 		return new ProductDaoMongo();
 	}
 
+	@Override
+	public String toString() {
+		return "Mongo Database";
+	}
+
 }

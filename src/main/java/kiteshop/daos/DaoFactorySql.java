@@ -41,4 +41,11 @@ public class DaoFactorySql implements DaoFactoryInterface {
 		return new ProductDaoSql();
 	}
 
+	@Override
+	public String toString() {
+		return "Sql Database";
+	}
+	
+	
+
 }
