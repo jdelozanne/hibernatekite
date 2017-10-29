@@ -45,7 +45,7 @@ public class HikariCP implements ConnectionInterface {
             config.setJdbcUrl(props.getProperty("dburl"));
             config.setUsername(props.getProperty("user"));
             config.setPassword(props.getProperty("password"));
-            config.setMaximumPoolSize(10);
+            config.setMaximumPoolSize(2);
             config.setAutoCommit(true);
             config.addDataSourceProperty("cachePrepStmts", "true");
             config.addDataSourceProperty("prepStmtCacheSize", "250");

@@ -25,12 +25,13 @@ public class CheckConnection {
     public static void main(String[] args) {
        
         
-		//new HoofdController(new DaoFactorySql()).startMenuBestellingen();
-                System.out.println(new BestellingDaoSql().readBestellingByBestellingID(4));
-                /*List<BestelRegel> bestelregels = new BestelRegelDaoSql().readBestelRegelsByBestelling(b);
-                for(Bestelling x : k){
-                    System.out.println(x.toString());
+	new HoofdController(new DaoFactorySql()).startMenuBestellingen();
+                
+               // Bestelling b = new BestellingDaoSql().readBestellingByBestellingID(5);
+               // System.out.println(b.bestellingToString());
+                //for(Bestelling x : be){
+                //    System.out.println(x.bestellingToString());
 
-                }*/
+                }
     }
-}
+

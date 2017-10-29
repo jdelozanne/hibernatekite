@@ -10,13 +10,14 @@ package kiteshop.daos;
  * @author Steef P
  */
 public interface DaoFactoryInterface {
+
     AccountDaoInterface createAccountDao();
-	
-	BestellingDaoInterface createBestellingDao();
-	
-	BestelRegelDaoInterface createBestelregelDao();
-	
-	KlantDaoInterface createKlantDao();
-	
-	ProductDaoInterface createProductDao();
+
+    BestellingDaoInterface createBestellingDao();
+
+    BestelRegelDaoInterface createBestelregelDao();
+
+    KlantDaoInterface createKlantDao();
+
+    ProductDaoInterface createProductDao();
 }

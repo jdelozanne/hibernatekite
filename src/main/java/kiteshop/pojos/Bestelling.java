@@ -19,7 +19,8 @@ public class Bestelling {
     private Klant klant;
     private List<BestelRegel> bestelregels;
     private BigDecimal totaalprijs;
-
+    private int klantID;
+    
     public Bestelling() {
         bestelregels = new ArrayList<>();
     }
@@ -39,6 +40,13 @@ public class Bestelling {
 
     public Klant getKlant() {
         return klant;
+    }
+    public int getKlantID(){
+        return klantID;
+    }
+    
+    public void setKlantID(int klantID){
+        this.klantID = klantID;
     }
 
     public void setKlant(Klant klant) {
@@ -76,7 +84,7 @@ public class Bestelling {
     }
 
     public String bestellingToString() {
-        String bestelling = "BestellingID = " + bestellingID + "\n Totaalbedrag = " + totaalprijs;
+        String bestelling = "BestellingID = " + bestellingID + " KlantID = " + klantID + " Totaalbedrag = " + totaalprijs;
         return bestelling;
     }
 

@@ -35,7 +35,6 @@ public class BestellingDaoMongo implements BestellingDaoInterface {
     public BestellingDaoMongo() {
         //create a connection with mongodb database
         this.mongo = new MongoDBConnection().connect();
-        //this.mongo = new MongoClient("localhost", 27017);
         this.database = mongo.getDB("kiteshop");
         this.collection = database.getCollection("bestelling");
     }

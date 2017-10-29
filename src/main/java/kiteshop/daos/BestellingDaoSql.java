@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import kiteshop.pojos.Bestelling;
+import kiteshop.pojos.Klant;
 import kiteshop.test.ProjectLog;
 
 /**
@@ -44,12 +45,12 @@ public class BestellingDaoSql implements BestellingDaoInterface {
             statement.setInt(2, bestelling.getKlant().getKlantID());
             statement.setBigDecimal(3, bestelling.getTotaalprijs());
             statement.execute();
-            try(ResultSet result = statement.getGeneratedKeys();){
-            if (result.isBeforeFirst()) {
-                result.next();
-                bestelling.setBestellingID(result.getInt(1));
-                System.out.println("Nieuwe bestelling aangemaakt met bestelling id: " + bestelling.getBestellingID());
-            }
+            try (ResultSet result = statement.getGeneratedKeys();) {
+                if (result.isBeforeFirst()) {
+                    result.next();
+                    bestelling.setBestellingID(result.getInt(1));
+                    System.out.println("Nieuwe bestelling aangemaakt met bestelling id: " + bestelling.getBestellingID());
+                }
             }
         } catch (SQLException ex) {
         }
@@ -84,17 +85,19 @@ public class BestellingDaoSql implements BestellingDaoInterface {
     @Override
     public Bestelling readBestellingByBestellingID(int bestellingID) {
         Bestelling b = new Bestelling();
-        String query = "Select * from bestelling where bestellingID = ?";
+        String query = "Select * from bestelling join klant "
+                + "on bestelling.klantID = klant.klantID"
+                + " where bestellingID = ?";
         try (Connection connection = factory.createConnection(factory.getConnectorType());
                 PreparedStatement statement = connection.prepareStatement(query);) {
 
             statement.setInt(1, bestellingID);
-            try(ResultSet result = statement.executeQuery()){
-            while (result.next()) {
-                b.setBestellingID(result.getInt(1));
-                b.setKlant(new KlantDaoSql().readKlantById(result.getInt(2)));
-                b.setTotaalprijs(result.getBigDecimal(3));
-            }
+            try (ResultSet result = statement.executeQuery()) {
+                while (result.next()) {
+                    b.setBestellingID(result.getInt(1));
+                    b.setKlantID(result.getInt(2));
+                    b.setTotaalprijs(result.getBigDecimal(3));
+                }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -105,17 +108,17 @@ public class BestellingDaoSql implements BestellingDaoInterface {
     public List<Bestelling> readBestellingByKlantID(int klantID) {
         List<Bestelling> bestellingen = new ArrayList<>();
         String query = "Select * from bestelling Where klantID =" + klantID;
+        Klant klant = new KlantDaoSql().readKlantById(klantID);
         try (Connection connection = factory.createConnection(factory.getConnectorType());
                 Statement statement = connection.createStatement()) {
-
-            try(ResultSet result = statement.executeQuery(query);){
-            while (result.next()) {
-                Bestelling b = new Bestelling();
-                b.setBestellingID(result.getInt(1));
-                b.setKlant(new KlantDaoSql().readKlantById(result.getInt(2)));
-                b.setTotaalprijs(result.getBigDecimal(3));
-                bestellingen.add(b);
-            }
+            try (ResultSet result = statement.executeQuery(query);) {
+                while (result.next()) {
+                    Bestelling b = new Bestelling();
+                    b.setBestellingID(result.getInt(1));
+                    b.setKlant(klant);
+                    b.setTotaalprijs(result.getBigDecimal(3));
+                    bestellingen.add(b);
+                }
             }
             logger.info("reading from bestelling with specific klantID");
         } catch (SQLException ex) {
@@ -126,23 +129,30 @@ public class BestellingDaoSql implements BestellingDaoInterface {
 
     public List<Bestelling> readAllBestelling() {
         List<Bestelling> bestellingen = new ArrayList<>();
-        String readAll = "Select * from bestelling";
+        String readAll = "Select * from bestelling join klant "
+                + "on bestelling_klantID = klantID";
+        
         try (Connection connection = factory.createConnection(factory.getConnectorType());
                 Statement statement = connection.createStatement();) {
-            
-           try( ResultSet result = statement.executeQuery(readAll);){
-            while (result.next()) {
-                Bestelling b = new Bestelling();
-                b.setBestellingID(result.getInt(1));
-                b.setKlant(new KlantDaoSql().readKlantById(result.getInt(2)));
-               b.setTotaalprijs(result.getBigDecimal(3));
-                bestellingen.add(b);
+
+            try (ResultSet result = statement.executeQuery(readAll);) {
+                while (result.next()) {
+                    Bestelling b = new Bestelling();
+                    b.setBestellingID(result.getInt(1));
+                    b.setKlantID(result.getInt(4));
+                    b.setTotaalprijs(result.getBigDecimal(3));
+                    
+                    bestellingen.add(b);
+                }
             }
-           }
-            logger.info("reading all bestelling");
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return bestellingen;
+        logger.info("reading all bestelling");
     }
+    catch (SQLException ex
+
+    
+        ) {
+            ex.printStackTrace();
+    }
+    return bestellingen ;
+}
 }
