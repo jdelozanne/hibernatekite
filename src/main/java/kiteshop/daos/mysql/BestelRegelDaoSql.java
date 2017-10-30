@@ -32,9 +32,15 @@ public class BestelRegelDaoSql implements BestelRegelDaoInterface {
     String insertNew = "INSERT INTO Bestel_regel"
             + "(bestel_regelID, productID, aantal, bestellingID)"
             + "values (?,?,?,?)";
-    String queryReadBestellingID = "Select * from bestel_regel where bestellingID = ?";
-    String updateBestelRegel = "UPDATE bestel_regel SET bestel_regelID = ?, productID = ?, aantal = ?, bestellingID =? where bestellingID = ?";
-    String queryReadAllByBestelling = "Select * from bestel_regel Where bestellingID = ?";
+    String updateBestelRegel = "UPDATE bestel_regel SET"
+            + " bestel_regelID = ?, "
+            + "productID = ?, "
+            + "aantal = ?, "
+            + "bestellingID =? "
+            + "where bestellingID = ?";
+    String queryReadAllByBestelling = "Select * from bestel_regel join product"
+            + " on bestel_regel.productID = product.productID "
+            + "Where bestellingID = ?";
 
     public BestelRegelDaoSql() {
     }
@@ -50,27 +56,6 @@ public class BestelRegelDaoSql implements BestelRegelDaoInterface {
             statement.setInt(3, regel.getAantal());
             statement.setInt(4, regel.getBestelling().getBestellingID());
             statement.execute();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    @Override
-    public void readBestelRegel(int bestellingID) {
-        BestelRegel r = new BestelRegel();
-
-        try (Connection connection = factory.createConnection(factory.getConnectorType());
-                PreparedStatement statement = connection.prepareStatement(this.queryReadBestellingID);) {
-
-            statement.setInt(1, bestellingID);
-            try (ResultSet result = statement.executeQuery();) {
-                while (result.next()) {
-                    r.setBestelRegelID(result.getInt(1));
-                    r.getProduct().setProductID(result.getInt(2));
-                    r.setAantal(result.getInt(3));
-                    r.getBestelling().setBestellingID(result.getInt(4));
-                }
-            }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -106,10 +91,15 @@ public class BestelRegelDaoSql implements BestelRegelDaoInterface {
             try (ResultSet result = statement.executeQuery()) {
                 while (result.next()) {
                     BestelRegel r = new BestelRegel();
+                    Product p = new Product();
                     r.setBestelRegelID(result.getInt(1));
                     r.getProduct().setProductID(result.getInt(2));
-                    //r.setProduct(new ProductDaoSql().readProductByID(result.getInt(2)));
                     r.setAantal(result.getInt(3));
+                    p.setProductID(result.getInt(4));
+                    p.setNaam(result.getString(5));
+                    p.setVoorraad(result.getInt(6));
+                    p.setPrijs(result.getBigDecimal(7));
+                    r.setProduct(p);
                     bestelregels.add(r);
                 }
             }
