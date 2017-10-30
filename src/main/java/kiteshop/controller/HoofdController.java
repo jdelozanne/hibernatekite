@@ -25,7 +25,7 @@ public class HoofdController {
 
 	public void start() {
 		InlogMenu inlogMenu = new InlogMenu(new AccountController(DaoFactory.createAccountDao()));
-		boolean inlogSuccesfull = inlogMenu.inloggen();
+		boolean inlogSuccesfull = inlogMenu.start();
 		
 		if(inlogSuccesfull){
 			HoofdMenu hoofdMenu = new HoofdMenu(this);
