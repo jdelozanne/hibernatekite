@@ -95,8 +95,15 @@ public class BestellingDaoSql implements BestellingDaoInterface {
             try (ResultSet result = statement.executeQuery()) {
                 while (result.next()) {
                     b.setBestellingID(result.getInt(1));
-                    b.setKlantID(result.getInt(2));
                     b.setTotaalprijs(result.getBigDecimal(3));
+                    Klant klant = new Klant();
+                    klant.setKlantID(result.getInt(4));
+                    klant.setVoornaam(result.getString(5));
+                    klant.setTussenvoegsel(result.getString(6));
+                    klant.setAchternaam(result.getString(7));
+                    klant.setEmail(result.getString(8));
+                    klant.setTelefoonnummer(result.getString(9));
+                    b.setKlant(klant);
                 }
             }
         } catch (SQLException ex) {
@@ -139,9 +146,17 @@ public class BestellingDaoSql implements BestellingDaoInterface {
                 while (result.next()) {
                     Bestelling b = new Bestelling();
                     b.setBestellingID(result.getInt(1));
-                    b.setKlantID(result.getInt(4));
+                    //b.setKlantID(result.getInt(4));
                     b.setTotaalprijs(result.getBigDecimal(3));
                     
+                    Klant klant = new Klant();
+                    klant.setKlantID(result.getInt(4));
+                    klant.setVoornaam(result.getString(5));
+                    klant.setTussenvoegsel(result.getString(6));
+                    klant.setAchternaam(result.getString(7));
+                    klant.setEmail(result.getString(8));
+                    klant.setTelefoonnummer(result.getString(9));
+                    b.setKlant(klant);
                     bestellingen.add(b);
                 }
             }
