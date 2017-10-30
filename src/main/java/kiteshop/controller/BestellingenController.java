@@ -3,11 +3,10 @@ package kiteshop.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import kiteshop.daos.BestelRegelDaoSql;
-import kiteshop.daos.BestellingDaoSql;
-
-import kiteshop.daos.KlantDaoSql;
-import kiteshop.daos.ProductDaoSql;
+import kiteshop.daos.mysql.BestelRegelDaoSql;
+import kiteshop.daos.mysql.BestellingDaoSql;
+import kiteshop.daos.mysql.KlantDaoSql;
+import kiteshop.daos.mysql.ProductDaoSql;
 import kiteshop.pojos.BestelRegel;
 import kiteshop.pojos.Bestelling;
 import kiteshop.pojos.Klant;

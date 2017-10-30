@@ -3,8 +3,8 @@ package kiteshop.controller;
 import java.util.List;
 import java.util.logging.Logger;
 
-import kiteshop.daos.AccountDaoSql;
-import kiteshop.daos.AccountDaoMongo;
+import kiteshop.daos.mysql.AccountDaoSql;
+import kiteshop.daos.mongodb.AccountDaoMongo;
 import kiteshop.pojos.Account;
 import kiteshop.test.PaswordHasher;
 import kiteshop.test.ProjectLog;

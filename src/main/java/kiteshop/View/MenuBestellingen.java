@@ -15,8 +15,8 @@ import java.util.logging.Logger;
 
 import kiteshop.controller.BestelRegelController;
 import kiteshop.controller.BestellingenController;
-import kiteshop.daos.KlantDaoSql;
-import kiteshop.daos.ProductDaoSql;
+import kiteshop.daos.mysql.KlantDaoSql;
+import kiteshop.daos.mysql.ProductDaoSql;
 import kiteshop.pojos.*;
 import kiteshop.test.ProjectLog;
 

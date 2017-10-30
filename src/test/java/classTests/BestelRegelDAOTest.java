@@ -7,7 +7,7 @@ package classTests;
 
 import java.util.ArrayList;
 
-import kiteshop.daos.BestelRegelDaoSql;
+import kiteshop.daos.mysql.BestelRegelDaoSql;
 import kiteshop.pojos.BestelRegel;
 import kiteshop.pojos.Bestelling;
 import org.junit.After;

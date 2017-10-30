@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kiteshop.daos;
+package kiteshop.daos.mysql;
 
 import Connection.ConnectionFactory;
 import Connection.HikariCP;
@@ -16,6 +16,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+import kiteshop.daos.AccountDaoInterface;
 import kiteshop.pojos.Account;
 import kiteshop.test.ProjectLog;
 

@@ -5,6 +5,8 @@
  */
 package kiteshop.controller;
 
+import kiteshop.daos.mysql.DaoFactorySql;
+import kiteshop.daos.mongodb.DaoFactoryMongo;
 import kiteshop.View.*;
 
 import kiteshop.daos.*;

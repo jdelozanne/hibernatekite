@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor. lala
  */
-package kiteshop.daos;
+package kiteshop.daos.mysql;
 
 import Connection.ConnectionFactory;
 import Connection.JDBC;
@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import kiteshop.daos.KlantDaoInterface;
 
 import kiteshop.pojos.Account;
 import kiteshop.pojos.Adres;
