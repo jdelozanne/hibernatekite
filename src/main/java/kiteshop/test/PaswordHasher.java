@@ -14,9 +14,6 @@ public class PaswordHasher {
 		String combinedHex = saltHex + paswordHex;
 
 		//Net achter gekomen, hex is case insensitive
-		System.out.println("Salthex "+saltHex+ " Length "+saltHex.length());
-		System.out.println("Paswordhex "+paswordHex +" Length "+paswordHex.length());
-		System.out.println("Combinedhex "+combinedHex + " Length "+combinedHex.length());
 
 		byte[] combinedArray = hexStringtoByteArray(combinedHex);
 
