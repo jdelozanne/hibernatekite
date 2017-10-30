@@ -18,16 +18,15 @@ import kiteshop.pojos.Product;
  * @author julia
  */
 public class MenuProducten {
+
     Scanner input = new Scanner(System.in);
     ProductenController controller;
 
     public MenuProducten(ProductenController controller) {
-		this.controller = controller;
-	}
-   
+        this.controller = controller;
+    }
 
     public void start() {
-        
         System.out.println("Kies wat je wilt doen:");
         System.out.println("Kies 1 voor Nieuwe product maken");
         System.out.println("Kies 2 voor Een product wijzigen");
@@ -55,7 +54,7 @@ public class MenuProducten {
                 start();
                 break;
             case 5:
-            	break;
+                break;
             default:
                 System.out.println("Probeer opnieuw");
                 start();
@@ -64,20 +63,20 @@ public class MenuProducten {
 
     public void createProduct() {
         Product product = new Product();
-        
+
         System.out.println("geef productnaam: ");
-        
+
         String productnaam = input.nextLine();
         product.setNaam(productnaam);
 
         System.out.println("geef voorraad");
         int voorraad = vraagInteger();
         product.setVoorraad(voorraad);
-        
+
         System.out.println("geef prijs ");
         BigDecimal prijs = vraagBigDecimal();
         product.setPrijs(prijs);
-                
+
         controller.createProduct(product);
     }
 
@@ -96,7 +95,7 @@ public class MenuProducten {
         System.out.println("Kies 2 voor de voorraad");
         System.out.println("Kies 3 voor de prijs");
         int keuze = vraagInteger();
-        
+
         switch (keuze) {
             case 1:
                 System.out.println("Geef de nieuwe productnaam: ");
@@ -109,7 +108,8 @@ public class MenuProducten {
                 break;
             case 3:
                 System.out.println("Geef de nieuwe prijs: ");
-                p.setPrijs(input.nextBigDecimal());
+                BigDecimal prijs = vraagBigDecimal();
+                p.setPrijs(prijs);
                 input.nextLine();
                 break;
         }
@@ -125,29 +125,4 @@ public class MenuProducten {
         Product p = controller.showSpecificProduct(productnaam);
         controller.deleteProduct(p);
     }
-
-	private int vraagInteger() {
-		String integer = null;
-		while(!isValidInt(integer)){
-			integer = input.nextLine();
-			if(!isValidInt(integer)){
-				System.out.println("Dit is geen nummer, probeer opnieuw");
-			}
-		}
-		return Integer.parseInt(integer);
-	}
-	
-	private BigDecimal vraagBigDecimal() {
-		String bigDecimal = null;
-		while(!isValidBigDecimal(bigDecimal)){
-			bigDecimal = input.nextLine();
-			if(!isValidBigDecimal(bigDecimal)){
-				System.out.println("Dit is geen geldige waarde voor een prijs, decimale getallen zijn toegestaan, met een punt als scheidingsteken, probeer opnieuw");
-			}
-		}
-		return new BigDecimal(bigDecimal);
-	}
-
-
-	
 }

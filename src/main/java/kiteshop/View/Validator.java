@@ -1,11 +1,142 @@
 package kiteshop.View;
 
+import java.math.BigDecimal;
+import java.util.Scanner;
+import kiteshop.pojos.Adres;
 import org.apache.commons.validator.routines.BigDecimalValidator;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.commons.validator.routines.IntegerValidator;
 import org.apache.commons.validator.routines.RegexValidator;
 
 public class Validator {
+    
+    public static int vraagInteger( ) {
+		String integer = null;
+                Scanner input = new Scanner(System.in);
+		while(!isValidInt(integer)){
+			System.out.println("geef nummer: ");
+			integer = input.nextLine();
+			if(!isValidInt(integer)){
+				System.out.println("Dit is geen nummer, probeer opnieuw");
+			}
+		}
+		return Integer.parseInt(integer);
+	}
+    
+    public static BigDecimal vraagBigDecimal() {
+		String bigDecimal = null;
+                Scanner input = new Scanner(System.in);
+		while(!isValidBigDecimal(bigDecimal)){
+			bigDecimal = input.nextLine();
+			if(!isValidBigDecimal(bigDecimal)){
+				System.out.println("Dit is geen geldige waarde voor een prijs, decimale getallen zijn toegestaan, met een punt als scheidingsteken, probeer opnieuw");
+			}
+		}
+		return new BigDecimal(bigDecimal);
+	}
+    public static Adres vraagAdres() {  //Simpele user Input die geen validatie betreft doet hij zelf, als er wel validatie is, is er een hulp methode gemaakt
+		Adres adres = new Adres();
+                Scanner input = new Scanner(System.in);
+		System.out.println("geef plaats: ");
+		String woonplaats = input.nextLine();
+		adres.setWoonplaats(woonplaats);
+
+		String postcode = vraagPostcode();
+		adres.setPostcode(postcode);
+
+		System.out.println("geef straatnaam: ");
+		String straatnaam = input.nextLine();
+		adres.setStraatnaam(straatnaam);
+
+		int huisnummer = vraagHuisnummer();
+		adres.setHuisnummer(huisnummer);
+
+		String toevoeging = vraagToevoeging();
+		adres.setToevoeging(toevoeging);
+
+		return adres;
+	}
+
+	public static String vraagPostcode() {
+		String postcode = null;
+                Scanner input = new Scanner(System.in);
+		while(!isValidPostcode(postcode)){
+			System.out.println("geef postcode: ");
+			postcode = input.nextLine();
+			if(!isValidPostcode(postcode)){
+				System.out.println("Dit is geen geldige postcode, probeer opnieuw");
+			}
+		}
+		return postcode;
+	}
+
+	public static String vraagToevoeging() {
+		String toevoeging = null;
+                Scanner input = new Scanner(System.in);
+		while(!isValidToevoeging(toevoeging)){
+			System.out.println("geef toevoeging: ");
+			toevoeging = input.nextLine();
+			if(!isValidToevoeging(toevoeging)){
+				System.out.println("Dit is geen geldige toevoeging, probeer opnieuw");
+			}
+		}
+		return toevoeging;
+	}
+
+	public static String vraagTelefoonnummer() {
+		String telefoonnr = null;
+                Scanner input = new Scanner(System.in);
+		while(!isValidTelefoonnummer(telefoonnr)){
+			System.out.println("geef telefoonnummer: ");
+			telefoonnr = input.nextLine();
+			if(!isValidTelefoonnummer(telefoonnr)){
+				System.out.println("Dit is geen geldig telefoonnummer, probeer opnieuw");
+			}
+		}
+		return telefoonnr;
+	}
+        
+        public static int vraagIntegerMinMax(int min, int max) {
+		String integer = null;
+                Scanner input = new Scanner(System.in);
+		while(!isValidInt(integer)|| !isValidValue(integer, min,max)){
+			System.out.println("geef nummer: ");
+			integer = input.nextLine();
+			if(!isValidInt(integer)){
+				System.out.println("Dit is geen nummer, probeer opnieuw");
+			} else if(!isValidValue(integer, min,max)){
+				System.out.println("Dit nummer behoort niet tot de mogelijkheden, probeer opnieuw");
+			}
+		}
+		return Integer.parseInt(integer);
+	}
+
+	public static String vraagEmail() {
+		String email = null;
+                Scanner input = new Scanner(System.in);
+		while(!isValidEmail(email)){
+			System.out.println("geef emailadres: ");
+			email = input.nextLine();
+			if(!isValidEmail(email)){
+				System.out.println("Dit is geen geldig emailadres, probeer opnieuw");
+			}
+		}
+		return email;
+	}
+
+	public static int vraagHuisnummer() {
+		int huisnummer = 0;
+                Scanner input = new Scanner(System.in);
+		System.out.println("geef huisnummer: ");  // ik begreep uit een tutorial dat je next int en next niet doorelkaar moet gebruiken, tevens , next intwacht niet, vandaar deze oplossing
+		String tempHuisnummer = input.nextLine();
+		try {
+			huisnummer = Integer.parseInt(tempHuisnummer);
+		} catch (NumberFormatException e) {
+			System.out.println("Je hebt geen nummer in getoetst, probeer opnieuw");
+			vraagHuisnummer();
+		}
+		return huisnummer;
+	}
 
 	public static boolean isValidBigDecimal(String bigdecimal){
 		BigDecimalValidator bigDecimalValidator  = BigDecimalValidator.getInstance();

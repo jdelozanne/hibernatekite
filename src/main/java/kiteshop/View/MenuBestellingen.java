@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
+import static kiteshop.View.Validator.vraagInteger;
 import kiteshop.controller.BestellingenController;
 import kiteshop.daos.mysql.KlantDaoSql;
 import kiteshop.daos.mysql.ProductDaoSql;
@@ -40,7 +41,7 @@ public class MenuBestellingen {
         System.out.println("Kies 4 voor een overzicht van bestellingen");
         System.out.println("Kies 5 om terug te keren naar het hoofdmenu");
         System.out.println("Kies 6 voor bestelling wijzigen");
-        int keuze = input.nextInt();
+        int keuze = vraagInteger();
         input.nextLine();
 
         switch (keuze) {
@@ -105,7 +106,7 @@ public class MenuBestellingen {
         Product p = new ProductDaoSql().readProduct(productnaam);
 
         System.out.println("Hoeveel stuks wilt u van dit specifieke product toevoegen?");
-        int aantal = input.nextInt();
+        int aantal = vraagInteger();
         input.nextLine();
 
         BestelRegel b = new BestelRegel(bestelling, p, aantal);
@@ -127,7 +128,7 @@ public class MenuBestellingen {
         for (int i = 0; i < klanten.size(); i++) {
             System.out.println(i + 1 + " " + klanten.get(i).toString());
         }
-        Klant choosenKlant = klanten.get(input.nextInt() - 1);
+        Klant choosenKlant = klanten.get(vraagInteger() - 1);
         input.nextLine();
         return choosenKlant;
     }
@@ -138,7 +139,7 @@ public class MenuBestellingen {
         for (int i = 0; i < bestellingen.size(); i++) {
             System.out.println(i + 1 + " " + bestellingen.get(i).bestellingToString());
         }
-        Bestelling choosenBestelling = bestellingen.get(input.nextInt() - 1);
+        Bestelling choosenBestelling = bestellingen.get(vraagInteger() - 1);
         return choosenBestelling;
     }
 
@@ -148,7 +149,7 @@ public class MenuBestellingen {
         for (int i = 0; i < bestelregels.size(); i++) {
             System.out.println(i + 1 + " " + bestelregels.get(i).toString());
         }
-        BestelRegel choosenBestelRegel = bestelregels.get(input.nextInt() - 1);
+        BestelRegel choosenBestelRegel = bestelregels.get(vraagInteger() - 1);
         updateBestelling(choosenBestelRegel, b);
     }
 
@@ -164,14 +165,14 @@ public class MenuBestellingen {
                 break;
             case 2:
                 System.out.println("Geef het nieuwe aantal");
-                int aantal = input.nextInt();
+                int aantal = vraagInteger();
                 br.setAantal(aantal);
                 break;
         }
         System.out.println("Wilt u nog een verandering doorvoeren binnen deze regel? Kies 1");
         System.out.println("Wilt u een andere regel veranderen? Kies 2");
         System.out.println("Bent u klaar? Kies 3");
-        int keuzeVervolg = input.nextInt();
+        int keuzeVervolg = vraagInteger();
         
         switch (keuzeVervolg) {
             case 1:

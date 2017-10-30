@@ -9,9 +9,10 @@ import static kiteshop.View.Validator.isValidInt;
 
 import java.util.Scanner;
 import java.util.logging.Logger;
+import static kiteshop.View.Validator.vraagInteger;
 
 import kiteshop.controller.HoofdController;
-import kiteshop.pojos.Account;
+
 import kiteshop.test.ProjectLog;
 
 /**
@@ -21,9 +22,7 @@ import kiteshop.test.ProjectLog;
 public class HoofdMenu {
 	private final Logger logger = ProjectLog.getLogger();
 	private Scanner input = new Scanner(System.in);
-    
-
-    
+        
     HoofdController controller;
     
     public HoofdMenu(HoofdController hoofdController) {
@@ -99,20 +98,5 @@ public class HoofdMenu {
         } else {
             start();
         }
-    }
-    
-    
-
-    private int vraagInteger() {
-		String integer = null;
-		while(!isValidInt(integer)){
-			System.out.println("geef nummer: ");
-			integer = input.nextLine();
-			if(!isValidInt(integer)){
-				System.out.println("Dit is geen nummer, probeer opnieuw");
-			}
-		}
-		return Integer.parseInt(integer);
-	}
-  
+    }  
 }

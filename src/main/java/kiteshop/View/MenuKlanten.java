@@ -9,12 +9,11 @@ import kiteshop.controller.KlantenController;
 import kiteshop.pojos.*;
 import kiteshop.test.ProjectLog;
 
-import static kiteshop.View.Validator.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
+import static kiteshop.View.Validator.*;
 /**
  *
  * @author julia en steef
@@ -59,9 +58,6 @@ public class MenuKlanten {
 			}
 			break;
 		case 3:
-			/* geimplenteerd nu voor zoeken op achternaam (wellicht in de toekomst meer opties) omdat 
-			 * er meerdere klanten kunnen zijn met dezelfde achternaam
-			 */
 			klantVerwijderenAchterNaam();
 			System.out.println("Wilt u nog een een klant verwijderen J/N");
 			if (input.nextLine().equalsIgnoreCase("J")) {
@@ -239,121 +235,10 @@ public class MenuKlanten {
 		return klant;
 	}
 
-
-	private Adres vraagAdres() {  //Simpele user Input die geen validatie betreft doet hij zelf, als er wel validatie is, is er een hulp methode gemaakt
-		Adres adres = new Adres();
-		System.out.println("geef plaats: ");
-		String woonplaats = input.nextLine();
-		adres.setWoonplaats(woonplaats);
-
-		String postcode = vraagPostcode();
-		adres.setPostcode(postcode);
-
-		System.out.println("geef straatnaam: ");
-		String straatnaam = input.nextLine();
-		adres.setStraatnaam(straatnaam);
-
-		int huisnummer = vraagHuisnummer();
-		adres.setHuisnummer(huisnummer);
-
-		String toevoeging = vraagToevoeging();
-		adres.setToevoeging(toevoeging);
-
-		return adres;
-	}
-
-	private String vraagPostcode() {
-		String postcode = null;
-		while(!isValidPostcode(postcode)){
-			System.out.println("geef postcode: ");
-			postcode = input.nextLine();
-			if(!isValidPostcode(postcode)){
-				System.out.println("Dit is geen geldige postcode, probeer opnieuw");
-			}
-		}
-		return postcode;
-	}
-
-	private String vraagToevoeging() {
-		String toevoeging = null;
-		while(!isValidToevoeging(toevoeging)){
-			System.out.println("geef toevoeging: ");
-			toevoeging = input.nextLine();
-			if(!isValidToevoeging(toevoeging)){
-				System.out.println("Dit is geen geldige toevoeging, probeer opnieuw");
-			}
-		}
-		return toevoeging;
-	}
-
-	private String vraagTelefoonnummer() {
-		String telefoonnr = null;
-		while(!isValidTelefoonnummer(telefoonnr)){
-			System.out.println("geef telefoonnummer: ");
-			telefoonnr = input.nextLine();
-			if(!isValidTelefoonnummer(telefoonnr)){
-				System.out.println("Dit is geen geldig telefoonnummer, probeer opnieuw");
-			}
-		}
-		return telefoonnr;
-	}
-
-	private int vraagInteger() {
-		String integer = null;
-		while(!isValidInt(integer)){
-			System.out.println("geef nummer: ");
-			integer = input.nextLine();
-			if(!isValidInt(integer)){
-				System.out.println("Dit is geen nummer, probeer opnieuw");
-			}
-		}
-		return Integer.parseInt(integer);
-	}
-
-	private int vraagIntegerMinMax(int min, int max) {
-		String integer = null;
-		while(!isValidInt(integer)|| !isValidValue(integer, min,max)){
-			System.out.println("geef nummer: ");
-			integer = input.nextLine();
-			if(!isValidInt(integer)){
-				System.out.println("Dit is geen nummer, probeer opnieuw");
-			} else if(!isValidValue(integer, min,max)){
-				System.out.println("Dit nummer behoort niet tot de mogelijkheden, probeer opnieuw");
-			}
-		}
-		return Integer.parseInt(integer);
-	}
-
-	private String vraagEmail() {
-		String email = null;
-		while(!isValidEmail(email)){
-			System.out.println("geef emailadres: ");
-			email = input.nextLine();
-			if(!isValidEmail(email)){
-				System.out.println("Dit is geen geldig emailadres, probeer opnieuw");
-			}
-		}
-		return email;
-	}
-
-	private int vraagHuisnummer() {
-		int huisnummer = 0;
-		System.out.println("geef huisnummer: ");  // ik begreep uit een tutorial dat je next int en next niet doorelkaar moet gebruiken, tevens , next intwacht niet, vandaar deze oplossing
-		String tempHuisnummer = input.nextLine();
-		try {
-			huisnummer = Integer.parseInt(tempHuisnummer);
-		} catch (NumberFormatException e) {
-			System.out.println("Je hebt geen nummer in getoetst, probeer opnieuw");
-			vraagHuisnummer();
-		}
-		return huisnummer;
-	}
-
 	public void printKlanten() {
 		ArrayList<Klant> klantenlijst = new ArrayList<>();
 		for (Klant element : klantenlijst) {
 			System.out.println(element + "\n");
 		}
 	}
-
 }
