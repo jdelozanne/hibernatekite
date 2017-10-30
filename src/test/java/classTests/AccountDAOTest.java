@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import kiteshop.daos.AccountDaoSql;
+import kiteshop.daos.mysql.AccountDaoSql;
 import kiteshop.pojos.Account;
 import setup.SetUpTestDatabase;
 

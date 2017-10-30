@@ -6,7 +6,7 @@
 package kiteshop.View;
 
 import kiteshop.controller.HoofdController;
-import kiteshop.daos.DaoFactorySql;
+import kiteshop.daos.mysql.DaoFactorySql;
 
 /**
  *

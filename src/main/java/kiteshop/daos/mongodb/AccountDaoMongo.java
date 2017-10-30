@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kiteshop.daos;
+package kiteshop.daos.mongodb;
 
 import Connection.MongoDBConnection;
 import Connection.JDBC;
@@ -21,9 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import kiteshop.daos.AccountDaoInterface;
 import kiteshop.pojos.Account;
 import org.bson.Document;
-import static kiteshop.daos.KlantDaoMongo.getNextSequence;
+import static kiteshop.daos.mongodb.KlantDaoMongo.getNextSequence;
 
 /**
  *

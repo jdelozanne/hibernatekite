@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import kiteshop.daos.ProductDaoSql;
+import kiteshop.daos.mysql.ProductDaoSql;
 import kiteshop.pojos.Product;
 import setup.SetUpTestDatabase;
 

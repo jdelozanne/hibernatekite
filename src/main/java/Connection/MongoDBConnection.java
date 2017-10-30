@@ -6,8 +6,10 @@
 package Connection;
 
 import com.mongodb.*;
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.util.List;
+import java.util.Properties;
 
 /**
  *
@@ -23,9 +25,19 @@ public class MongoDBConnection {
     //dat doe je door document.put("naam", "ww");
     //vervolgens kun je het document opslaan door collection.insert(document); 
     MongoClient mongo;
-    
-    public MongoClient connect(){
-        this.mongo = new MongoClient("localhost", 27017);
+    private static String pathOfActivePropopertyFile = "src/main/java/Connection/connect.properties";
+
+    public MongoClient connect() {
+        try {
+            Properties props = new Properties();
+            props.load(new FileInputStream(pathOfActivePropopertyFile));
+            String hostname = props.getProperty("hostnameMongo");
+            int portMongo = Integer.parseInt(props.getProperty("portMongo"));
+            this.mongo = new MongoClient(hostname, portMongo);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
         return mongo;
     }
 }

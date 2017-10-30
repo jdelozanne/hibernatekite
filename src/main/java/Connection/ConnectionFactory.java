@@ -5,21 +5,25 @@
  */
 package Connection;
 
+import java.io.FileInputStream;
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.Properties;
 
 /**
  *
  * @author julia
  */
 public class ConnectionFactory {
-    
-    HikariCP hikariConnection = new HikariCP();
-    JDBC jdbcConnection = new JDBC();
-    Connection connection;
-    static String connectorType = "jdbc";
-    
-    public Connection createConnection(String connectorType){
-        switch(connectorType.toLowerCase()){
+
+    private HikariCP hikariConnection = new HikariCP();
+    private JDBC jdbcConnection = new JDBC();
+    private Connection connection;
+    private String connectorType;
+    private static String pathOfActivePropopertyFile = "src/main/java/Connection/connect.properties";
+
+    public Connection createConnection(String connectorType) {
+        switch (connectorType.toLowerCase()) {
             case "jdbc":
                 connection = jdbcConnection.getConnection();
                 break;
@@ -29,11 +33,15 @@ public class ConnectionFactory {
         }
         return connection;
     }
-    
-    public String getConnectorType(){
-        return connectorType;
-    }
 
-   
-  
+    public String getConnectorType() {
+        try {
+            Properties props = new Properties();
+            props.load(new FileInputStream(pathOfActivePropopertyFile));
+            this.connectorType = props.getProperty("connectorType");
+        } catch (Exception ex) {
+            System.out.println("geen connectortype gevonden:" + ex);
+        }
+        return this.connectorType;
+    }
 }

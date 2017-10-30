@@ -3,49 +3,50 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kiteshop.daos;
+package kiteshop.daos.mongodb;
+
+import kiteshop.daos.AccountDaoInterface;
+import kiteshop.daos.BestelRegelDaoInterface;
+import kiteshop.daos.BestellingDaoInterface;
+import kiteshop.daos.DaoFactoryInterface;
+import kiteshop.daos.KlantDaoInterface;
+import kiteshop.daos.ProductDaoInterface;
 
 /**
  *
  * @author Steef P
  */
-public class DaoFactorySql implements DaoFactoryInterface {
+public class DaoFactoryMongo implements DaoFactoryInterface {
 
 	@Override
 	public AccountDaoInterface createAccountDao() {
-		
-		return new AccountDaoSql();
+		return new AccountDaoMongo();
 	}
 
 	@Override
 	public BestellingDaoInterface createBestellingDao() {
-		// TODO Auto-generated method stub
-		return new BestellingDaoSql();
+
+		return new BestellingDaoMongo();
 	}
 
 	@Override
 	public BestelRegelDaoInterface createBestelregelDao() {
-		// TODO Auto-generated method stub
-		return new BestelRegelDaoSql();
+		return new BestelRegelDaoMongo();
 	}
 
 	@Override
 	public KlantDaoInterface createKlantDao() {
-		// TODO Auto-generated method stub
-		return new KlantDaoSql();
+		return new KlantDaoMongo();
 	}
 
 	@Override
 	public ProductDaoInterface createProductDao() {
-		// TODO Auto-generated method stub
-		return new ProductDaoSql();
+		return new ProductDaoMongo();
 	}
 
 	@Override
 	public String toString() {
-		return "Sql Database";
+		return "Mongo Database";
 	}
-	
-	
 
 }

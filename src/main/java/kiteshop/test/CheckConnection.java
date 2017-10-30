@@ -7,11 +7,12 @@ package kiteshop.test;
 
 import java.util.List;
 import kiteshop.controller.HoofdController;
-import kiteshop.daos.AccountDaoSql;
-import kiteshop.daos.BestelRegelDaoSql;
-import kiteshop.daos.BestellingDaoSql;
-import kiteshop.daos.DaoFactorySql;
-import kiteshop.daos.KlantDaoSql;
+import kiteshop.daos.mongodb.DaoFactoryMongo;
+import kiteshop.daos.mysql.AccountDaoSql;
+import kiteshop.daos.mysql.BestelRegelDaoSql;
+import kiteshop.daos.mysql.BestellingDaoSql;
+import kiteshop.daos.mysql.DaoFactorySql;
+import kiteshop.daos.mysql.KlantDaoSql;
 import kiteshop.pojos.Account;
 import kiteshop.pojos.BestelRegel;
 import kiteshop.pojos.Bestelling;
@@ -25,7 +26,7 @@ public class CheckConnection {
     public static void main(String[] args) {
        
         
-	new HoofdController(new DaoFactorySql()).startMenuBestellingen();
+	new HoofdController(new DaoFactoryMongo()).startMenuBestellingen();
                 
                // Bestelling b = new BestellingDaoSql().readBestellingByBestellingID(5);
                // System.out.println(b.bestellingToString());
