@@ -14,6 +14,7 @@ import kiteshop.pojos.Product;
 import kiteshop.test.ProjectLog;
 import kiteshop.daos.BestelRegelDaoInterface;
 import kiteshop.daos.BestellingDaoInterface;
+import kiteshop.daos.ProductDaoInterface;
 
 public class BestellingenController {
 
@@ -21,16 +22,22 @@ public class BestellingenController {
 
     BestellingDaoInterface bestellingDAO;
     BestelRegelDaoInterface bestelRegelDAO;
+    ProductDaoInterface productDAO;
 
-      public BestellingenController(BestellingDaoInterface bestellingDAO, BestelRegelDaoInterface bestelRegelDAO) {
-		this.bestellingDAO = bestellingDAO;
-		this.bestelRegelDAO = bestelRegelDAO;
-	}
+    
 
       
+	public BestellingenController(BestellingDaoInterface bestellingDAO, BestelRegelDaoInterface bestelRegelDAO,
+			ProductDaoInterface productDAO) {
+		this.bestellingDAO = bestellingDAO;
+		this.bestelRegelDAO = bestelRegelDAO;
+		this.productDAO = productDAO;
+	}
+
 	public void createBestelling(Bestelling bestelling) {
         bestellingDAO.createBestelling(bestelling);
         createBestelRegels(bestelling);
+        adjustVoorraad(bestelling);
         logger.info("nieuwe bestelling gemaakt");
     }
 
@@ -75,4 +82,33 @@ public class BestellingenController {
         BestelRegelDaoSql besteldao = new BestelRegelDaoSql();
         return besteldao.readBestelRegelsByBestelling(bestelling);
     }
+    
+    private void adjustVoorraad(Bestelling bestelling){
+    	for(BestelRegel bestelregel : bestelling.getBestelling()){
+    		Product betreffendeproduct = bestelregel.getProduct();
+    		int aantalProductenbesteld = bestelregel.getAantal();
+    		int productVoorraadInDatabase = productDAO.readProductByID(betreffendeproduct.getProductID()).getVoorraad(); //ik haal het product opnieuw uit de database, om de actuele voorraad te weten, anders kan een een andere bestelregel die alvast hebben aangepast
+    		int nieuweVoorraad = productVoorraadInDatabase - aantalProductenbesteld;
+    		betreffendeproduct.setVoorraad(nieuweVoorraad);
+    		productDAO.updateProduct(betreffendeproduct);
+    		
+    	}
+    	
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
