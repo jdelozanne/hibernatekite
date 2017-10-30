@@ -5,6 +5,7 @@
  */
 package setup;
 
+import Connection.ConnectionFactory;
 import Connection.JDBC;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -29,7 +30,10 @@ public class SetUpTestDatabase {
 
 	public SetUpTestDatabase() {
 		JDBC.setPathOfActivePropopertyFiletoTest();
-		this.connection = JDBC.getConnection();
+
+		ConnectionFactory factory = new ConnectionFactory();
+		connection = factory.createConnection("jdbc");
+
 	}
 
 	private static final String DATABASE = "TestKiteshop";
@@ -44,7 +48,8 @@ public class SetUpTestDatabase {
 		String create_account = "CREATE TABLE IF NOT EXISTS `" + DATABASE + "`.`account` (\n"
 				+ "  `accountID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,\n"
 				+ "  `gebruikersnaam` VARCHAR(45) NOT NULL,\n"
-				+ "  `wachtwoord` VARCHAR(45) NOT NULL,\n"
+				+ "  `wachtwoord` VARCHAR(70) NOT NULL,\n"
+				+ "  `salt` VARCHAR(70) NULL,\n"
 				+ "  `account_type` VARCHAR(20) NULL DEFAULT NULL,\n"
 				+ "  PRIMARY KEY (`accountID`))\n"
 				+ "ENGINE = InnoDB";  // de engine kun je ook weghalen dan werkt het ook SP
@@ -146,8 +151,8 @@ public class SetUpTestDatabase {
 		String insert_account = "INSERT INTO `" + DATABASE + "`.`account` (`gebruikersnaam`, `wachtwoord`) VALUES ('Steef', 'Cola');";
 		String insert_product = "INSERT INTO `" + DATABASE + "`.`product` (`productID`, `productnaam`, voorraad, `prijs`) VALUES ('1', 'Cabrinha Drifter', 5, '719.00'), ('2', 'Cabrinha Chaos', 8,  '719.00'),('3', 'Brunotti Virtuoso', 7, '399.00');";
 		String insert_klant = "INSERT INTO `" + DATABASE + "`.`klant` (`KlantID`, `voornaam`, `achternaam`, emailadres,`telefoonnummer`) VALUES ('1', 'Steef', 'Pelgrom', 'stevey@hotmail.com', '06-56847965');";
-		
-		
+
+
 		String insert_bestelling = "INSERT INTO `" + DATABASE + "`.`bestelling` (`bestellingID`, `klantID`) VALUES ('1', '1');";
 		String insert_bestelregel = "INSERT INTO `" + DATABASE + "`.`bestel_regel` (`bestel_regelID`, `aantal`, `Bestelling_bestellingID`, `product_idProduct`) VALUES ('1', '4', '1', '2'), ('2', '1', '1', '2');";
 

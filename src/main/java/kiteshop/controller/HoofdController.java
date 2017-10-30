@@ -13,7 +13,7 @@ import kiteshop.daos.*;
 
 /**
  *
- * @author julia
+ * @author julia en steef
  */
 public class HoofdController {
 
@@ -25,7 +25,7 @@ public class HoofdController {
 
 	public void start() {
 		InlogMenu inlogMenu = new InlogMenu(new AccountController(DaoFactory.createAccountDao()));
-		boolean inlogSuccesfull = inlogMenu.inloggen();
+		boolean inlogSuccesfull = inlogMenu.start();
 		
 		if(inlogSuccesfull){
 			HoofdMenu hoofdMenu = new HoofdMenu(this);
@@ -47,7 +47,7 @@ public class HoofdController {
 	}
 
 	public void startMenuBestellingen() {
-		MenuBestellingen menuBestellingen = new MenuBestellingen(new BestellingenController(DaoFactory.createBestellingDao(), DaoFactory.createBestelregelDao()));
+		MenuBestellingen menuBestellingen = new MenuBestellingen(new BestellingenController(DaoFactory.createBestellingDao(), DaoFactory.createBestelregelDao(), DaoFactory.createProductDao()));
 		menuBestellingen.start();
 	}
 
