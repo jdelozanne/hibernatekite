@@ -13,8 +13,6 @@ public class PaswordHasher {
 		String paswordHex = toHexadecimal(password);
 		String combinedHex = saltHex + paswordHex;
 
-		//Net achter gekomen, hex is case insensitive
-
 		byte[] combinedArray = hexStringtoByteArray(combinedHex);
 
 		MessageDigest md= null;
