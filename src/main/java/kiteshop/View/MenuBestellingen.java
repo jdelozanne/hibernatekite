@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
-
-
-import kiteshop.controller.BestelRegelController;
 import kiteshop.controller.BestellingenController;
 import kiteshop.daos.mysql.KlantDaoSql;
 import kiteshop.daos.mysql.ProductDaoSql;

@@ -138,7 +138,7 @@ public class BestellingDaoSql implements BestellingDaoInterface {
     public List<Bestelling> readAllBestelling() {
         List<Bestelling> bestellingen = new ArrayList<>();
         String readAll = "Select * from bestelling join klant "
-                + "on bestelling_klantID = klantID";
+                + "on bestelling.klantID = klant.klantID";
         
         try (Connection connection = factory.createConnection(factory.getConnectorType());
                 Statement statement = connection.createStatement();) {

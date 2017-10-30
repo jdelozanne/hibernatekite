@@ -26,7 +26,7 @@ public class CheckConnection {
     public static void main(String[] args) {
        
         
-	new HoofdController(new DaoFactoryMongo()).startMenuBestellingen();
+	new HoofdController(new DaoFactorySql()).startMenuBestellingen();
                 
                // Bestelling b = new BestellingDaoSql().readBestellingByBestellingID(5);
                // System.out.println(b.bestellingToString());

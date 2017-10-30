@@ -17,8 +17,6 @@ import kiteshop.pojos.Bestelling;
 public interface BestelRegelDaoInterface {
     
     void createBestelRegel(BestelRegel regel);
-
-    void readBestelRegel(int bestellingID);
     
     public List<BestelRegel> readBestelRegelsByBestelling(Bestelling bestelling);
 
