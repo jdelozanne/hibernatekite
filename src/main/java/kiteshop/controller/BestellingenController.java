@@ -87,7 +87,7 @@ public class BestellingenController {
     	for(BestelRegel bestelregel : bestelling.getBestelling()){
     		Product betreffendeproduct = bestelregel.getProduct();
     		int aantalProductenbesteld = bestelregel.getAantal();
-    		int productVoorraadInDatabase = productDAO.readProductByID(betreffendeproduct.getProductID()).getVoorraad(); //ik haal het product opnieuw uit de database, om de actuele voorraad te weten, anders kan een een andere bestelregel die alvast hebben aangepast
+    		int productVoorraadInDatabase = productDAO.readProductByID(betreffendeproduct.getProductID()).getVoorraad(); //ik haal het product opnieuw op uit de database, om de actuele voorraad te weten, anders kan een een andere bestelregel die alvast hebben aangepast
     		int nieuweVoorraad = productVoorraadInDatabase - aantalProductenbesteld;
     		betreffendeproduct.setVoorraad(nieuweVoorraad);
     		productDAO.updateProduct(betreffendeproduct);

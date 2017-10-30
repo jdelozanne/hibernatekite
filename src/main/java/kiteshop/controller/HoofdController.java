@@ -13,7 +13,7 @@ import kiteshop.daos.*;
 
 /**
  *
- * @author julia
+ * @author julia en steef
  */
 public class HoofdController {
 
