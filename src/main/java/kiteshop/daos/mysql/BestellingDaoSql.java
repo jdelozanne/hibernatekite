@@ -36,7 +36,7 @@ public class BestellingDaoSql implements BestellingDaoInterface {
 
     @Override
     public void createBestelling(Bestelling bestelling) {
-        String sql = "INSERT INTO bestelling"
+       String sql = "INSERT INTO bestelling"
                 + "(bestellingID, klantID, totaalprijs)"
                 + "values (?,?,?)";
         try (Connection connection = factory.createConnection(factory.getConnectorType());
