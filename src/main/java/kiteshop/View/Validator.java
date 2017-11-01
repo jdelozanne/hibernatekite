@@ -5,16 +5,14 @@ import java.util.Scanner;
 import kiteshop.pojos.Adres;
 import org.apache.commons.validator.routines.BigDecimalValidator;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.apache.commons.validator.routines.IntegerValidator;
 import org.apache.commons.validator.routines.RegexValidator;
 
 public class Validator {
-    
-    public static int vraagInteger( ) {
+
+	public static int vraagInteger( ) {
 		String integer = null;
-                Scanner input = new Scanner(System.in);
+		Scanner input = new Scanner(System.in);
 		while(!isValidInt(integer)){
-			System.out.println("geef nummer: ");
 			integer = input.nextLine();
 			if(!isValidInt(integer)){
 				System.out.println("Dit is geen nummer, probeer opnieuw");
@@ -22,10 +20,10 @@ public class Validator {
 		}
 		return Integer.parseInt(integer);
 	}
-    
-    public static BigDecimal vraagBigDecimal() {
+
+	public static BigDecimal vraagBigDecimal() {
 		String bigDecimal = null;
-                Scanner input = new Scanner(System.in);
+		Scanner input = new Scanner(System.in);
 		while(!isValidBigDecimal(bigDecimal)){
 			bigDecimal = input.nextLine();
 			if(!isValidBigDecimal(bigDecimal)){
@@ -34,9 +32,9 @@ public class Validator {
 		}
 		return new BigDecimal(bigDecimal);
 	}
-    public static Adres vraagAdres() {  //Simpele user Input die geen validatie betreft doet hij zelf, als er wel validatie is, is er een hulp methode gemaakt
+	public static Adres vraagAdres() {  
 		Adres adres = new Adres();
-                Scanner input = new Scanner(System.in);
+		Scanner input = new Scanner(System.in);
 		System.out.println("geef plaats: ");
 		String woonplaats = input.nextLine();
 		adres.setWoonplaats(woonplaats);
@@ -59,7 +57,7 @@ public class Validator {
 
 	public static String vraagPostcode() {
 		String postcode = null;
-                Scanner input = new Scanner(System.in);
+		Scanner input = new Scanner(System.in);
 		while(!isValidPostcode(postcode)){
 			System.out.println("geef postcode: ");
 			postcode = input.nextLine();
@@ -72,7 +70,7 @@ public class Validator {
 
 	public static String vraagToevoeging() {
 		String toevoeging = null;
-                Scanner input = new Scanner(System.in);
+		Scanner input = new Scanner(System.in);
 		while(!isValidToevoeging(toevoeging)){
 			System.out.println("geef toevoeging: ");
 			toevoeging = input.nextLine();
@@ -85,7 +83,7 @@ public class Validator {
 
 	public static String vraagTelefoonnummer() {
 		String telefoonnr = null;
-                Scanner input = new Scanner(System.in);
+		Scanner input = new Scanner(System.in);
 		while(!isValidTelefoonnummer(telefoonnr)){
 			System.out.println("geef telefoonnummer: ");
 			telefoonnr = input.nextLine();
@@ -95,12 +93,11 @@ public class Validator {
 		}
 		return telefoonnr;
 	}
-        
-        public static int vraagIntegerMinMax(int min, int max) {
+
+	public static int vraagIntegerMinMax(int min, int max) {
 		String integer = null;
-                Scanner input = new Scanner(System.in);
+		Scanner input = new Scanner(System.in);
 		while(!isValidInt(integer)|| !isValidValue(integer, min,max)){
-			System.out.println("geef nummer: ");
 			integer = input.nextLine();
 			if(!isValidInt(integer)){
 				System.out.println("Dit is geen nummer, probeer opnieuw");
@@ -113,7 +110,7 @@ public class Validator {
 
 	public static String vraagEmail() {
 		String email = null;
-                Scanner input = new Scanner(System.in);
+		Scanner input = new Scanner(System.in);
 		while(!isValidEmail(email)){
 			System.out.println("geef emailadres: ");
 			email = input.nextLine();
@@ -126,8 +123,8 @@ public class Validator {
 
 	public static int vraagHuisnummer() {
 		int huisnummer = 0;
-                Scanner input = new Scanner(System.in);
-		System.out.println("geef huisnummer: ");  // ik begreep uit een tutorial dat je next int en next niet doorelkaar moet gebruiken, tevens , next intwacht niet, vandaar deze oplossing
+		Scanner input = new Scanner(System.in);
+		System.out.println("geef huisnummer: ");  
 		String tempHuisnummer = input.nextLine();
 		try {
 			huisnummer = Integer.parseInt(tempHuisnummer);
@@ -159,7 +156,7 @@ public class Validator {
 	public static boolean isValidValue(String integer, int min, int max){
 		return (Integer.parseInt(integer)>= min && Integer.parseInt(integer)<= max);
 	}
-	
+
 
 	public static boolean isValidEmail(String email){
 		EmailValidator emailValidator  = EmailValidator.getInstance();
@@ -212,7 +209,7 @@ public class Validator {
 	}
 
 	public static boolean isValidWachtwoord(String wachtwoord){
-		//minimaal 8 karakters lang en een getal bevatten
+		//minimaal 4 karakters lang en een getal bevatten
 		String regex = "[^\\-]{4,}";
 		String regex2 = "[^\\-]{0,}[0-9]{1}[^\\-]{0,}";
 

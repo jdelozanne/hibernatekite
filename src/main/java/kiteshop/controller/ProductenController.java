@@ -37,7 +37,7 @@ public class ProductenController {
 
     public void displayProducten(List<Product> lijst) {
         for (Product p : lijst) {
-            System.out.printf("%s50\n", p.toString());
+            System.out.println(p);
         }
     }
 

@@ -288,7 +288,7 @@ public class KlantDaoSql implements KlantDaoInterface {
 
     @Override
     public Klant readKlantById(int id) {
-        Klant k = new Klant();
+        Klant klant = new Klant();
         Adres bezoekAdres = new Adres();
         Adres factuurAdres = new Adres();
         String query = "Select * from klant where klantID = ?";
@@ -301,14 +301,14 @@ public class KlantDaoSql implements KlantDaoInterface {
             statement.setInt(1, id);
             try (ResultSet result = statement.executeQuery();) {
                 while (result.next()) {
-                    Klant klant = new Klant();
+             
                     klant.setKlantID(result.getInt(1));
                     klant.setVoornaam(result.getString(2));
                     klant.setTussenvoegsel(result.getString(3));
                     klant.setAchternaam(result.getString(4));
                     klant.setEmail(result.getString(5));
                     klant.setTelefoonnummer(result.getString(6));
-                    logger.info("In first loop");
+          
                 }
             }
             statement2.setInt(1, id);
@@ -338,8 +338,8 @@ public class KlantDaoSql implements KlantDaoInterface {
                 factuurAdres.setAdresType(AdresType.FACTUURADRES);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(KlantDaoSql.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
-        return k;
+        return klant;
     }
 }

@@ -68,7 +68,7 @@ public class Bestelling {
     
 
     public String bestellingToString() {
-        String bestelling = "BestellingID = " + bestellingID + " KlantID = " + this.getKlant().getKlantID() + " Totaalbedrag = " + totaalprijs;
+        String bestelling = "BestellingID = " + bestellingID + " KlantID = " + getKlant().getKlantID() + " Totaalbedrag = " + totaalprijs;
         return bestelling;
     }
     
