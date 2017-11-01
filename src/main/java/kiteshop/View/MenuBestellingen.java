@@ -173,8 +173,6 @@ public class MenuBestellingen {
 	public void updateBestelling(BestelRegel br, Bestelling b) {
 		
 		br.setBestelling(b);
-		System.out.println("Bestelling van de bestleregel "+br.getBestelling());
-		System.out.println("Bestellingid van de bestleregel "+br.getBestellingID());
 		System.out.println("Wat wilt u veranderen, kies 1 voor product of kies 2 voor het aantal");
 		int keuze = input.nextInt();
 		input.nextLine();

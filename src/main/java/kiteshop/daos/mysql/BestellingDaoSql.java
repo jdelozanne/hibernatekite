@@ -117,7 +117,6 @@ public class BestellingDaoSql implements BestellingDaoInterface {
         List<Bestelling> bestellingen = new ArrayList<>();
         String query = "Select * from bestelling Where klantID =" + klantID;
         Klant klant = new KlantDaoSql().readKlantById(klantID);
-        System.out.println(klant);
         try (Connection connection = factory.createConnection(factory.getConnectorType());
                 Statement statement = connection.createStatement()) {
             try (ResultSet result = statement.executeQuery(query);) {
