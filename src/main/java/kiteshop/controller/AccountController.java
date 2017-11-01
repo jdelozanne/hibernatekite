@@ -46,6 +46,15 @@ public class AccountController {
 		return accountDAO.readAccountByGebruikersnaam(gebruikersnaam);
 	}
 
+	public boolean accountExists(String gebruikersnaam){
+		boolean exists = false;
+		if(accountDAO.readAccountByGebruikersnaam(gebruikersnaam).getGebruikersnaam()!=null){
+			exists=true;
+		}
+		return exists;
+	}
+	
+	
 	public void deleteAccount(Account account) {
 		accountDAO.deleteAccount(account);
 	}

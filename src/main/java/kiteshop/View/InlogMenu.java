@@ -23,53 +23,54 @@ import kiteshop.pojos.Account;
  * @author julia
  */
 public class InlogMenu {
-    private final Logger logger = ProjectLog.getLogger();
-    private Scanner input = new Scanner(System.in);
+	private final Logger logger = ProjectLog.getLogger();
+	private Scanner input = new Scanner(System.in);
 
-    AccountController controller;
-    
-    public InlogMenu(AccountController controller) {
+	AccountController controller;
+
+	public InlogMenu(AccountController controller) {
 		this.controller = controller;
 	}    
 
 
 	public boolean start() {
 		System.out.println("Welkom bij de Kiteshop");
-    	System.out.println("Kies 1 als u een nieuwe account wil aanmaken");
-    	System.out.println("Kies 2 als u wilt inloggen");
-    	int keuze = vraagInteger();
-    	
-    	boolean inlogsucces =  false;
-    	
-    	if (keuze==1){
-    		maakNieuwAccount();
-    		System.out.println("U kunt nu inloggen met uw nieuwe account");
-    		inlogsucces = inloggen();
-    	} else if (keuze==2){
-    		inlogsucces = inloggen();
-    	} else {
-    		System.out.println("Dit is geen geldige keuze");
-    	}
-    	
+		System.out.println("Kies 1 als u een nieuwe account wil aanmaken");
+		System.out.println("Kies 2 als u wilt inloggen");
+		int keuze = vraagInteger();
+
+		boolean inlogsucces =  false;
+
+		if (keuze==1){
+			maakNieuwAccount();
+			System.out.println("U kunt nu inloggen met uw nieuwe account");
+			inlogsucces = inloggen();
+		} else if (keuze==2){
+			inlogsucces = inloggen();
+		} else {
+			System.out.println("Dit is geen geldige keuze");
+		}
+
 		return inlogsucces;
 	}
-    
-    public boolean inloggen() {
-   	
-        System.out.println("Geef uw gebruikersnaam: ");
-        String user = input.nextLine();
 
-        System.out.println("Geef uw wachtwoord: ");
-        String ww = input.nextLine();
+	public boolean inloggen() {
 
-        logger.info("Gebruikersnaam en wachtwoord ingegeven");
-        if (controller.checkLogin(user, ww)) {
-            return true;
-        } else {
-            System.out.println("Onjuiste gegevens, probeer opnieuw");
-            return false;
-        }
-    }
+		System.out.println("Geef uw gebruikersnaam: ");
+		String user = input.nextLine();
+
+		System.out.println("Geef uw wachtwoord: ");
+		String ww = input.nextLine();
+
+		if (controller.accountExists(user) && controller.checkLogin(user, ww)) {
+			return true;
+		}
+		else {
+			System.out.println("Onjuiste gegevens, probeer opnieuw");
+			return false;
+		}
+
+	}
 
 	private int vraagInteger() {
 		String integer = null;
@@ -83,18 +84,26 @@ public class InlogMenu {
 		return Integer.parseInt(integer);
 	}
 
-    
+
 	public void maakNieuwAccount() {
 		Account account = new Account();
+		
 		System.out.println("Gebruikersnaam?");
 		String gebruiker = input.nextLine();
-		account.setGebruikersnaam(gebruiker);
+		if(!controller.accountExists(gebruiker)){
+			
+			account.setGebruikersnaam(gebruiker);
 
-		String wachtwoord = vraagWachtwoord();
+			String wachtwoord = vraagWachtwoord();
 
-		account.setWachtwoord(wachtwoord);
+			account.setWachtwoord(wachtwoord);
 
-		controller.createAccount(account);
+			controller.createAccount(account);
+		} else {
+			System.out.println("Deze gebruiker bestaat al, probeer opnieuw");
+			maakNieuwAccount();
+		}
+		
 	}
 
 
@@ -111,6 +120,6 @@ public class InlogMenu {
 	}
 
 
-	
-    
+
+
 }
