@@ -44,7 +44,6 @@ public class MenuBestellingen {
 		System.out.println("Kies 5 om terug te keren naar het hoofdmenu");
 		int keuze = vraagInteger();
 
-
 		switch (keuze) {
 		case 1:
 			Klant Klant = firstPickRightKlant();
@@ -63,8 +62,10 @@ public class MenuBestellingen {
 			break;
 		case 3:
 			Klant klantBestelling = firstPickRightKlant();
+			if(klantBestelling!=null){
 			Bestelling bestellingToDelete = pickRightBestelling(klantBestelling);
 			deleteBestelling(bestellingToDelete);
+			}
 			start();
 			break;
 		case 4:
@@ -81,12 +82,9 @@ public class MenuBestellingen {
 	}
 
 	public void createBestelling(Klant klant ) {
-
-
 		Bestelling bestelling = new Bestelling(klant);
 
 		System.out.println("Wilt u iets toevoegen aan de bestelling? J/N");
-
 		String antwoord = input.nextLine();
 		while (antwoord.equalsIgnoreCase("J")) {
 			BestelRegel bestelRegelToBeAdded = createBestelRegel(bestelling);
@@ -95,7 +93,6 @@ public class MenuBestellingen {
 			antwoord = input.nextLine();
 		}
 		System.out.println("totaalprijs van de bestelling: EURO " + bestelling.calculatePrijs(bestelling.getBestelling()));
-
 		controller.createBestelling(bestelling);
 		logger.info("bereken de prijs");
 	}
@@ -120,7 +117,12 @@ public class MenuBestellingen {
 	public void showBestellingen() {
 		List<Bestelling> lijst = controller.showBestellingen();
 		for (Bestelling b : lijst) {
-			System.out.println(b);
+			System.out.println("Bestelling ID :"+b.getBestellingID()+ " voor klant "+b.getKlant().getVoornaam()+" "+b.getKlant().getAchternaam());
+			System.out.println("Met de volgende bestelregels: ");
+			for(BestelRegel br : b.getBestelling()){
+				System.out.println("    -Productnaam "+br.getProduct().getNaam()+ " Aantal: "+br.getAantal());
+			}
+			System.out.println("");
 		}
 
 	}
@@ -129,13 +131,12 @@ public class MenuBestellingen {
 		Klant klant = null;
 
 		System.out.println("Geef alstublieft de achternaam van de betreffende klant");
-
 		List<Klant> searchResult = controller.showKlantenAchternaam(input.nextLine());
 		if(searchResult.size()==0){
 			System.out.println("Er zijn geen klanten gevonden, u gaat terug naar het bestellingen menu");
 		} else if(searchResult.size()==1){
 			klant= searchResult.get(0);
-			System.out.println("Betreffende klant :"+ klant.getVoornaam() + " "+ klant.getAchternaam());
+			System.out.println("Betreffende klant: "+ klant.getVoornaam() + " "+ klant.getAchternaam());
 		} else {
 			System.out.println("De volgende klanten zijn gevonden, geeft u alstublieft het nummer van de betreffende klant");
 			for (int i = 0; i < searchResult.size(); i++) {

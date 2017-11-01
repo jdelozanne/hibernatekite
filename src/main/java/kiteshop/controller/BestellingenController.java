@@ -46,6 +46,10 @@ public class BestellingenController {
 
     public List<Bestelling> showBestellingen() {
         List<Bestelling> bestellingen = bestellingDAO.readAllBestelling();
+        for(Bestelling b:bestellingen){
+        	ArrayList<BestelRegel> brList = (ArrayList<BestelRegel>) bestelRegelDAO.readBestelRegelsByBestelling(b);
+        	b.setBestelling(brList);
+        }
         return bestellingen;
     }
 

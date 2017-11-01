@@ -71,7 +71,7 @@ public class Bestelling {
         String bestelling = "BestellingID = " + bestellingID + " KlantID = " + this.getKlant().getKlantID() + " Totaalbedrag = " + totaalprijs;
         return bestelling;
     }
-
+    
     public BigDecimal calculatePrijs(List<BestelRegel> bestelregels) {
         totaalprijs = new BigDecimal(0);
         for (BestelRegel b : bestelregels) {
