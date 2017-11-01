@@ -42,13 +42,19 @@ public class BestellingDaoMongo implements BestellingDaoInterface {
 
     @Override
     public void createBestelling(Bestelling bestelling) {
-        document = new BasicDBObject();
+       document = new BasicDBObject();
         try {
-            document.put("id", getNextSequence("bestellingid", "countersBestelling"));
+        	Object bestellingIDObject = getNextSequence("bestellingid", "countersBestelling");
+        	int bestelingId = (int) Float.parseFloat(bestellingIDObject.toString());
+        	bestelling.setBestellingID(bestelingId);
+          	System.out.println(bestelingId);
+        	
+            document.put("id", bestellingIDObject);
             document.put("klantID", bestelling.getKlant().getKlantID());
             document.put("totaalprijs", bestelling.getTotaalprijs().toString());
             collection.insert(document);
         } catch (Exception ex) {
+        	ex.printStackTrace();
             Logger.getLogger(BestellingDaoMongo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
