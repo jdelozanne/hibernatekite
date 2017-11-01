@@ -3,37 +3,32 @@ package kiteshop.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import kiteshop.daos.mysql.BestelRegelDaoSql;
-import kiteshop.daos.mysql.BestellingDaoSql;
-import kiteshop.daos.mysql.KlantDaoSql;
-import kiteshop.daos.mysql.ProductDaoSql;
-import kiteshop.pojos.BestelRegel;
-import kiteshop.pojos.Bestelling;
-import kiteshop.pojos.Klant;
-import kiteshop.pojos.Product;
+import kiteshop.daos.mysql.*;
+import kiteshop.pojos.*;
 import kiteshop.test.ProjectLog;
-import kiteshop.daos.BestelRegelDaoInterface;
-import kiteshop.daos.BestellingDaoInterface;
-import kiteshop.daos.ProductDaoInterface;
+import kiteshop.daos.*;
+
 
 public class BestellingenController {
 
     private final Logger logger = ProjectLog.getLogger();
 
+    
     BestellingDaoInterface bestellingDAO;
     BestelRegelDaoInterface bestelRegelDAO;
     ProductDaoInterface productDAO;
+    KlantDaoInterface klantDao;  
 
-    
-
-      
 	public BestellingenController(BestellingDaoInterface bestellingDAO, BestelRegelDaoInterface bestelRegelDAO,
-			ProductDaoInterface productDAO) {
+			ProductDaoInterface productDAO, KlantDaoInterface klantDao) {
 		this.bestellingDAO = bestellingDAO;
 		this.bestelRegelDAO = bestelRegelDAO;
 		this.productDAO = productDAO;
+		this.klantDao = klantDao;
 	}
 
+	
+	//Bestelling functies
 	public void createBestelling(Bestelling bestelling) {
         bestellingDAO.createBestelling(bestelling);
         createBestelRegels(bestelling);
@@ -41,22 +36,8 @@ public class BestellingenController {
         logger.info("nieuwe bestelling gemaakt");
     }
 
-    public void createBestelRegels(Bestelling bestelling) {
-        List<BestelRegel> bestelregels = new ArrayList<>();
-        bestelregels = bestelling.getBestelling();
-        for (BestelRegel b : bestelregels) {
-            bestelRegelDAO.createBestelRegel(b);
-            logger.info("bestelregels gemaakt");
-        }
-    }
-
     public void updateBestelling(int id) {
         bestellingDAO.readBestellingByBestellingID(id);
-    }
-
-    public List<Klant> getKlantByAchternaam(String klantachternaam) {
-        KlantDaoSql klantdao = new KlantDaoSql();
-        return klantdao.readKlantByAchternaam(klantachternaam);
     }
 
     public List<Bestelling> getBestellingByKlantID(int klantID) {
@@ -78,9 +59,35 @@ public class BestellingenController {
         }
     }
 
+  //Bestelregel functies
     public List<BestelRegel> getBestelregelsByBestelling(Bestelling bestelling) {
         BestelRegelDaoSql besteldao = new BestelRegelDaoSql();
         return besteldao.readBestelRegelsByBestelling(bestelling);
+    }
+    
+    public void createBestelRegels(Bestelling bestelling) {
+        List<BestelRegel> bestelregels = new ArrayList<>();
+        bestelregels = bestelling.getBestelling();
+        for (BestelRegel b : bestelregels) {
+            bestelRegelDAO.createBestelRegel(b);
+            logger.info("bestelregels gemaakt");
+        }
+    }
+    
+    
+    //NIET-bestellingdao functies
+    public List<Klant> showKlantenAchternaam(String achternaam) {
+        return klantDao.readKlantByAchternaam(achternaam);
+    }
+    
+    public List<Klant> getKlantByAchternaam(String klantachternaam) {
+        KlantDaoSql klantdao = new KlantDaoSql();
+        return klantdao.readKlantByAchternaam(klantachternaam);
+    }
+    
+    public Product showSpecificProduct(String naam) {
+        Product p = productDAO.readProduct(naam);
+        return p;
     }
     
     private void adjustVoorraad(Bestelling bestelling){

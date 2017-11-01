@@ -47,7 +47,7 @@ public class HoofdController {
 	}
 
 	public void startMenuBestellingen() {
-		MenuBestellingen menuBestellingen = new MenuBestellingen(new BestellingenController(DaoFactory.createBestellingDao(), DaoFactory.createBestelregelDao(), DaoFactory.createProductDao()));
+		MenuBestellingen menuBestellingen = new MenuBestellingen(new BestellingenController(DaoFactory.createBestellingDao(), DaoFactory.createBestelregelDao(), DaoFactory.createProductDao(), DaoFactory.createKlantDao()));
 		menuBestellingen.start();
 	}
 

@@ -40,9 +40,8 @@ public class MenuBestellingen {
         System.out.println("Kies 3 voor een bestelling verwijderen");
         System.out.println("Kies 4 voor een overzicht van bestellingen");
         System.out.println("Kies 5 om terug te keren naar het hoofdmenu");
-        System.out.println("Kies 6 voor bestelling wijzigen");
         int keuze = vraagInteger();
-        input.nextLine();
+        
 
         switch (keuze) {
             case 1:
@@ -81,8 +80,8 @@ public class MenuBestellingen {
     }
 
     public void createBestelling(String achternaam) {
-        KlantDaoSql k = new KlantDaoSql();
-        Klant klant = k.readKlantByAchternaam(achternaam).get(0);
+        
+        Klant klant =  controller.showKlantenAchternaam(achternaam).get(0);
         Bestelling bestelling = new Bestelling(klant);
 
         System.out.println("Wilt u iets toevoegen aan de bestelling? J/N");
@@ -103,7 +102,7 @@ public class MenuBestellingen {
     public BestelRegel createBestelRegel(Bestelling bestelling) {
         System.out.println("Welk product wilt u toevoegen aan de bestelling");
         String productnaam = input.nextLine();
-        Product p = new ProductDaoSql().readProduct(productnaam);
+        Product p = controller.showSpecificProduct(productnaam);
 
         System.out.println("Hoeveel stuks wilt u van dit specifieke product toevoegen?");
         int aantal = vraagInteger();
