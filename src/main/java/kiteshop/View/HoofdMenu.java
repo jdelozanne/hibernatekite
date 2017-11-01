@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import static kiteshop.View.Validator.vraagInteger;
 
 import kiteshop.controller.HoofdController;
+import kiteshop.daos.mysql.DaoFactorySql;
 
 import kiteshop.test.ProjectLog;
 
@@ -94,7 +95,8 @@ public class HoofdMenu {
 	public void uitloggen() {
         System.out.println("Weet u zeker dat u wilt afsluiten? J/N");
         if (input.nextLine().equalsIgnoreCase("j")) {
-            System.exit(0);
+            
+            new HoofdController(new DaoFactorySql()).start();
         } else {
             start();
         }

@@ -134,6 +134,19 @@ public class Validator {
 		}
 		return huisnummer;
 	}
+        
+        public static String vraagWachtwoord() {
+		String wachtwoord = null;
+                Scanner input = new Scanner(System.in);
+		while(!isValidWachtwoord(wachtwoord)){
+			System.out.println("Wachtwoord?");
+			wachtwoord = input.nextLine();
+			if(!isValidWachtwoord(wachtwoord)){
+				System.out.println("Dit is geen geldig wachtwoord, een wachtwoord bestaat uit minimaal 4 tekens en bevat minstens 1 cijfer");	
+			}
+		} 
+		return wachtwoord;
+	}
 
 	public static boolean isValidBigDecimal(String bigdecimal){
 		BigDecimalValidator bigDecimalValidator  = BigDecimalValidator.getInstance();

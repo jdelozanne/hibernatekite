@@ -8,8 +8,6 @@ package kiteshop.View;
 import kiteshop.controller.KlantenController;
 import kiteshop.pojos.*;
 import kiteshop.test.ProjectLog;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
@@ -140,7 +138,7 @@ public class MenuKlanten {
 	}
 
 	private void klantWijzigenAchternaam() {
-		Klant choosenKlant = bepaalJuisteKlant();
+		Klant choosenKlant = pickRightKlant();
 
 		if(choosenKlant!= null){
 
@@ -202,7 +200,7 @@ public class MenuKlanten {
 	}
 
 	private void klantVerwijderenAchterNaam() {
-		Klant choosenKlant = bepaalJuisteKlant();
+		Klant choosenKlant = pickRightKlant();
 
 		if(choosenKlant!= null){
 			System.out.println("Weet u zeker dat u de volgende klant wil verwijderen: " + choosenKlant + "J/N");
@@ -214,8 +212,8 @@ public class MenuKlanten {
 		}
 	}
 
-
-	private Klant bepaalJuisteKlant(){
+//deze methode wordt ook gebruikt in bestellingenMenu
+	private Klant pickRightKlant(){
 		Klant klant = null;
 
 		System.out.println("Geef alstublieft de achternaam van de betreffende klant?");
@@ -233,12 +231,5 @@ public class MenuKlanten {
 			klant = searchResult.get(choosenIndex);
 		}
 		return klant;
-	}
-
-	public void printKlanten() {
-		ArrayList<Klant> klantenlijst = new ArrayList<>();
-		for (Klant element : klantenlijst) {
-			System.out.println(element + "\n");
-		}
 	}
 }

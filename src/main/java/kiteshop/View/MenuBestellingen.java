@@ -36,6 +36,7 @@ public class MenuBestellingen {
 	}
 
 	public void start() {
+
 		System.out.println("Kies wat je wilt doen:");
 		System.out.println("Kies 1 voor een nieuwe bestelling maken");
 		System.out.println("Kies 2 voor een bestelling wijzigen");
@@ -206,5 +207,8 @@ public class MenuBestellingen {
 			System.out.println("bestelling is geupdate, terug naar Hoofdmenu");
 			break;
 		}
-	}
+        }
 }
+
+	
+

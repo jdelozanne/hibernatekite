@@ -39,7 +39,7 @@ public class MenuAccounts {
 		System.out.println("Kies 3 voor een account wijzigen");
 		System.out.println("Kies 4 voor Een account verwijderen");
 		System.out.println("Kies 5 terug naar het hoofdmenu");
-		int keuze = input.nextInt();
+		int keuze = vraagInteger();
 		input.nextLine();
 
 		switch (keuze) {
@@ -169,22 +169,4 @@ public class MenuAccounts {
 			}
 		}
 	}
-	
-	/*
-	 * Helper functies (en main) zie onder
-	 */
-
-
-	private String vraagWachtwoord() {
-		String wachtwoord = null;
-		while(!isValidWachtwoord(wachtwoord)){
-			System.out.println("Wachtwoord?");
-			wachtwoord = input.nextLine();
-			if(!isValidWachtwoord(wachtwoord)){
-				System.out.println("Dit is geen geldig wachtwoord, een wachtwoord bestaat uit minimaal 4 tekens en bevat minstens 1 cijfer");	
-			}
-		} 
-		return wachtwoord;
-	}
-
 }

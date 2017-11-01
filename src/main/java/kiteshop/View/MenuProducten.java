@@ -69,7 +69,7 @@ public class MenuProducten {
         String productnaam = input.nextLine();
         product.setNaam(productnaam);
 
-        System.out.println("geef voorraad");
+        System.out.println("geef voorraad: ");
         int voorraad = vraagInteger();
         product.setVoorraad(voorraad);
 

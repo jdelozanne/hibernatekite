@@ -5,11 +5,18 @@
  */
 package kiteshop.View;
 
+import static java.lang.System.currentTimeMillis;
+import java.util.Calendar;
+import java.util.Date;
 import static kiteshop.View.Validator.isValidInt;
 import static kiteshop.View.Validator.isValidWachtwoord;
 
 import java.util.Scanner;
+import java.util.TimeZone;
+import java.util.UUID;
 import java.util.logging.Logger;
+import static kiteshop.View.Validator.vraagInteger;
+import static kiteshop.View.Validator.vraagWachtwoord;
 
 import kiteshop.test.ProjectLog;
 import kiteshop.test.ProjectLog.*;
@@ -17,109 +24,133 @@ import kiteshop.test.ProjectLog.*;
 import kiteshop.controller.*;
 import kiteshop.daos.mysql.AccountDaoSql;
 import kiteshop.pojos.Account;
+import static kiteshop.test.PaswordHasher.createHashedPassword;
+import static kiteshop.test.PaswordHasher.createHashedToken;
+import static kiteshop.test.PaswordHasher.createSaltHex;
 
 /**
  *
  * @author julia
  */
 public class InlogMenu {
-	private final Logger logger = ProjectLog.getLogger();
-	private Scanner input = new Scanner(System.in);
 
-	AccountController controller;
+    private final Logger logger = ProjectLog.getLogger();
+    private Scanner input = new Scanner(System.in);
+    long lastLoginTime; //nog niet in gebruik
+    AccountController controller;
+    private static String token;
 
-	public InlogMenu(AccountController controller) {
-		this.controller = controller;
-	}    
+    public InlogMenu(AccountController controller) {
+        this.controller = controller;
+    }
 
+    public boolean start() {
+        System.out.println("Welkom bij de Kiteshop");
+        System.out.println("Kies 1 als u een nieuwe account wil aanmaken");
+        System.out.println("Kies 2 als u wilt inloggen");
+        System.out.println("Kies 3 als u wilt afsluiten");
+        int keuze = vraagInteger();
 
-	public boolean start() {
-		System.out.println("Welkom bij de Kiteshop");
-		System.out.println("Kies 1 als u een nieuwe account wil aanmaken");
-		System.out.println("Kies 2 als u wilt inloggen");
-		int keuze = vraagInteger();
+        boolean inlogsucces = false;
 
-		boolean inlogsucces =  false;
+        if (keuze == 1) {
+            maakNieuwAccount();
+            System.out.println("U kunt nu inloggen met uw nieuwe account");
+            inlogsucces = inloggen();
+        } else if (keuze == 2) {
+            inlogsucces = inloggen();
+            } else if(keuze == 3){
+            System.out.println("Afsluiten..");
+            System.exit(0);
+        } else {
+            System.out.println("Dit is geen geldige keuze");
+        }
 
-		if (keuze==1){
-			maakNieuwAccount();
-			System.out.println("U kunt nu inloggen met uw nieuwe account");
-			inlogsucces = inloggen();
-		} else if (keuze==2){
-			inlogsucces = inloggen();
-		} else {
-			System.out.println("Dit is geen geldige keuze");
-		}
+        return inlogsucces;
+    }
 
-		return inlogsucces;
-	}
+ 
+    public boolean inloggen() {
+// if(getTime() - this.lastLoginTime < 86400000){
+        //controleer gehele hashedToken
+        // }
+        System.out.println("Geef uw gebruikersnaam: ");
+        String user = input.nextLine();
+if (getToken() != null && createHashedToken(user).equals(getToken())) {
+            return true;
+        }
+        System.out.println("Geef uw wachtwoord: ");
+        String ww = input.nextLine();
 
-	public boolean inloggen() {
+        if (controller.accountExists(user) && controller.checkLogin(user, ww)) {
+            //maak een token nadat de gegevens zijn gecontroleerd
+            saveToken(user);
+            return true;
+        } else {
+            System.out.println("Onjuiste gegevens, probeer opnieuw");
+            return false;
+        }
 
-		System.out.println("Geef uw gebruikersnaam: ");
-		String user = input.nextLine();
+    }
 
-		System.out.println("Geef uw wachtwoord: ");
-		String ww = input.nextLine();
+    public void maakNieuwAccount() {
+        Account account = new Account();
 
-		if (controller.accountExists(user) && controller.checkLogin(user, ww)) {
-			return true;
-		}
-		else {
-			System.out.println("Onjuiste gegevens, probeer opnieuw");
-			return false;
-		}
+        System.out.println("Gebruikersnaam?");
+        String gebruiker = input.nextLine();
+        if (!controller.accountExists(gebruiker)) {
 
-	}
+            account.setGebruikersnaam(gebruiker);
 
-	private int vraagInteger() {
-		String integer = null;
-		while(!isValidInt(integer)){
-			System.out.println("geef nummer: ");
-			integer = input.nextLine();
-			if(!isValidInt(integer)){
-				System.out.println("Dit is geen nummer, probeer opnieuw");
-			}
-		}
-		return Integer.parseInt(integer);
-	}
+            String wachtwoord = vraagWachtwoord();
 
+            account.setWachtwoord(wachtwoord);
 
-	public void maakNieuwAccount() {
-		Account account = new Account();
-		
-		System.out.println("Gebruikersnaam?");
-		String gebruiker = input.nextLine();
-		if(!controller.accountExists(gebruiker)){
-			
-			account.setGebruikersnaam(gebruiker);
+            controller.createAccount(account);
+        } else {
+            System.out.println("Deze gebruiker bestaat al, probeer opnieuw");
+            maakNieuwAccount();
+        }
 
-			String wachtwoord = vraagWachtwoord();
+    }
 
-			account.setWachtwoord(wachtwoord);
+    private String vraagWachtwoord() {
+        String wachtwoord = null;
+        while (!isValidWachtwoord(wachtwoord)) {
+            System.out.println("Wachtwoord?");
+            wachtwoord = input.nextLine();
+            if (!isValidWachtwoord(wachtwoord)) {
+                System.out.println("Dit is geen geldig wachtwoord, een wachtwoord bestaat uit minimaal 4 tekens en bevat minstens 1 cijfer");
+            }
+        }
+        return wachtwoord;
+    }
 
-			controller.createAccount(account);
-		} else {
-			System.out.println("Deze gebruiker bestaat al, probeer opnieuw");
-			maakNieuwAccount();
-		}
-		
-	}
+    public String getToken() {
+        return this.token;
+    }
 
+    public void saveToken(String username) {
+        Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());//nu nog niet gebruikt
+        Date currentTime = localCalendar.getTime(); //nu nog niet gebruikt
 
-	private String vraagWachtwoord() {
-		String wachtwoord = null;
-		while(!isValidWachtwoord(wachtwoord)){
-			System.out.println("Wachtwoord?");
-			wachtwoord = input.nextLine();
-			if(!isValidWachtwoord(wachtwoord)){
-				System.out.println("Dit is geen geldig wachtwoord, een wachtwoord bestaat uit minimaal 4 tekens en bevat minstens 1 cijfer");	
-			}
-		} 
-		return wachtwoord;
-	}
+        //nu nog niet gebruikt
+        String hashedToken = createHashedToken(username);
+        this.token = hashedToken;
 
+    }
 
+    public void setLoginTime() {
+        this.lastLoginTime = getTime();
+    }
 
+    //nu nog niet gebruikt
+    public static long getTime() {
+        //Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
+        //Date currentTime = localCalendar.getTime();
+        long time = currentTimeMillis();
+        return time;
+
+    }
 
 }

@@ -147,7 +147,6 @@ public class BestellingDaoSql implements BestellingDaoInterface {
                 while (result.next()) {
                     Bestelling b = new Bestelling();
                     b.setBestellingID(result.getInt(1));
-                    //b.setKlantID(result.getInt(4));
                     b.setTotaalprijs(result.getBigDecimal(3));
                     
                     Klant klant = new Klant();
