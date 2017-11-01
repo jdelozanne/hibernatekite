@@ -95,10 +95,10 @@ public class BestelRegelDaoSql implements BestelRegelDaoInterface {
                     r.setBestelRegelID(result.getInt(1));
                     r.getProduct().setProductID(result.getInt(2));
                     r.setAantal(result.getInt(3));
-                    p.setProductID(result.getInt(4));
-                    p.setNaam(result.getString(5));
-                    p.setVoorraad(result.getInt(6));
-                    p.setPrijs(result.getBigDecimal(7));
+                    p.setProductID(result.getInt(5));
+                    p.setNaam(result.getString(6));
+                    p.setVoorraad(result.getInt(7));
+                    p.setPrijs(result.getBigDecimal(8));
                     r.setProduct(p);
                     bestelregels.add(r);
                 }
