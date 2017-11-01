@@ -32,12 +32,10 @@ public class BestelRegelDaoSql implements BestelRegelDaoInterface {
     String insertNew = "INSERT INTO Bestel_regel"
             + "(bestel_regelID, productID, aantal, bestellingID)"
             + "values (?,?,?,?)";
-    String updateBestelRegel = "UPDATE bestel_regel SET"
-            + " bestel_regelID = ?, "
+    String updateBestelRegel = "UPDATE bestel_regel SET "
             + "productID = ?, "
-            + "aantal = ?, "
-            + "bestellingID =? "
-            + "where bestellingID = ?";
+            + "aantal = ? "
+            + "where bestel_regelID = ?";
     String queryReadAllByBestelling = "Select * from bestel_regel join product"
             + " on bestel_regel.productID = product.productID "
             + "Where bestellingID = ?";
@@ -63,14 +61,12 @@ public class BestelRegelDaoSql implements BestelRegelDaoInterface {
 
     @Override
     public void updateBestelRegel(BestelRegel regel) {
-
+System.out.println("aantal is "+regel.getAantal());
         try (Connection connection = factory.createConnection(factory.getConnectorType());
                 PreparedStatement statement = connection.prepareStatement(this.updateBestelRegel)) {
-            statement.setInt(1, regel.getBestelRegelID());
-            statement.setInt(2, regel.getProduct().getProductID());
-            statement.setInt(3, regel.getAantal());
-            statement.setInt(4, regel.getBestellingID());
-            statement.setInt(5, regel.getBestellingID());
+            statement.setInt(1, regel.getProduct().getProductID());
+            statement.setInt(2, regel.getAantal());
+            statement.setInt(3, regel.getBestelRegelID());
             statement.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

@@ -65,15 +65,7 @@ public class Bestelling {
         bestelregels.add(b);
     }
 
-    @Override
-    public String toString() {
-
-        String regel = null;
-        for (BestelRegel b : bestelregels) {
-            regel += b.toString() + "\n";
-        }
-        return regel;
-    }
+    
 
     public String bestellingToString() {
         String bestelling = "BestellingID = " + bestellingID + " KlantID = " + this.getKlant().getKlantID() + " Totaalbedrag = " + totaalprijs;
@@ -88,4 +80,10 @@ public class Bestelling {
         }
         return totaalprijs;
     }
+
+	@Override
+	public String toString() {
+		return "Bestelling [bestellingID=" + bestellingID + ", klant=" + klant + ", bestelregels=" + bestelregels
+				+ ", totaalprijs=" + totaalprijs + "]";
+	}
 }

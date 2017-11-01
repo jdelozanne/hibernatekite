@@ -44,9 +44,9 @@ public class BestellingenController {
         return bestellingDAO.readBestellingByKlantID(klantID);
     }
 
-    public void showBestellingen() {
+    public List<Bestelling> showBestellingen() {
         List<Bestelling> bestellingen = bestellingDAO.readAllBestelling();
-        displayBestelling(bestellingen);
+        return bestellingen;
     }
 
     public void deleteBestelling(int bestellingId) {
@@ -55,14 +55,13 @@ public class BestellingenController {
 
     public void displayBestelling(List<Bestelling> lijst) {
         for (Bestelling b : lijst) {
-            System.out.println(b.bestellingToString());
+            System.out.println(b);
         }
     }
 
   //Bestelregel functies
     public List<BestelRegel> getBestelregelsByBestelling(Bestelling bestelling) {
-        BestelRegelDaoSql besteldao = new BestelRegelDaoSql();
-        return besteldao.readBestelRegelsByBestelling(bestelling);
+         return bestelRegelDAO.readBestelRegelsByBestelling(bestelling);
     }
     
     public void createBestelRegels(Bestelling bestelling) {
@@ -74,16 +73,15 @@ public class BestellingenController {
         }
     }
     
+    public void updateBestelregel(BestelRegel bestelregel){
+    	bestelRegelDAO.updateBestelRegel(bestelregel);
+    }
     
     //NIET-bestellingdao functies
     public List<Klant> showKlantenAchternaam(String achternaam) {
         return klantDao.readKlantByAchternaam(achternaam);
     }
-    
-    public List<Klant> getKlantByAchternaam(String klantachternaam) {
-        KlantDaoSql klantdao = new KlantDaoSql();
-        return klantdao.readKlantByAchternaam(klantachternaam);
-    }
+        
     
     public Product showSpecificProduct(String naam) {
         Product p = productDAO.readProduct(naam);
