@@ -36,9 +36,9 @@ public class InlogMenu {
 
     private final Logger logger = ProjectLog.getLogger();
     private Scanner input = new Scanner(System.in);
-    long lastLoginTime; //nog niet in gebruik
     AccountController controller;
     private static String token;
+    private static final long timeLimit = 3600000;
 
     public InlogMenu(AccountController controller) {
         this.controller = controller;
@@ -59,7 +59,7 @@ public class InlogMenu {
             inlogsucces = inloggen();
         } else if (keuze == 2) {
             inlogsucces = inloggen();
-            } else if(keuze == 3){
+        } else if (keuze == 3) {
             System.out.println("Afsluiten..");
             System.exit(0);
         } else {
@@ -69,16 +69,21 @@ public class InlogMenu {
         return inlogsucces;
     }
 
- 
     public boolean inloggen() {
-// if(getTime() - this.lastLoginTime < 86400000){
-        //controleer gehele hashedToken
-        // }
+
         System.out.println("Geef uw gebruikersnaam: ");
         String user = input.nextLine();
-if (getToken() != null && createHashedToken(user).equals(getToken())) {
-            return true;
+
+        //tijdlimiet controleren
+        if (getToken() != null) {
+            String timeLogin = token.split(":")[0];
+            if (getTime() - Long.valueOf(timeLogin) < timeLimit) {
+                if (createHashedToken(user).equals(getToken().split(":")[1])) {
+                    return true;
+                }
+            }
         }
+
         System.out.println("Geef uw wachtwoord: ");
         String ww = input.nextLine();
 
@@ -127,27 +132,17 @@ if (getToken() != null && createHashedToken(user).equals(getToken())) {
     }
 
     public String getToken() {
-        return this.token;
+        return token;
     }
 
     public void saveToken(String username) {
-        Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());//nu nog niet gebruikt
-        Date currentTime = localCalendar.getTime(); //nu nog niet gebruikt
-
-        //nu nog niet gebruikt
+        //creeer een hash van de gebruikersnaam, plak erna de huidige tijd in milliseconde ervoor.
+        //de tijd wordt gebruikt om een tijdlimiet te controleren.
         String hashedToken = createHashedToken(username);
-        this.token = hashedToken;
-
+        token = getTime() + ":" + hashedToken;
     }
 
-    public void setLoginTime() {
-        this.lastLoginTime = getTime();
-    }
-
-    //nu nog niet gebruikt
     public static long getTime() {
-        //Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
-        //Date currentTime = localCalendar.getTime();
         long time = currentTimeMillis();
         return time;
 

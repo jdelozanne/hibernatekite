@@ -50,24 +50,18 @@ public class PaswordHasher {
 
 	public static String createHashedToken(String user) {
 		String tokenHex = toHexadecimal(user);
-		
-
 		byte[] combinedArray = hexStringtoByteArray(tokenHex);
-
 		MessageDigest md= null;
-
 		try {
-			md = MessageDigest.getInstance("md5"); // je kan hier md5 of SHA zetten, blijft werken
+			md = MessageDigest.getInstance("SHA"); // je kan hier md5 of SHA zetten, blijft werken
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		md.update(combinedArray); 
 		byte[] hashedPasswordInBytes = md.digest();
 		String hashedTokenHex = biteArrayToHexString(hashedPasswordInBytes);
 
 		return hashedTokenHex;
-	
         }
 
 
