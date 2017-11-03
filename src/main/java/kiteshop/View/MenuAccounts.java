@@ -14,7 +14,7 @@ import kiteshop.controller.AccountController;
 import kiteshop.pojos.Account;
 import kiteshop.pojos.Adres;
 import kiteshop.pojos.AdresType;
-import kiteshop.test.ProjectLog;
+import kiteshop.utilities.ProjectLog;
 
 import static kiteshop.View.Validator.*;
 

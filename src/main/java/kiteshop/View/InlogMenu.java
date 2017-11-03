@@ -18,15 +18,15 @@ import java.util.logging.Logger;
 import static kiteshop.View.Validator.vraagInteger;
 import static kiteshop.View.Validator.vraagWachtwoord;
 
-import kiteshop.test.ProjectLog;
-import kiteshop.test.ProjectLog.*;
+import kiteshop.utilities.ProjectLog;
+import kiteshop.utilities.ProjectLog.*;
 
 import kiteshop.controller.*;
 import kiteshop.daos.mysql.AccountDaoSql;
 import kiteshop.pojos.Account;
-import static kiteshop.test.PaswordHasher.createHashedPassword;
-import static kiteshop.test.PaswordHasher.createHashedToken;
-import static kiteshop.test.PaswordHasher.createSaltHex;
+import static kiteshop.utilities.PaswordHasher.createHashedPassword;
+import static kiteshop.utilities.PaswordHasher.createHashedToken;
+import static kiteshop.utilities.PaswordHasher.createSaltHex;
 
 /**
  *
@@ -145,7 +145,5 @@ public class InlogMenu {
     public static long getTime() {
         long time = currentTimeMillis();
         return time;
-
     }
-
 }

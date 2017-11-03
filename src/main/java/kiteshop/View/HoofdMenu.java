@@ -14,7 +14,7 @@ import static kiteshop.View.Validator.vraagInteger;
 import kiteshop.controller.HoofdController;
 import kiteshop.daos.mysql.DaoFactorySql;
 
-import kiteshop.test.ProjectLog;
+import kiteshop.utilities.ProjectLog;
 
 /**
  *

@@ -7,7 +7,7 @@ package kiteshop.View;
 
 import kiteshop.controller.KlantenController;
 import kiteshop.pojos.*;
-import kiteshop.test.ProjectLog;
+import kiteshop.utilities.ProjectLog;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;

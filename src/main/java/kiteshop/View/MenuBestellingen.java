@@ -18,7 +18,7 @@ import kiteshop.controller.BestellingenController;
 import kiteshop.daos.mysql.KlantDaoSql;
 import kiteshop.daos.mysql.ProductDaoSql;
 import kiteshop.pojos.*;
-import kiteshop.test.ProjectLog;
+import kiteshop.utilities.ProjectLog;
 
 /**
  *
