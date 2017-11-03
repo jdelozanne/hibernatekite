@@ -14,7 +14,6 @@ public class ProductenController {
 
     private final Logger logger = ProjectLog.getLogger();
     ProductDaoInterface productDAO;
-    
 
     public ProductenController(ProductDaoInterface productDAO) {
       this.productDAO = productDAO;
