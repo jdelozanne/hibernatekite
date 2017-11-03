@@ -3,9 +3,6 @@ package kiteshop.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-
-
-import kiteshop.daos.mysql.ProductDaoSql;
 import kiteshop.pojos.Product;
 import kiteshop.test.ProjectLog;
 import kiteshop.daos.ProductDaoInterface;
