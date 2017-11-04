@@ -1,7 +1,15 @@
 package kiteshop.controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import static java.lang.System.currentTimeMillis;
 import java.util.List;
+import java.util.Scanner;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import kiteshop.View.InlogMenu;
 
 import kiteshop.daos.mysql.AccountDaoSql;
 import kiteshop.daos.mongodb.AccountDaoMongo;
@@ -12,63 +20,107 @@ import kiteshop.daos.AccountDaoInterface;
 
 public class AccountController {
 
-	private final Logger logger = ProjectLog.getLogger();
-	AccountDaoInterface accountDAO;
+    private static final long timeLimit = 6000;
 
-	public AccountController(AccountDaoInterface accountDao) {
-		this.accountDAO = accountDao;
-	}
+    private final Logger logger = ProjectLog.getLogger();
+    AccountDaoInterface accountDAO;
 
-	public void createAccount(Account account) {
-		/* 
+    public AccountController(AccountDaoInterface accountDao) {
+        this.accountDAO = accountDao;
+    }
+
+    public void createAccount(Account account) {
+        /* 
 		 * Het ingegeven nog niet gehashte password wordt in de hasher gestopt en daarna wordt het pasword overschreven 
 		 * door het gehashte, en het orgineel bestaat dan dus niet meer
-		 */
-		
-		String salthex = PaswordHasher.createSaltHex();
-		String hashedwachtwoord = PaswordHasher.createHashedPassword(salthex, account.getWachtwoord());
-		account.setSalt(salthex);
-		account.setWachtwoord(hashedwachtwoord);
+         */
 
-		accountDAO.createAccount(account);
-	}
+        String salthex = PaswordHasher.createSaltHex();
+        String hashedwachtwoord = PaswordHasher.createHashedPassword(salthex, account.getWachtwoord());
+        account.setSalt(salthex);
+        account.setWachtwoord(hashedwachtwoord);
 
-	public boolean checkLogin(String gebruikersnaam, String gegevenWachtwoord) {
-		logger.info("Gebruikers naam :" + gebruikersnaam + " Wachtwoord :" + gegevenWachtwoord + "Juiste wachtwoord :" + accountDAO.readAccountByGebruikersnaam(gebruikersnaam).getWachtwoord());
-		Account currentAccount = accountDAO.readAccountByGebruikersnaam(gebruikersnaam);
-		String saltCurrentAccount = currentAccount.getSalt();
-		String gegevenWachtwoordGehashd = PaswordHasher.createHashedPassword(saltCurrentAccount, gegevenWachtwoord);
-				
-		return gegevenWachtwoordGehashd.equals(currentAccount.getWachtwoord());
-	}
+        accountDAO.createAccount(account);
+    }
 
-	public Account readAccountByGebruikersnaam(String gebruikersnaam) {
-		return accountDAO.readAccountByGebruikersnaam(gebruikersnaam);
-	}
+    public boolean checkLogin(String gebruikersnaam, String gegevenWachtwoord) {
+        logger.info("Gebruikers naam :" + gebruikersnaam + " Wachtwoord :" + gegevenWachtwoord + "Juiste wachtwoord :" + accountDAO.readAccountByGebruikersnaam(gebruikersnaam).getWachtwoord());
+        Account currentAccount = accountDAO.readAccountByGebruikersnaam(gebruikersnaam);
+        String saltCurrentAccount = currentAccount.getSalt();
+        String gegevenWachtwoordGehashd = PaswordHasher.createHashedPassword(saltCurrentAccount, gegevenWachtwoord);
 
-	public boolean accountExists(String gebruikersnaam){
-		boolean exists = false;
-		if(accountDAO.readAccountByGebruikersnaam(gebruikersnaam).getGebruikersnaam()!=null){
-			exists=true;
-		}
-		return exists;
-	}
-	
-	
-	public void deleteAccount(Account account) {
-		accountDAO.deleteAccount(account);
-	}
+        return gegevenWachtwoordGehashd.equals(currentAccount.getWachtwoord());
+    }
+    public boolean findToken() {
+        boolean tokenIsFound = false;
+        File file = new File("src/main/java/Connection/token.txt");
+        String token = null;
+        if (file.length() != 0) {
+            try (Scanner inputFromFile = new Scanner(file)) {
+                while (inputFromFile.hasNext()) {
+                    token = inputFromFile.nextLine();
+                }
+                String timeLogin = token.split(":")[0];
+                if (getTime() - Long.valueOf(timeLogin) < timeLimit) {
+                    tokenIsFound = true;
+                }
+            } catch (FileNotFoundException e) {
+                System.out.println("file npot found");
+            }
+        }
+        return tokenIsFound;
+    }
+    
+    public void writingFile(String token) {
+        File file = new File("src/main/java/Connection/token.txt");
+        if (file.exists()) {
+            file.delete();
+            try {
+                file.createNewFile();
+            } catch (IOException ex) {
+                Logger.getLogger(InlogMenu.class
+                        .getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        try (PrintWriter print = new PrintWriter(file)) {
+            print.print(token);
 
-	public void updateAccount(Account account) {
-		accountDAO.updateAccount(account);
-	}
+        } catch (FileNotFoundException e) {
 
-	public List<Account> readAllAccounts() {
-		return accountDAO.readAllAccounts();
-	}
+        }
+    }
 
-	public List<Account> readAllAccountsMongo() {
-		return new AccountDaoMongo().readAllAccounts();
-	}
+    public Account readAccountByGebruikersnaam(String gebruikersnaam) {
+        return accountDAO.readAccountByGebruikersnaam(gebruikersnaam);
+    }
+
+    public boolean accountExists(String gebruikersnaam) {
+        boolean exists = false;
+        if (accountDAO.readAccountByGebruikersnaam(gebruikersnaam).getGebruikersnaam() != null) {
+            exists = true;
+        }
+        return exists;
+    }
+
+    public void deleteAccount(Account account) {
+        accountDAO.deleteAccount(account);
+    }
+
+    public void updateAccount(Account account) {
+        accountDAO.updateAccount(account);
+    }
+
+    public List<Account> readAllAccounts() {
+        return accountDAO.readAllAccounts();
+    }
+
+    public List<Account> readAllAccountsMongo() {
+        return new AccountDaoMongo().readAllAccounts();
+    }
+    
+    public static long getTime() {
+        long time = currentTimeMillis();
+        return time;
+    }
 
 }

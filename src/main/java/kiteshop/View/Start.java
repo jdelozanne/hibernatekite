@@ -13,9 +13,11 @@ import kiteshop.daos.mysql.DaoFactorySql;
  * @author Steef P
  */
 public class Start {
-    
+  
     public static void main(String[] args) {
 		new HoofdController(new DaoFactorySql()).start();
-	}
+
+    }
+    
     
 }

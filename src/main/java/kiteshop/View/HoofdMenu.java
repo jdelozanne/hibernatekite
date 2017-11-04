@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package kiteshop.View;
 
 import static kiteshop.View.Validator.isValidInt;
@@ -93,7 +88,7 @@ public class HoofdMenu {
 	}
 
 	public void uitloggen() {
-        System.out.println("Weet u zeker dat u wilt afsluiten? J/N");
+        System.out.println("Weet u zeker dat u wilt uitloggen? J/N");
         if (input.nextLine().equalsIgnoreCase("j")) {
             
             new HoofdController(new DaoFactorySql()).start();

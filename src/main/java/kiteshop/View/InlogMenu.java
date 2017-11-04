@@ -5,6 +5,10 @@
  */
 package kiteshop.View;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import static java.lang.System.currentTimeMillis;
 import java.util.Calendar;
 import java.util.Date;
@@ -14,6 +18,7 @@ import static kiteshop.View.Validator.isValidWachtwoord;
 import java.util.Scanner;
 import java.util.TimeZone;
 import java.util.UUID;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import static kiteshop.View.Validator.vraagInteger;
 import static kiteshop.View.Validator.vraagWachtwoord;
@@ -22,6 +27,7 @@ import kiteshop.utilities.ProjectLog;
 import kiteshop.utilities.ProjectLog.*;
 
 import kiteshop.controller.*;
+import static kiteshop.controller.AccountController.getTime;
 import kiteshop.daos.mysql.AccountDaoSql;
 import kiteshop.pojos.Account;
 import static kiteshop.utilities.PaswordHasher.createHashedPassword;
@@ -37,8 +43,7 @@ public class InlogMenu {
     private final Logger logger = ProjectLog.getLogger();
     private Scanner input = new Scanner(System.in);
     AccountController controller;
-    private static String token;
-    private static final long timeLimit = 3600000;
+    
 
     public InlogMenu(AccountController controller) {
         this.controller = controller;
@@ -71,23 +76,17 @@ public class InlogMenu {
 
     public boolean inloggen() {
 
-        System.out.println("Geef uw gebruikersnaam: ");
-        String user = input.nextLine();
-
-        //tijdlimiet controleren
-        if (getToken() != null) {
-            String timeLogin = token.split(":")[0];
-            if (getTime() - Long.valueOf(timeLogin) < timeLimit) {
-                if (createHashedToken(user).equals(getToken().split(":")[1])) {
-                    return true;
-                }
-            }
+        if(controller.findToken()){
+            return true;
         }
-
-        System.out.println("Geef uw wachtwoord: ");
+        System.out.println(
+                "Geef uw gebruikersnaam: ");
+        String user = input.nextLine();
+        System.out.println(
+                "Geef uw wachtwoord: ");
         String ww = input.nextLine();
-
-        if (controller.accountExists(user) && controller.checkLogin(user, ww)) {
+        if (controller.accountExists(user)
+                && controller.checkLogin(user, ww)) {
             //maak een token nadat de gegevens zijn gecontroleerd
             saveToken(user);
             return true;
@@ -100,23 +99,17 @@ public class InlogMenu {
 
     public void maakNieuwAccount() {
         Account account = new Account();
-
         System.out.println("Gebruikersnaam?");
         String gebruiker = input.nextLine();
         if (!controller.accountExists(gebruiker)) {
-
             account.setGebruikersnaam(gebruiker);
-
             String wachtwoord = vraagWachtwoord();
-
             account.setWachtwoord(wachtwoord);
-
             controller.createAccount(account);
         } else {
             System.out.println("Deze gebruiker bestaat al, probeer opnieuw");
             maakNieuwAccount();
         }
-
     }
 
     private String vraagWachtwoord() {
@@ -131,19 +124,17 @@ public class InlogMenu {
         return wachtwoord;
     }
 
-    public String getToken() {
-        return token;
-    }
-
     public void saveToken(String username) {
         //creeer een hash van de gebruikersnaam, plak erna de huidige tijd in milliseconde ervoor.
         //de tijd wordt gebruikt om een tijdlimiet te controleren.
         String hashedToken = createHashedToken(username);
-        token = getTime() + ":" + hashedToken;
+        String token = getTime() + ":" + hashedToken;
+        controller.writingFile(token);
     }
 
-    public static long getTime() {
-        long time = currentTimeMillis();
-        return time;
-    }
+    
+
+    
+
+    
 }
