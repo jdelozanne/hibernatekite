@@ -20,7 +20,7 @@ public class ConnectionFactory {
     private JDBC jdbcConnection = new JDBC();
     private Connection connection;
     private String connectorType;
-    private static String pathOfActivePropopertyFile = "src/main/java/Connection/connect.properties";
+    private static String pathOfActivePropertyFile = "src/main/resources/META-INF/connect.properties";
 
     public Connection createConnection(String connectorType) {
         switch (connectorType.toLowerCase()) {
@@ -37,7 +37,7 @@ public class ConnectionFactory {
     public String getConnectorType() {
         try {
             Properties props = new Properties();
-            props.load(new FileInputStream(pathOfActivePropopertyFile));
+            props.load(new FileInputStream(pathOfActivePropertyFile));
             this.connectorType = props.getProperty("connectorType");
         } catch (Exception ex) {
             System.out.println("geen connectortype gevonden:" + ex);

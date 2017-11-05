@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import kiteshop.daos.AccountDaoInterface;
 import kiteshop.pojos.Account;
 import org.bson.Document;
@@ -89,7 +90,7 @@ public class AccountDaoMongo implements AccountDaoInterface {
     public Account readAccountByGebruikersnaam(String gebruikersnaam) {
         Account a = new Account();
         DBObject query = new BasicDBObject();
-        query.put("gebruikersnaam", gebruikersnaam);
+        query.put("gebruikersnaam", Pattern.compile(gebruikersnaam, Pattern.CASE_INSENSITIVE));
         DBCursor cursor = collection.find(query);
         while (cursor.hasNext()) {
             DBObject object = cursor.next();

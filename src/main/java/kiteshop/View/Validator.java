@@ -15,7 +15,7 @@ public class Validator {
 		while(!isValidInt(integer)){
 			integer = input.nextLine();
 			if(!isValidInt(integer)){
-				System.out.println("Dit is geen nummer, probeer opnieuw");
+				System.out.println("Dit is geen nummer, probeer opnieuw.\n Gebruik getal(len) zonder punt of komma");
 			}
 		}
 		return Integer.parseInt(integer);
@@ -27,7 +27,7 @@ public class Validator {
 		while(!isValidBigDecimal(bigDecimal)){
 			bigDecimal = input.nextLine();
 			if(!isValidBigDecimal(bigDecimal)){
-				System.out.println("Dit is geen geldige waarde voor een prijs, decimale getallen zijn toegestaan, met een punt als scheidingsteken, probeer opnieuw");
+				System.out.println("Dit is geen geldige waarde voor een prijs.\n Decimale getallen zijn toegestaan, met een punt als scheidingsteken, probeer opnieuw");
 			}
 		}
 		return new BigDecimal(bigDecimal);
@@ -62,7 +62,7 @@ public class Validator {
 			System.out.println("geef postcode: ");
 			postcode = input.nextLine();
 			if(!isValidPostcode(postcode)){
-				System.out.println("Dit is geen geldige postcode, probeer opnieuw");
+				System.out.println("Dit is geen geldige postcode, probeer opnieuw. \n de postcode bestaat uit 4 cijfers en 2 letters aan elkaar");
 			}
 		}
 		return postcode;
@@ -75,7 +75,7 @@ public class Validator {
 			System.out.println("geef toevoeging: ");
 			toevoeging = input.nextLine();
 			if(!isValidToevoeging(toevoeging)){
-				System.out.println("Dit is geen geldige toevoeging, probeer opnieuw");
+				System.out.println("Dit is geen geldige toevoeging, probeer opnieuw. \n Werk met Romeinse cijfers of letters.");
 			}
 		}
 		return toevoeging;
@@ -88,7 +88,7 @@ public class Validator {
 			System.out.println("geef telefoonnummer: ");
 			telefoonnr = input.nextLine();
 			if(!isValidTelefoonnummer(telefoonnr)){
-				System.out.println("Dit is geen geldig telefoonnummer, probeer opnieuw");
+				System.out.println("Dit is geen geldig telefoonnummer, probeer opnieuw.\n Gebruik geen haakjes");
 			}
 		}
 		return telefoonnr;
@@ -115,7 +115,7 @@ public class Validator {
 			System.out.println("geef emailadres: ");
 			email = input.nextLine();
 			if(!isValidEmail(email)){
-				System.out.println("Dit is geen geldig emailadres, probeer opnieuw");
+				System.out.println("Dit is geen geldig emailadres, probeer opnieuw.\n vb: naam@provider.nl");
 			}
 		}
 		return email;
@@ -142,7 +142,7 @@ public class Validator {
 			System.out.println("Wachtwoord?");
 			wachtwoord = input.nextLine();
 			if(!isValidWachtwoord(wachtwoord)){
-				System.out.println("Dit is geen geldig wachtwoord, een wachtwoord bestaat uit minimaal 4 tekens en bevat minstens 1 cijfer");	
+				System.out.println("Dit is geen geldig wachtwoord.\n Een wachtwoord bestaat uit minimaal 4 tekens en bevat minstens 1 cijfer");	
 			}
 		} 
 		return wachtwoord;

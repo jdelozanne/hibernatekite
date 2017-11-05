@@ -52,9 +52,10 @@ public class ProductDaoSql implements ProductDaoInterface {
     }
 
     @Override
+    //deze methode moet nog even worden aangepast zodat ie een List teruggeeft ipv Object
     public Product readProduct(String productnaam) {
         Product p = new Product();
-        String query = "Select * from product where productnaam = ?";
+        String query = "Select * from product where productnaam CONTAINS ?";
         try (Connection connection = factory.createConnection(factory.getConnectorType());
                 PreparedStatement statement = connection.prepareStatement(query);) {
 
@@ -71,28 +72,6 @@ public class ProductDaoSql implements ProductDaoInterface {
             ex.printStackTrace();
         }
         return p;
-    }
-//overloaded
-
-    public String readProduct(int productID) {
-        Product p = new Product();
-        String query = "Select productnaam from product where productID = ?";
-        try (Connection connection = factory.createConnection(factory.getConnectorType());
-                PreparedStatement statement = connection.prepareStatement(query);) {
-
-            statement.setInt(1, productID);
-            try(ResultSet result = statement.executeQuery();){
-            while (result.next()) {
-                p.setProductID(result.getInt(1));
-                p.setNaam(result.getString(2));
-                p.setVoorraad(result.getInt(3));
-                p.setPrijs(result.getBigDecimal(4));
-            }
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return p.getNaam();
     }
 
     @Override

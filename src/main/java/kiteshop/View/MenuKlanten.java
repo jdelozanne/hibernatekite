@@ -221,7 +221,7 @@ public class MenuKlanten {
 	private Klant pickRightKlant(){
 		Klant klant = null;
 
-		System.out.println("Geef alstublieft de achternaam van de betreffende klant?");
+		System.out.println("Geef alstublieft de achternaam van de betreffende klant? ");
 		List<Klant> searchResult = controller.showKlantenAchternaam(input.nextLine());
 		if(searchResult.size()==0){
 			System.out.println("Er zijn geen klanten gevonden, u gaat terug naar het klantenmenu");

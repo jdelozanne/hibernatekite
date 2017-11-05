@@ -20,7 +20,7 @@ import kiteshop.daos.AccountDaoInterface;
 
 public class AccountController {
 
-    private static final long timeLimit = 6000;
+    private static final long TIMELIMIT = 6000;
 
     private final Logger logger = ProjectLog.getLogger();
     AccountDaoInterface accountDAO;
@@ -61,7 +61,7 @@ public class AccountController {
                     token = inputFromFile.nextLine();
                 }
                 String timeLogin = token.split(":")[0];
-                if (getTime() - Long.valueOf(timeLogin) < timeLimit) {
+                if (getTime() - Long.valueOf(timeLogin) < TIMELIMIT) {
                     tokenIsFound = true;
                 }
             } catch (FileNotFoundException e) {

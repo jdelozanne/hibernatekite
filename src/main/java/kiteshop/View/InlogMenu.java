@@ -75,7 +75,8 @@ public class InlogMenu {
     }
 
     public boolean inloggen() {
-
+        //eerst kijken of er een file met het juiste token beschikbaar is.
+        //zo ja, dan gelijk door naar start().
         if(controller.findToken()){
             return true;
         }
@@ -125,8 +126,6 @@ public class InlogMenu {
     }
 
     public void saveToken(String username) {
-        //creeer een hash van de gebruikersnaam, plak erna de huidige tijd in milliseconde ervoor.
-        //de tijd wordt gebruikt om een tijdlimiet te controleren.
         String hashedToken = createHashedToken(username);
         String token = getTime() + ":" + hashedToken;
         controller.writingFile(token);

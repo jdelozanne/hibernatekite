@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import kiteshop.daos.ProductDaoInterface;
 import static kiteshop.daos.mongodb.KlantDaoMongo.getNextSequence;
 import kiteshop.pojos.Account;
@@ -64,7 +65,7 @@ public class ProductDaoMongo implements ProductDaoInterface {
     public Product readProduct(String productnaam) {
         Product p = new Product();
         BasicDBObject query = new BasicDBObject();
-        query.put("productnaam", productnaam);
+        query.put("productnaam", Pattern.compile(productnaam, Pattern.CASE_INSENSITIVE));//veranderd voor contains
         DBCursor cursor = collection.find(query);
         while (cursor.hasNext()) {
             DBObject object = cursor.next();

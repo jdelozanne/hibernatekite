@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import kiteshop.daos.KlantDaoInterface;
 import kiteshop.pojos.Adres;
 import kiteshop.pojos.Klant;
@@ -185,7 +186,7 @@ public class KlantDaoMongo implements KlantDaoInterface {
 	public List<Klant> readKlantByAchternaam(String a) {
 		List<Klant> klanten = new ArrayList<>();
 		DBObject query = new BasicDBObject();
-		query.put("achternaam", a);
+		query.put("achternaam", Pattern.compile(a, Pattern.CASE_INSENSITIVE));//veranderd voor hoofdletters
 		DBCursor cursor = collection.find(query);
 
 		while (cursor.hasNext()) {
