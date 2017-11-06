@@ -16,7 +16,7 @@ import kiteshop.pojos.Adres;
 import kiteshop.pojos.AdresType;
 import kiteshop.utilities.ProjectLog;
 
-import static kiteshop.View.Validator.*;
+import static kiteshop.utilities.Validator.*;
 
 /**
  *

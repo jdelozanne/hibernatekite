@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.apache.commons.validator.routines.IntegerValidator;
 import org.apache.commons.validator.routines.RegexValidator;
 
-import static kiteshop.View.Validator.*;
+import static kiteshop.utilities.Validator.*;
 
 import org.junit.After;
 import org.junit.AfterClass;

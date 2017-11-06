@@ -1,4 +1,4 @@
-package kiteshop.View;
+package kiteshop.utilities;
 
 import java.math.BigDecimal;
 import java.util.Scanner;

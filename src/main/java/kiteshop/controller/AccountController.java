@@ -14,9 +14,9 @@ import kiteshop.View.InlogMenu;
 import kiteshop.daos.mysql.AccountDaoSql;
 import kiteshop.daos.mongodb.AccountDaoMongo;
 import kiteshop.pojos.Account;
-import kiteshop.test.PaswordHasher;
 import kiteshop.daos.AccountDaoInterface;
-import static kiteshop.test.PaswordHasher.createHashedToken;
+import kiteshop.utilities.PaswordHasher;
+import static kiteshop.utilities.PaswordHasher.createHashedToken;
 import kiteshop.utilities.ProjectLog;
 
 public class AccountController {
@@ -45,13 +45,17 @@ public class AccountController {
     }
 
     public boolean checkLogin(String gebruikersnaam, String gegevenWachtwoord) {
-        logger.info("Gebruikers naam :" + gebruikersnaam + " Wachtwoord :" + gegevenWachtwoord + "Juiste wachtwoord :" + accountDAO.readAccountByGebruikersnaam(gebruikersnaam).getWachtwoord());
+        logger.info("Gebruikers naam :" + gebruikersnaam 
+                + " Wachtwoord :" + gegevenWachtwoord 
+                + "Juiste wachtwoord :" 
+                + accountDAO.readAccountByGebruikersnaam(gebruikersnaam).getWachtwoord());
         Account currentAccount = accountDAO.readAccountByGebruikersnaam(gebruikersnaam);
         String saltCurrentAccount = currentAccount.getSalt();
         String gegevenWachtwoordGehashd = PaswordHasher.createHashedPassword(saltCurrentAccount, gegevenWachtwoord);
 
         return gegevenWachtwoordGehashd.equals(currentAccount.getWachtwoord());
     }
+
     public boolean findToken() {
         boolean tokenIsFound = false;
         File file = new File("src/main/java/Connection/token.txt");
@@ -62,10 +66,10 @@ public class AccountController {
                     token = inputFromFile.nextLine();
                 }
                 String loginTime = token.split(":")[1];
-                String readablePartOfToken = token.split(":")[0] + token.split(":")[1] ;
+                String readablePartOfToken = token.split(":")[0] + token.split(":")[1];
                 String hashedPartOfToken = token.split(":")[2];
-                if((createHashedToken(readablePartOfToken).equals(hashedPartOfToken))
-                        && (getTime() - Long.valueOf(loginTime) < TIMELIMIT)) {
+                if ((getTime() - Long.valueOf(loginTime) < TIMELIMIT)
+                        && (createHashedToken(readablePartOfToken).equals(hashedPartOfToken))) {
                     tokenIsFound = true;
                 }
             } catch (FileNotFoundException e) {
@@ -74,7 +78,7 @@ public class AccountController {
         }
         return tokenIsFound;
     }
-    
+
     public void writingFile(String token) {
         File file = new File("src/main/java/Connection/token.txt");
         if (file.exists()) {
@@ -121,7 +125,7 @@ public class AccountController {
     public List<Account> readAllAccountsMongo() {
         return new AccountDaoMongo().readAllAccounts();
     }
-    
+
     public static long getTime() {
         long time = currentTimeMillis();
         return time;

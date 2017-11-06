@@ -1,10 +1,10 @@
 package kiteshop.View;
 
-import static kiteshop.View.Validator.isValidInt;
+import static kiteshop.utilities.Validator.isValidInt;
 
 import java.util.Scanner;
 import java.util.logging.Logger;
-import static kiteshop.View.Validator.vraagInteger;
+import static kiteshop.utilities.Validator.vraagInteger;
 
 import kiteshop.controller.HoofdController;
 import kiteshop.daos.mysql.DaoFactorySql;

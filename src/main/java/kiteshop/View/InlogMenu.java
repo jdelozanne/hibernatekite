@@ -12,16 +12,16 @@ import java.io.PrintWriter;
 import static java.lang.System.currentTimeMillis;
 import java.util.Calendar;
 import java.util.Date;
-import static kiteshop.View.Validator.isValidInt;
-import static kiteshop.View.Validator.isValidWachtwoord;
+import static kiteshop.utilities.Validator.isValidInt;
+import static kiteshop.utilities.Validator.isValidWachtwoord;
 
 import java.util.Scanner;
 import java.util.TimeZone;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static kiteshop.View.Validator.vraagInteger;
-import static kiteshop.View.Validator.vraagWachtwoord;
+import static kiteshop.utilities.Validator.vraagInteger;
+import static kiteshop.utilities.Validator.vraagWachtwoord;
 
 import kiteshop.utilities.ProjectLog;
 import kiteshop.utilities.ProjectLog.*;
@@ -43,7 +43,6 @@ public class InlogMenu {
     private final Logger logger = ProjectLog.getLogger();
     private Scanner input = new Scanner(System.in);
     AccountController controller;
-    
 
     public InlogMenu(AccountController controller) {
         this.controller = controller;
@@ -75,9 +74,7 @@ public class InlogMenu {
     }
 
     public boolean inloggen() {
-        //eerst kijken of er een file met het juiste token beschikbaar is.
-        //zo ja, dan gelijk door naar start().
-        if(controller.findToken()){
+        if (controller.findToken()) {
             return true;
         }
         System.out.println(
@@ -133,9 +130,4 @@ public class InlogMenu {
         controller.writingFile(token);
     }
 
-    
-
-    
-
-    
 }

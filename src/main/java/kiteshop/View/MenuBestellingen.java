@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
-import static kiteshop.View.Validator.vraagInteger;
-import static kiteshop.View.Validator.vraagIntegerMinMax;
+import static kiteshop.utilities.Validator.vraagInteger;
+import static kiteshop.utilities.Validator.vraagIntegerMinMax;
 
 import kiteshop.controller.BestellingenController;
 import kiteshop.daos.mysql.KlantDaoSql;

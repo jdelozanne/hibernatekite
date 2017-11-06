@@ -5,7 +5,7 @@
  */
 package kiteshop.View;
 
-import static kiteshop.View.Validator.*;
+import static kiteshop.utilities.Validator.*;
 
 import java.math.BigDecimal;
 import java.util.List;

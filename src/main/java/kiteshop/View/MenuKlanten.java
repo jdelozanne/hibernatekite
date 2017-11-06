@@ -11,7 +11,7 @@ import kiteshop.utilities.ProjectLog;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
-import static kiteshop.View.Validator.*;
+import static kiteshop.utilities.Validator.*;
 /**
  *
  * @author julia en steef
