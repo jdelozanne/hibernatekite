@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 import kiteshop.daos.ProductDaoInterface;
 import kiteshop.pojos.BestelRegel;
 import kiteshop.pojos.Product;
-import kiteshop.test.ProjectLog;
+import kiteshop.utilities.ProjectLog;
 
 /**
  *
@@ -59,7 +59,7 @@ public class ProductDaoSql implements ProductDaoInterface {
         try (Connection connection = factory.createConnection(factory.getConnectorType());
                 PreparedStatement statement = connection.prepareStatement(query);) {
 
-            statement.setString(1, productnaam + "%");
+            statement.setString(1, "%" + productnaam + "%");
             try (ResultSet result = statement.executeQuery();) {
             while (result.next()) {
                     Product p = new Product();
