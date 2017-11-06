@@ -181,7 +181,7 @@ public class MenuBestellingen {
 		case 1:
 			System.out.println("Geef de naam van het nieuwe product");
 			String productnaam = input.nextLine();
-			br.setProduct(controller.showSpecificProduct(productnaam));
+			br.setProduct(pickRightProduct());
 			controller.updateBestelregel(br);
 			break;
 		case 2:
@@ -208,6 +208,27 @@ public class MenuBestellingen {
 			break;
 		}
         }
+        private Product pickRightProduct() {
+        Product product = null;
+        System.out.println("Geef alstublieft de productnaam of type ");
+        List<Product> producten = controller.showProductByName(input.nextLine());
+        if (producten.size() == 0) {
+            System.out.println("Er zijn geen producten gevonden, u gaat terug naar het productenmenu");
+        } else {
+            System.out.println("De volgende producten zijn gevonden, geeft u alstublieft het nummer van het correcte product");
+            for (int i = 0; i < producten.size(); i++) {
+                System.out.println(i + 1 + " " + producten.get(i));
+            }
+            int choosenIndex = vraagInteger();
+            if ((producten.size() <= choosenIndex) && (0 < choosenIndex)) {
+                product = producten.get(choosenIndex -1);
+            } else {
+                System.out.println("Dit gekozen nummer is onjuist, probeer opnieuw");
+                pickRightProduct();
+            }
+        }
+        return product;
+    }
 }
 
 	

@@ -3,9 +3,10 @@ package kiteshop.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+import kiteshop.View.MenuProducten;
 import kiteshop.daos.mysql.*;
 import kiteshop.pojos.*;
-import kiteshop.test.ProjectLog;
+import kiteshop.utilities.ProjectLog;
 import kiteshop.daos.*;
 
 
@@ -85,11 +86,9 @@ public class BestellingenController {
     public List<Klant> showKlantenAchternaam(String achternaam) {
         return klantDao.readKlantByAchternaam(achternaam);
     }
-        
-    
-    public Product showSpecificProduct(String naam) {
-        Product p = productDAO.readProduct(naam);
-        return p;
+    public List<Product> showProductByName(String productnaam) {
+        List<Product> producten = productDAO.readProductByName(productnaam);
+        return producten;
     }
     
     private void adjustVoorraad(Bestelling bestelling){

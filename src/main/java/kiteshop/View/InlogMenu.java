@@ -126,8 +126,10 @@ public class InlogMenu {
     }
 
     public void saveToken(String username) {
-        String hashedToken = createHashedToken(username);
-        String token = getTime() + ":" + hashedToken;
+        long loginTime = getTime();
+        String toBeHashed = username + loginTime;
+        String hashedToken = createHashedToken(toBeHashed);
+        String token = username + ":" + loginTime + ":" + hashedToken;
         controller.writingFile(token);
     }
 

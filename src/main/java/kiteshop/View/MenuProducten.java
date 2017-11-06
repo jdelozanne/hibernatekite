@@ -8,6 +8,7 @@ package kiteshop.View;
 import static kiteshop.View.Validator.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Scanner;
 
 import kiteshop.controller.ProductenController;
@@ -40,13 +41,21 @@ public class MenuProducten {
                 start();
                 break;
             case 2:
-                System.out.println("Geef alstublieft de naam van het product dat u wilt wijzigen: ");
-                showSpecificProduct(input.nextLine());
+                updateProduct();
+                System.out.println("Wilt u nog een product wijzigen? J/N");
+                if (input.nextLine().equalsIgnoreCase("J")) {
+                    updateProduct();
+                start();
+                } 
                 start();
                 break;
             case 3:
-                System.out.println("Geef alstublieft de naam van het product dat u wilt verwijderen: ");
-                deleteProduct(input.nextLine());
+                deleteProduct();
+                System.out.println("Wilt u nog een product verwijderen? J/N");
+                if (input.nextLine().equalsIgnoreCase("J")) {
+                    deleteProduct();
+                start();
+                } 
                 start();
                 break;
             case 4:
@@ -84,12 +93,9 @@ public class MenuProducten {
         controller.showProducten();
     }
 
-    public void showSpecificProduct(String productnaam) {
-        Product p = controller.showSpecificProduct(productnaam);
-        updateProduct(p);
-    }
-
-    public void updateProduct(Product p) {
+    public void updateProduct() {
+        Product p = pickRightProduct();
+        if (p != null) {
         System.out.println("Wat wilt u aanpassen aan dit product?");
         System.out.println("Kies 1 voor de productnaam");
         System.out.println("Kies 2 voor de voorraad");
@@ -113,16 +119,38 @@ public class MenuProducten {
                 input.nextLine();
                 break;
         }
-        System.out.println(p.toString() + "\nWilt u nog iets aanpassen aan dit product? J/N");
-        if (input.nextLine().equalsIgnoreCase("j")) {
-            updateProduct(p);
         } else {
             controller.updateProduct(p);
         }
     }
+    
 
-    public void deleteProduct(String productnaam) {
-        Product p = controller.showSpecificProduct(productnaam);
+    public void deleteProduct() {
+        Product p = pickRightProduct();
+        if (p != null) {
         controller.deleteProduct(p);
+    }
+}
+
+    private Product pickRightProduct() {
+        Product product = null;
+        System.out.println("Geef alstublieft de productnaam of type ");
+        List<Product> producten = controller.showProductByName(input.nextLine());
+        if (producten.size() == 0) {
+            System.out.println("Er zijn geen producten gevonden, u gaat terug naar het productenmenu");
+        } else {
+            System.out.println("De volgende producten zijn gevonden, geeft u alstublieft het nummer van het correcte product");
+            for (int i = 0; i < producten.size(); i++) {
+                System.out.println(i + 1 + " " + producten.get(i));
+            }
+            int choosenIndex = vraagInteger();
+            if ((producten.size() <= choosenIndex) && (0 < choosenIndex)) {
+                product = producten.get(choosenIndex -1);
+            } else {
+                System.out.println("Dit gekozen nummer is onjuist, probeer opnieuw");
+                pickRightProduct();
+            }
+        }
+        return product;
     }
 }

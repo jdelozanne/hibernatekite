@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 
 import kiteshop.daos.mysql.KlantDaoSql;
 import kiteshop.pojos.Klant;
-import kiteshop.test.ProjectLog;
+import kiteshop.utilities.ProjectLog;
 import kiteshop.daos.KlantDaoInterface;
 
 public class KlantenController {

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import kiteshop.pojos.Product;
-import kiteshop.test.ProjectLog;
+import kiteshop.utilities.ProjectLog;
 import kiteshop.daos.ProductDaoInterface;
 
 public class ProductenController {
@@ -20,15 +20,14 @@ public class ProductenController {
              productDAO.createProduct(product); 
     }
 
-    public Product showSpecificProduct(String naam) {
-        Product p = productDAO.readProduct(naam);
-        System.out.println(p.toString());
-        return p;
-    }
-
     public void showProducten() {
         List<Product> producten = productDAO.readAllProducten();
         displayProducten(producten);
+    }
+
+    public List<Product> showProductByName(String productnaam) {
+        List<Product> producten = productDAO.readProductByName(productnaam);
+        return producten;
     }
 
     public void displayProducten(List<Product> lijst) {

@@ -22,7 +22,7 @@ import kiteshop.pojos.Account;
 import kiteshop.pojos.Adres;
 import kiteshop.pojos.AdresType;
 import kiteshop.pojos.Klant;
-import kiteshop.test.ProjectLog;
+import kiteshop.utilities.ProjectLog;
 
 /**
  *

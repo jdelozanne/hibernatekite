@@ -52,26 +52,28 @@ public class ProductDaoSql implements ProductDaoInterface {
     }
 
     @Override
-    //deze methode moet nog even worden aangepast zodat ie een List teruggeeft ipv Object
-    public Product readProduct(String productnaam) {
-        Product p = new Product();
-        String query = "Select * from product where productnaam CONTAINS ?";
+    public List<Product> readProductByName(String productnaam) {
+        List<Product> producten = new ArrayList<>();
+
+        String query = "Select * from product where productnaam LIKE ? ";
         try (Connection connection = factory.createConnection(factory.getConnectorType());
                 PreparedStatement statement = connection.prepareStatement(query);) {
 
-            statement.setString(1, productnaam);
-            try(ResultSet result = statement.executeQuery();){
+            statement.setString(1, productnaam + "%");
+            try (ResultSet result = statement.executeQuery();) {
             while (result.next()) {
+                    Product p = new Product();
                 p.setProductID(result.getInt(1));
                 p.setNaam(result.getString(2));
                 p.setVoorraad(result.getInt(3));
                 p.setPrijs(result.getBigDecimal(4));
+                    producten.add(p);
             }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return p;
+        return producten;
     }
 
     @Override
@@ -82,7 +84,7 @@ public class ProductDaoSql implements ProductDaoInterface {
                 PreparedStatement statement = connection.prepareStatement(query);) {
 
             statement.setInt(1, productID);
-            try(ResultSet result = statement.executeQuery();){
+            try (ResultSet result = statement.executeQuery();) {
             while (result.next()) {
                 p.setProductID(result.getInt(1));
                 p.setNaam(result.getString(2));
@@ -103,7 +105,7 @@ public class ProductDaoSql implements ProductDaoInterface {
         try (Connection connection = factory.createConnection(factory.getConnectorType());
                 Statement statement = connection.createStatement();) {
             
-            try(ResultSet result = statement.executeQuery(query);){
+            try (ResultSet result = statement.executeQuery(query);) {
             while (result.next()) {
                 Product p = new Product();
                 p.setProductID(result.getInt(1));

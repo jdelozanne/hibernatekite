@@ -15,12 +15,13 @@ import kiteshop.daos.mysql.AccountDaoSql;
 import kiteshop.daos.mongodb.AccountDaoMongo;
 import kiteshop.pojos.Account;
 import kiteshop.test.PaswordHasher;
-import kiteshop.test.ProjectLog;
 import kiteshop.daos.AccountDaoInterface;
+import static kiteshop.test.PaswordHasher.createHashedToken;
+import kiteshop.utilities.ProjectLog;
 
 public class AccountController {
 
-    private static final long TIMELIMIT = 6000;
+    private static final long TIMELIMIT = 60000;
 
     private final Logger logger = ProjectLog.getLogger();
     AccountDaoInterface accountDAO;
@@ -60,8 +61,11 @@ public class AccountController {
                 while (inputFromFile.hasNext()) {
                     token = inputFromFile.nextLine();
                 }
-                String timeLogin = token.split(":")[0];
-                if (getTime() - Long.valueOf(timeLogin) < TIMELIMIT) {
+                String loginTime = token.split(":")[1];
+                String readablePartOfToken = token.split(":")[0] + token.split(":")[1] ;
+                String hashedPartOfToken = token.split(":")[2];
+                if((createHashedToken(readablePartOfToken).equals(hashedPartOfToken))
+                        && (getTime() - Long.valueOf(loginTime) < TIMELIMIT)) {
                     tokenIsFound = true;
                 }
             } catch (FileNotFoundException e) {

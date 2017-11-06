@@ -19,7 +19,7 @@ import kiteshop.daos.BestelRegelDaoInterface;
 import kiteshop.pojos.BestelRegel;
 import kiteshop.pojos.Bestelling;
 import kiteshop.pojos.Product;
-import kiteshop.test.ProjectLog;
+import kiteshop.utilities.ProjectLog;
 
 /**
  *

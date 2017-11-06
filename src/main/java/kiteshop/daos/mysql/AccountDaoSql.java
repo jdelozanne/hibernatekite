@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import kiteshop.daos.AccountDaoInterface;
 import kiteshop.pojos.Account;
-import kiteshop.test.ProjectLog;
+//import kiteshop.test.ProjectLog;
 
 /**
  *
@@ -26,7 +26,7 @@ import kiteshop.test.ProjectLog;
  */
 public class AccountDaoSql implements AccountDaoInterface {
 
-    private final Logger logger = ProjectLog.getLogger();
+    //private final Logger logger = ProjectLog.getLogger();
     ConnectionFactory factory = new ConnectionFactory();
     
  
@@ -51,7 +51,7 @@ public class AccountDaoSql implements AccountDaoInterface {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        logger.info("creating account :" + account);
+        //logger.info("creating account :" + account);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class AccountDaoSql implements AccountDaoInterface {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        logger.info("Returning account :" + account);
+        //logger.info("Returning account :" + account);
         return account;
     }
 
@@ -91,7 +91,7 @@ public class AccountDaoSql implements AccountDaoInterface {
     	} catch (SQLException e) {
     		e.printStackTrace();
     	}
-    	logger.info("Updating account :" + account);
+    	//logger.info("Updating account :" + account);
     }
 
     @Override
@@ -126,7 +126,7 @@ public class AccountDaoSql implements AccountDaoInterface {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        logger.info("Returning all accounts :" + accounts);
+        //logger.info("Returning all accounts :" + accounts);
         return accounts;
     }
 }

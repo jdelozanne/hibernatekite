@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 import kiteshop.daos.BestellingDaoInterface;
 import kiteshop.pojos.Bestelling;
 import kiteshop.pojos.Klant;
-import kiteshop.test.ProjectLog;
+import kiteshop.utilities.ProjectLog;
 
 /**
  *

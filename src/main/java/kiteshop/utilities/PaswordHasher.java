@@ -48,8 +48,8 @@ public class PaswordHasher {
         
        
 
-	public static String createHashedToken(String user) {
-		String tokenHex = toHexadecimal(user);
+	public static String createHashedToken(String token) {
+		String tokenHex = toHexadecimal(token);
 		byte[] combinedArray = hexStringtoByteArray(tokenHex);
 		MessageDigest md= null;
 		try {
