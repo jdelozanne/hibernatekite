@@ -11,7 +11,7 @@ import java.sql.*;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-import kiteshop.test.ProjectLog;
+import kiteshop.utilities.ProjectLog;
 
 /**
  *

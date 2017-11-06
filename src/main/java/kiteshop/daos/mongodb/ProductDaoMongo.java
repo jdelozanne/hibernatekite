@@ -62,8 +62,8 @@ public class ProductDaoMongo implements ProductDaoInterface {
     }
 
     @Override
-    public Product readProduct(String productnaam) {
-        Product p = new Product();
+    public List<Product> readProductByName(String productnaam) {
+        List<Product> producten = new ArrayList<>();
         BasicDBObject query = new BasicDBObject();
         query.put("productnaam", Pattern.compile(productnaam, Pattern.CASE_INSENSITIVE));//veranderd voor contains
         DBCursor cursor = collection.find(query);
@@ -73,13 +73,14 @@ public class ProductDaoMongo implements ProductDaoInterface {
             int id = productObj.getInt("id");
             String naam = productObj.getString("productnaam");
             int voorraad = productObj.getInt("voorraad");
-            BigDecimal prijs = new BigDecimal(productObj.getString("prijs")).setScale(2, BigDecimal.ROUND_HALF_UP);
+           Product p = new Product(); 
+           BigDecimal prijs = new BigDecimal(productObj.getString("prijs")).setScale(2, BigDecimal.ROUND_HALF_UP);
             p.setProductID(id);
             p.setNaam(naam);
             p.setVoorraad(voorraad);
             p.setPrijs(prijs);
         }
-        return p;
+        return producten;
     }
 
     @Override

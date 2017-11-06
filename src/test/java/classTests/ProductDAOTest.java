@@ -52,22 +52,7 @@ public class ProductDAOTest {
 		assertEquals(expectedresult, result);
 	}
 
-	@Test
-	public final void testReadProductString() {
-		new SetUpTestDatabase().populateDatabase();
-		//form populate database ('2', 'Cabrinha Chaos', 8,  '719.00')
-		Product expectedresult = new Product();
-		expectedresult.setProductID(2);
-		expectedresult.setNaam("Cabrinha Chaos");
-		expectedresult.setVoorraad(8);
-		expectedresult.setPrijs(new BigDecimal("719.00"));
-
-		Product result = new ProductDaoSql().readProduct("Cabrinha Chaos");
-
-
-		assertEquals(expectedresult, result);
-	}
-
+	
 	@Test
 	public final void testShowProducten() {
 		new SetUpTestDatabase().populateDatabase();
