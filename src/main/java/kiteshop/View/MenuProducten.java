@@ -82,7 +82,7 @@ public class MenuProducten {
         int voorraad = vraagInteger();
         product.setVoorraad(voorraad);
 
-        System.out.println("geef prijs ");
+        System.out.println("geef de prijs met de decimalen door een punt gescheiden:  ");
         BigDecimal prijs = vraagBigDecimal();
         product.setPrijs(prijs);
 

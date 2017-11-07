@@ -93,12 +93,18 @@ public class BestellingenController {
     
     private void adjustVoorraad(Bestelling bestelling){
     	for(BestelRegel bestelregel : bestelling.getBestelling()){
-    		Product betreffendeproduct = bestelregel.getProduct();
-    		int aantalProductenbesteld = bestelregel.getAantal();
-    		int productVoorraadInDatabase = productDAO.readProductByID(betreffendeproduct.getProductID()).getVoorraad(); //ik haal het product opnieuw op uit de database, om de actuele voorraad te weten, anders kan een een andere bestelregel die alvast hebben aangepast
-    		int nieuweVoorraad = productVoorraadInDatabase - aantalProductenbesteld;
-    		betreffendeproduct.setVoorraad(nieuweVoorraad);
-    		productDAO.updateProduct(betreffendeproduct);
+    		Product betreffendeProduct = bestelregel.getProduct();
+    		int aantalProductenBesteld = bestelregel.getAantal();
+    		int productVoorraadInDatabase = productDAO.readProductByID(betreffendeProduct.getProductID()).getVoorraad(); //ik haal het product opnieuw op uit de database, om de actuele voorraad te weten, anders kan een een andere bestelregel die alvast hebben aangepast
+    		int nieuweVoorraad = productVoorraadInDatabase - aantalProductenBesteld;
+    		betreffendeProduct.setVoorraad(nieuweVoorraad);
+    		productDAO.updateProduct(betreffendeProduct);
+                if(aantalProductenBesteld > productVoorraadInDatabase){
+                    System.out.println("LET OP: " + betreffendeProduct.getNaam() + " is momenteel niet voorradig in dit aantal. U kunt dit product bijbestellen."
+                            + "\n Van dit product zijn maximaal " + productVoorraadInDatabase + " stuks direct leverbaar.");
+                }else if(aantalProductenBesteld == productVoorraadInDatabase){
+                    System.out.println("De voorraad van " + betreffendeProduct.getNaam() + " is nu nul.\n Bestel bij om de voorraad aan te vullen.");
+                }
     		
     	}
     	

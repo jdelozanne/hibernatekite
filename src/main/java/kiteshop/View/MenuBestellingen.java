@@ -99,8 +99,6 @@ public class MenuBestellingen {
 	}
 
 	public BestelRegel createBestelRegel(Bestelling bestelling) {
-		System.out.println("Welk product wilt u toevoegen aan de bestelling");
-		String productnaam = input.nextLine();
 		Product p = pickRightProduct();
 
 		System.out.println("Hoeveel stuks wilt u van dit specifieke product toevoegen?");
