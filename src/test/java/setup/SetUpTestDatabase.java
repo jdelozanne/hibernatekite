@@ -71,7 +71,7 @@ public class SetUpTestDatabase {
 				+ "  PRIMARY KEY (`KlantID`))\n"
 				+ "ENGINE = InnoDB";
 		String create_bestelregel = "CREATE TABLE IF NOT EXISTS `" + DATABASE + "`.`bestel_regel` (\n"
-				+ "  `bestel_regelID` INT(10) NOT NULL,\n"
+				+ "  `bestel_regelID` INT(10) NOT NULL AUTO_INCREMENT,\n"
 				+ "  `productID` INT(10) NOT NULL,\n"
 				+ "  `aantal` INT(5) NOT NULL,\n"
 				+ "  `bestellingID` INT(10) UNSIGNED NULL,\n"
