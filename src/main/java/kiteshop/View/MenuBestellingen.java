@@ -211,7 +211,7 @@ public class MenuBestellingen {
         System.out.println("Geef alstublieft de productnaam of type ");
         List<Product> producten = controller.showProductByName(input.nextLine());
         if (producten.size() == 0) {
-            System.out.println("Er zijn geen producten gevonden, u gaat terug naar het productenmenu");
+            System.out.println("Er zijn geen producten gevonden, u gaat terug naar het besteling menu");
         } else {
             System.out.println("De volgende producten zijn gevonden, geeft u alstublieft het nummer van het correcte product");
             for (int i = 0; i < producten.size(); i++) {
