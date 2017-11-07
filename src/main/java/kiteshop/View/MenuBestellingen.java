@@ -27,7 +27,6 @@ import kiteshop.utilities.ProjectLog;
 public class MenuBestellingen {
 
 	private final Logger logger = ProjectLog.getLogger();
-	private Scanner input = new Scanner(System.in);
 
 	BestellingenController controller;
 
@@ -64,8 +63,8 @@ public class MenuBestellingen {
 		case 3:
 			Klant klantBestelling = firstPickRightKlant();
 			if(klantBestelling!=null){
-			Bestelling bestellingToDelete = pickRightBestelling(klantBestelling);
-			deleteBestelling(bestellingToDelete);
+				Bestelling bestellingToDelete = pickRightBestelling(klantBestelling);
+				deleteBestelling(bestellingToDelete);
 			}
 			start();
 			break;
@@ -83,13 +82,16 @@ public class MenuBestellingen {
 	}
 
 	public void createBestelling(Klant klant ) {
+		Scanner input = new Scanner(System.in);
 		Bestelling bestelling = new Bestelling(klant);
 
 		System.out.println("Wilt u iets toevoegen aan de bestelling? J/N");
 		String antwoord = input.nextLine();
 		while (antwoord.equalsIgnoreCase("J")) {
 			BestelRegel bestelRegelToBeAdded = createBestelRegel(bestelling);
+			if(bestelRegelToBeAdded!=null){
 			bestelling.addBestelRegel(bestelRegelToBeAdded);
+			}
 			System.out.println("Wilt u iets toevoegen aan de bestelling? J/N");
 			antwoord = input.nextLine();
 		}
@@ -99,12 +101,14 @@ public class MenuBestellingen {
 	}
 
 	public BestelRegel createBestelRegel(Bestelling bestelling) {
+		BestelRegel b = null;
 		Product p = pickRightProduct();
+		if(p!=null){
+			System.out.println("Hoeveel stuks wilt u van dit specifieke product toevoegen?");
+			int aantal = vraagInteger();
 
-		System.out.println("Hoeveel stuks wilt u van dit specifieke product toevoegen?");
-		int aantal = vraagInteger();
-
-		BestelRegel b = new BestelRegel(bestelling, p, aantal);
+			b = new BestelRegel(bestelling, p, aantal);
+		}
 		return b;
 	}
 
@@ -127,6 +131,7 @@ public class MenuBestellingen {
 	}
 
 	public Klant firstPickRightKlant() {
+		Scanner input = new Scanner(System.in);
 		Klant klant = null;
 
 		System.out.println("Geef alstublieft de achternaam van de betreffende klant");
@@ -150,6 +155,7 @@ public class MenuBestellingen {
 	}
 
 	public Bestelling pickRightBestelling(Klant choosenKlant) {
+
 		List<Bestelling> bestellingen = controller.getBestellingByKlantID(choosenKlant.getKlantID());
 		System.out.println("De volgende bestellingen zijn gevonden van deze klant, geeft u alstublieft het nummer van de bestelling die u wil wijzigen");
 		for (int i = 0; i < bestellingen.size(); i++) {
@@ -170,7 +176,7 @@ public class MenuBestellingen {
 	}
 
 	public void updateBestelling(BestelRegel br, Bestelling b) {
-		
+		Scanner input = new Scanner(System.in);
 		br.setBestelling(b);
 		System.out.println("Wat wilt u veranderen, kies 1 voor product of kies 2 voor het aantal");
 		int keuze = input.nextInt();
@@ -178,7 +184,6 @@ public class MenuBestellingen {
 		switch (keuze) {
 		case 1:
 			System.out.println("Geef de naam van het nieuwe product");
-			String productnaam = input.nextLine();
 			br.setProduct(pickRightProduct());
 			controller.updateBestelregel(br);
 			break;
@@ -205,29 +210,27 @@ public class MenuBestellingen {
 			System.out.println("bestelling is geupdate, terug naar Hoofdmenu");
 			break;
 		}
-        }
-        private Product pickRightProduct() {
-        Product product = null;
-        System.out.println("Geef alstublieft de productnaam of type ");
-        List<Product> producten = controller.showProductByName(input.nextLine());
-        if (producten.size() == 0) {
-            System.out.println("Er zijn geen producten gevonden, u gaat terug naar het besteling menu");
-        } else {
-            System.out.println("De volgende producten zijn gevonden, geeft u alstublieft het nummer van het correcte product");
-            for (int i = 0; i < producten.size(); i++) {
-                System.out.println(i + 1 + " " + producten.get(i));
-            }
-            int choosenIndex = vraagInteger();
-            if ((producten.size() <= choosenIndex) && (0 < choosenIndex)) {
-                product = producten.get(choosenIndex -1);
-            } else {
-                System.out.println("Dit gekozen nummer is onjuist, probeer opnieuw");
-                pickRightProduct();
-            }
-        }
-        return product;
-    }
+	}
+
+	private Product pickRightProduct() {
+		Scanner input = new Scanner(System.in);
+		Product product = null;
+		System.out.println("Geef alstublieft de productnaam of type ");
+		List<Product> producten = controller.showProductByName(input.nextLine());
+		if (producten.size() == 0) {
+			System.out.println("Er zijn geen producten gevonden");
+		} else {
+			System.out.println("De volgende producten zijn gevonden, geeft u alstublieft het nummer van het correcte product");
+			for (int i = 0; i < producten.size(); i++) {
+				System.out.println(i + 1 + " " + producten.get(i));
+			}
+			int choosenIndex = vraagIntegerMinMax(1,producten.size()+1);
+			product = producten.get(choosenIndex -1);
+
+		}
+		return product;
+	}
 }
 
-	
+
 
