@@ -18,7 +18,7 @@ import static kiteshop.utilities.Validator.*;
  */
 public class MenuKlanten {
 	private final Logger logger = ProjectLog.getLogger();
-	private Scanner input = new Scanner(System.in);
+
 
 	KlantenController controller;
 
@@ -39,31 +39,14 @@ public class MenuKlanten {
 		switch (keuze) {
 		case 1:
 			createKlant();
-			System.out.println("Wilt u nog een nieuwe klant maken J/N");
-			if (input.nextLine().equalsIgnoreCase("J")) {
-				createKlant();
-			} else {
-				start();
-			}
+			start();
 			break;
 		case 2:
 			klantWijzigenAchternaam();
-			System.out.println("Wilt u nog een klant wijzigen J/N");
-			if (input.nextLine().equalsIgnoreCase("J")) {
-				klantWijzigenAchternaam();
-			} else {
-				start();
-			}
+			start();
 			break;
 		case 3:
 			klantVerwijderenAchterNaam();
-			System.out.println("Wilt u nog een een klant verwijderen J/N");
-			if (input.nextLine().equalsIgnoreCase("J")) {
-				klantVerwijderenAchterNaam();
-				start();
-			} else {
-				start();
-			}
 			break;
 		case 4:
 			showKlanten();
@@ -83,6 +66,7 @@ public class MenuKlanten {
 	}
 
 	private void createKlant() {
+		Scanner input = new Scanner(System.in);
 		Klant klant = new Klant();
 
 		System.out.println("geef voornaam: ");
@@ -116,11 +100,12 @@ public class MenuKlanten {
 			klant.setFactuurAdres(factuurAdres);
 		}
 		controller.createKlant(klant);
+		Scanner input2 = new Scanner(System.in);
+		System.out.println("Wilt u nog een nieuwe klant maken J/N");
+		if (input2.nextLine().equalsIgnoreCase("J")) {
+			createKlant();
+		} 
 	}
-
-
-
-
 
 	public void showKlanten() {
 		for (Klant klant : controller.showAllKlanten()) {
@@ -131,18 +116,31 @@ public class MenuKlanten {
 			System.out.println(klant.getBezoekAdres().getPostcode()+" "+klant.getBezoekAdres().getWoonplaats());
 			System.out.println();
 		}
+		if(controller.showAllKlanten().isEmpty()){
+			System.out.println("Er zijn geen klanten gevonden met deze achternaam");
+		}
 	}
 
 	public void readKlantenByAchternaam() {
+		Scanner input = new Scanner(System.in);
 		System.out.println("Geef alstublieft de achternaam van de klant die u wilt zien?");
 		List<Klant> searchResult = controller.showKlantenAchternaam(input.nextLine());
 
 		for (Klant klant : searchResult) {
-			System.out.println(klant);
+			System.out.println(klant.getVoornaam()+ " "+klant.getTussenvoegsel()+" "+klant.getAchternaam());
+			System.out.println("Tel nr "+klant.getTelefoonnummer()+" Email: "+klant.getEmail());
+			System.out.println("Bezoekadres:");
+			System.out.println(klant.getBezoekAdres().getStraatnaam()+" "+klant.getBezoekAdres().getHuisnummer());
+			System.out.println(klant.getBezoekAdres().getPostcode()+" "+klant.getBezoekAdres().getWoonplaats());
+			System.out.println();
+		}
+		if(searchResult.isEmpty()){
+			System.out.println("Er zijn geen klanten gevonden met deze achternaam");
 		}
 	}
 
 	private void klantWijzigenAchternaam() {
+		Scanner input = new Scanner(System.in);
 		Klant choosenKlant = pickRightKlant();
 
 		if(choosenKlant!= null){
@@ -158,6 +156,7 @@ public class MenuKlanten {
 
 			switch (keuze) {
 			case 1:
+
 				System.out.println("geef voornaam: ");
 				String voornaam = input.nextLine();
 				choosenKlant.setVoornaam(voornaam);
@@ -201,24 +200,37 @@ public class MenuKlanten {
 				klantWijzigenAchternaam();
 			}
 			controller.updateKlant(choosenKlant);
+
+			System.out.println("Wilt u nog een klant wijzigen J/N");
+			if (input.nextLine().equalsIgnoreCase("J")) {
+				klantWijzigenAchternaam();
+			} 
 		}
 	}
 
 	private void klantVerwijderenAchterNaam() {
+		Scanner input = new Scanner(System.in);
 		Klant choosenKlant = pickRightKlant();
 
 		if(choosenKlant!= null){
 			System.out.println("Weet u zeker dat u de volgende klant wil verwijderen: " + choosenKlant + "J/N");
-			if (input.next().equalsIgnoreCase("J")) {
+			if (input.nextLine().equalsIgnoreCase("J")) {
 				controller.deleteKlant(choosenKlant);
 			} else {
 				System.out.println("De klant is niet verwijderd");
 			}
 		}
+
+		System.out.println("Wilt u nog een een klant verwijderen J/N");
+		if (input.nextLine().equalsIgnoreCase("J")) {
+			klantVerwijderenAchterNaam();
+			start();
+		}
 	}
 
-//deze methode wordt ook gebruikt in bestellingenMenu
+	//deze methode wordt ook gebruikt in bestellingenMenu
 	private Klant pickRightKlant(){
+		Scanner input = new Scanner(System.in);
 		Klant klant = null;
 
 		System.out.println("Geef alstublieft de achternaam van de betreffende klant? ");
@@ -228,7 +240,7 @@ public class MenuKlanten {
 		} else {
 			System.out.println("De volgende klanten zijn gevonden, geeft u alstublieft het nummer van de klant die u wil verwijderen");
 			for (int i = 0; i < searchResult.size(); i++) {
-				System.out.println(i + 1 + " " + searchResult.get(i));
+				System.out.println(i + 1 + " " + searchResult.get(i).getVoornaam()+" "+ searchResult.get(i).getTussenvoegsel()+" "+ searchResult.get(i).getAchternaam());
 			}
 			int minimumKeuzewaarde = 1;
 			int maximumKeuzewaarde = searchResult.size();
