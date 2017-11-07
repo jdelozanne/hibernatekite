@@ -29,11 +29,11 @@ public class MenuProducten {
 
     public void start() {
         System.out.println("Kies wat je wilt doen:");
-        System.out.println("Kies 1 voor Nieuwe product maken");
+        System.out.println("Kies 1 voor Nieuw product toevoegen");
         System.out.println("Kies 2 voor Een product wijzigen");
         System.out.println("Kies 3 voor Een product verwijderen");
         System.out.println("Kies 4 voor Overzicht producten");
-        System.out.println("Kies 5 voor terug naar Hoofdmenu");
+        System.out.println("Kies 5 voor Terug naar Hoofdmenu");
         int keuze = vraagInteger();
         switch (keuze) {
             case 1:
