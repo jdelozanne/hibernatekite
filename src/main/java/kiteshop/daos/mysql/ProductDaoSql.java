@@ -45,7 +45,7 @@ public class ProductDaoSql implements ProductDaoInterface {
             statement.setInt(3, product.getVoorraad());
             statement.setBigDecimal(4, product.getPrijs());
             statement.execute();
-            System.out.println("Product " + product.getNaam() + "is succesvol teogevoegd");
+            System.out.println("Product " + product.getNaam() + " is succesvol toegevoegd");
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
