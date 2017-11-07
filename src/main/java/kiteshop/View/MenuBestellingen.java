@@ -119,7 +119,7 @@ public class MenuBestellingen {
 			System.out.println("Bestelling ID :"+b.getBestellingID()+ " voor klant "+b.getKlant().getVoornaam()+" "+b.getKlant().getAchternaam());
 			System.out.println("Met de volgende bestelregels: ");
 			for(BestelRegel br : b.getBestelling()){
-				System.out.println("    -Productnaam "+br.getProduct().getNaam()+ " Aantal: "+br.getAantal());
+				System.out.println("    -Productnaam "+br.getProduct().getNaam()+ " Aantal: "+br.getAantal()+ " Subtotaal :"+(br.getProduct().getPrijs().multiply(new BigDecimal(br.getAantal()))));
 			}
 			System.out.println("");
 		}
