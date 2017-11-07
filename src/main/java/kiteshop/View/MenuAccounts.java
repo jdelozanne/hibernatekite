@@ -40,17 +40,12 @@ public class MenuAccounts {
 		System.out.println("Kies 4 voor Een account verwijderen");
 		System.out.println("Kies 5 terug naar het hoofdmenu");
 		int keuze = vraagInteger();
-		input.nextLine();
-
+	
 		switch (keuze) {
 		case 1:
 			maakNieuwAccount();
-			System.out.println("Wilt u nog een account maken J/N");
-			if (input.next().equalsIgnoreCase("J")) {
-				maakNieuwAccount();
-			} else {
-				start();
-			}
+			start();
+			
 			break;
 		case 2:
 			printAllAccounts();
@@ -59,12 +54,7 @@ public class MenuAccounts {
 			break;
 		case 3:
 			wijzigAccount();
-			System.out.println("Wilt u een ander account wijzigen J/N");
-			if (input.next().equalsIgnoreCase("J")) {
-				wijzigAccount();
-			} else {
-				start();
-			}
+			start();
 			break;
 		case 4:
 			verwijderAccount();
@@ -96,6 +86,10 @@ public class MenuAccounts {
 		account.setWachtwoord(wachtwoord);
 
 		controller.createAccount(account);
+		System.out.println("Wilt u nog een account maken J/N");
+		if (input.nextLine().equalsIgnoreCase("J")) {
+			maakNieuwAccount();
+		} 
 	}
 
 
@@ -150,6 +144,10 @@ public class MenuAccounts {
 				System.out.println("Uw keuze was incorrect");
 				wijzigAccount();
 			}
+		}
+		System.out.println("Wilt u een ander account wijzigen J/N");
+		if (input.nextLine().equalsIgnoreCase("J")) {
+			wijzigAccount();
 		}
 	}
 
