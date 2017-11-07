@@ -33,8 +33,8 @@ public class ValidatorTest {
 
 	@Test 
 	public final void testIsValidBigDecimal(){
-		String testBigDecimal1 = "500034.566567";
-		assertTrue(isValidBigDecimal(testBigDecimal1));
+		String testBigDecimal1 = "500034,566567";
+		assertFalse(isValidBigDecimal(testBigDecimal1));
 
 		String testBigDecimal2 = "adgfer";
 		assertFalse(isValidBigDecimal(testBigDecimal2));

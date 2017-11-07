@@ -150,7 +150,8 @@ public class Validator {
 
 	public static boolean isValidBigDecimal(String bigdecimal){
 		BigDecimalValidator bigDecimalValidator  = BigDecimalValidator.getInstance();
-		return bigDecimalValidator.isValid(bigdecimal);
+		
+		return (bigDecimalValidator.isValid(bigdecimal)&&!bigdecimal.contains(","));
 	}
 
 	public static boolean isValidInt(String integer){
