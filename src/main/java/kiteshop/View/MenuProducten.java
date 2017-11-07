@@ -131,6 +131,7 @@ public class MenuProducten {
 	}
 
 	private Product pickRightProduct() {
+		Scanner input = new Scanner(System.in);
 		Product product = null;
 		System.out.println("Geef alstublieft de productnaam of type ");
 		List<Product> producten = controller.showProductByName(input.nextLine());
