@@ -109,7 +109,7 @@ public class MenuKlanten {
 
 	public void showKlanten() {
 		for (Klant klant : controller.showAllKlanten()) {
-			System.out.println(klant.getVoornaam()+ " "+klant.getTussenvoegsel()+" "+klant.getAchternaam());
+			System.out.println(klant.getVoornaam()+ " "+klant.getAchternaam());
 			System.out.println("Tel nr "+klant.getTelefoonnummer()+" Email: "+klant.getEmail());
 			System.out.println("Bezoekadres:");
 			System.out.println(klant.getBezoekAdres().getStraatnaam()+" "+klant.getBezoekAdres().getHuisnummer());

@@ -137,7 +137,7 @@ public class SetupDatabase {
 		logger.info("Entering populate database");
 
 		// Prepare the SQL statements to insert the test data into the DATABASE
-		String insert_account = "INSERT INTO `" + DATABASE + "`.`account` (`gebruikersnaam`, `wachtwoord`) VALUES ('Steef', 'Cola');";
+		
 		String insert_product = "INSERT INTO `" + DATABASE + "`.`product` (`productID`, `productnaam`, voorraad, `prijs`) VALUES ('1', 'Cabrinha Drifter', 5, '719.00'), ('2', 'Cabrinha Chaos', 8,  '719.00'),('3', 'Brunotti Virtuoso', 7, '399.00');";
 		String insert_klant = "INSERT INTO `" + DATABASE + "`.`klant` (`KlantID`, `voornaam`, `achternaam`, emailadres,`telefoonnummer`) VALUES ('1', 'Steef', 'Pelgrom', 'stevey@hotmail.com', '06-56847965');";
 
@@ -150,7 +150,7 @@ public class SetupDatabase {
 			// Execute the SQL statements to insert the test data into the DATABASE
 			Statement stat = connection.createStatement();
 
-			stat.executeUpdate(insert_account);
+		
 			stat.executeUpdate(insert_product);
 			stat.executeUpdate(insert_klant);
 			//stat.executeUpdate(insert_bestelling);
@@ -180,6 +180,9 @@ public class SetupDatabase {
 		new SetupDatabase().initializeDatabase();
 		new SetupDatabase().populateDatabase();
 
+		PeopleFactory.createPeople(100);
+		PeopleFactory.createProducts();
+		
 		KlantDaoSql klantDAO = new KlantDaoSql();
 
 		logger.info("Beginning klantDAO readselectedklantenAchternaam");
