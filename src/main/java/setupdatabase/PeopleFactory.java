@@ -3,8 +3,11 @@ package setupdatabase;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import kiteshop.controller.AccountController;
+import kiteshop.daos.mysql.AccountDaoSql;
 import kiteshop.daos.mysql.KlantDaoSql;
 import kiteshop.daos.mysql.ProductDaoSql;
+import kiteshop.pojos.Account;
 import kiteshop.pojos.Adres;
 import kiteshop.pojos.AdresType;
 import kiteshop.pojos.Klant;
@@ -12,7 +15,7 @@ import kiteshop.pojos.Product;
 
 public class PeopleFactory {
 
-	
+
 	public static void createPeople(int i){
 
 		String[] fn = {"Bram", "Tom", "Klaas", "Paul", "Steef", "Julia", "Jeroen", "Inge", "Sanne", "Jeanette"};
@@ -35,20 +38,20 @@ public class PeopleFactory {
 
 			String email= voornaam+"@"+achternaam+".com";
 			k.setEmail(email);
-		
+
 			String Telnr= "06-"+rand1+rand2+rand1+rand2+rand1+rand2+rand1+rand2;
 			k.setTelefoonnummer(Telnr);
-		
+
 			Adres adres = new Adres();
 			String straatnaam = sn[3];
 			adres.setStraatnaam(straatnaam);
-		
+
 			int nr = rand1 + rand2 + rand3;
 			adres.setHuisnummer(nr);
 
 			String postcode = "1"+rand1+rand2+"0"+"GA";
 			adres.setPostcode(postcode);
-	
+
 			String plaats = "Amsterdam";
 			adres.setWoonplaats(plaats);
 			adres.setAdresType(AdresType.BEZOEKADRES);
@@ -59,6 +62,19 @@ public class PeopleFactory {
 	}
 
 	public static void createProducts(){
+
+		Account account = new Account();
+		account.setGebruikersnaam("Julia");
+		account.setWachtwoord("Pulia5");
+		Account account2 = new Account();
+		account2.setGebruikersnaam("Steef");
+		account2.setWachtwoord("Peef5");
+		AccountDaoSql acdao = new AccountDaoSql();
+		AccountController ac = new AccountController(acdao);
+
+		ac.createAccount(account);
+		ac.createAccount(account2);
+
 
 
 		Product p = new Product("Cabrinha Contra", new BigDecimal(1224), 100);
