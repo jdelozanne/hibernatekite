@@ -73,7 +73,7 @@ public class AccountController {
                     tokenIsFound = true;
                 }
             } catch (FileNotFoundException e) {
-                System.out.println("file npot found");
+                System.out.println("file not found");
             }
         }
         return tokenIsFound;

@@ -16,8 +16,7 @@ import java.util.Properties;
  */
 public class ConnectionFactory {
 
-    private HikariCP hikariConnection = new HikariCP();
-    private JDBC jdbcConnection = new JDBC();
+    private ConnectionInterface typeOfConnection;
     private Connection connection;
     private String connectorType;
     private static String pathOfActivePropertyFile = "src/main/resources/META-INF/connect.properties";
@@ -25,10 +24,12 @@ public class ConnectionFactory {
     public Connection createConnection(String connectorType) {
         switch (connectorType.toLowerCase()) {
             case "jdbc":
-                connection = jdbcConnection.getConnection();
+                typeOfConnection = new JDBC();
+                connection = typeOfConnection.getConnection();
                 break;
             case "hikaricp":
-                connection = hikariConnection.getConnection();
+                typeOfConnection = new HikariCP();
+                connection = typeOfConnection.getConnection();
                 break;
         }
         return connection;
