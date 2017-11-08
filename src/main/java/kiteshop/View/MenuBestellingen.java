@@ -144,7 +144,7 @@ public class MenuBestellingen {
 		} else {
 			System.out.println("De volgende klanten zijn gevonden, geeft u alstublieft het nummer van de betreffende klant");
 			for (int i = 0; i < searchResult.size(); i++) {
-				System.out.println(i + 1 + " " + searchResult.get(i));
+				System.out.println(i + 1 + " " + searchResult.get(i).getVoornaam()+" "+searchResult.get(i).getAchternaam());
 			}
 			int minimumKeuzewaarde = 1;
 			int maximumKeuzewaarde = searchResult.size();
