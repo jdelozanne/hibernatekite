@@ -24,8 +24,16 @@ public class Product {
     public Product(String naam) {
         this.naam = naam;
     }
+    
+    
 
-    public int getProductID() {
+    public Product(String naam, BigDecimal prijs, int voorraad) {
+		this.naam = naam;
+		this.prijs = prijs;
+		this.voorraad = voorraad;
+	}
+
+	public int getProductID() {
         return productID;
     }
     
