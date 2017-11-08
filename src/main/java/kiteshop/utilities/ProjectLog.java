@@ -22,7 +22,7 @@ public class ProjectLog {
 
 	public static Logger getLogger(){
 
-		System.out.println("lalala");
+	
 		Logger logr = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);  // zodat hij in het hele project gebruikt kan worden
 		LogManager.getLogManager().reset();
 
