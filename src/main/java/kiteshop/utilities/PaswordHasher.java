@@ -49,9 +49,9 @@ public class PaswordHasher {
        
 
 	public static String createHashedToken(String token) {
-		String tokenHex = toHexadecimal(token);
+		String tokenHex = toHexadecimal(token + "d|t1s33nt0k3n");
 		byte[] combinedArray = hexStringtoByteArray(tokenHex);
-		MessageDigest md= null;
+		MessageDigest md = null;
 		try {
 			md = MessageDigest.getInstance("SHA"); // je kan hier md5 of SHA zetten, blijft werken
 		} catch (Exception e) {

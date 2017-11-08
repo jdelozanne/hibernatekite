@@ -17,6 +17,7 @@ import kiteshop.pojos.Account;
 import kiteshop.pojos.BestelRegel;
 import kiteshop.pojos.Bestelling;
 import kiteshop.pojos.Klant;
+import kiteshop.utilities.PaswordHasher;
 
 /**
  *
@@ -26,12 +27,14 @@ public class CheckConnection {
     public static void main(String[] args) {
        
         
-	new HoofdController(new DaoFactorySql()).startMenuBestellingen();
+	//new HoofdController(new DaoFactorySql()).startMenuBestellingen();
                 
                // Bestelling b = new BestellingDaoSql().readBestellingByBestellingID(5);
                // System.out.println(b.bestellingToString());
                 //for(Bestelling x : be){
                 //    System.out.println(x.bestellingToString());
+                System.out.println(PaswordHasher.createSaltHex());
+                System.out.println(PaswordHasher.createSaltHex());
 
                 }
     }
