@@ -123,7 +123,7 @@ public class SetUpTestDatabase {
 
 		try {
 
-			Connection initConnection = DBConnectInit.getConnection();
+			Connection initConnection = DBTestConnectInit.getConnection();
 			Statement stat = initConnection.createStatement();
 			// Executes the given SQL statement, which may be an INSERT, UPDATE, or DELETE statement or an SQL statement that returns nothing, such as an SQL DDL statement. ExecuteQuery kan niet gebruikt worden voor DDL statements
 			System.out.println("kon ik wel aan uitvoeren statements toe?");
@@ -176,7 +176,7 @@ public class SetUpTestDatabase {
 		String dropDatabase = "DROP DATABASE IF EXISTS " + DATABASE;
 
 		try {
-			Connection initConnection = DBConnectInit.getConnection();
+			Connection initConnection = DBTestConnectInit.getConnection();
 			Statement stat = initConnection.createStatement();
 			stat.executeUpdate(dropDatabase);
 		} catch (SQLException e) {

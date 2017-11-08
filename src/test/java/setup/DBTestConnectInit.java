@@ -17,10 +17,10 @@ import kiteshop.utilities.ProjectLog;
  *
  * @author julia
  */
-public class DBConnectInit {
+public class DBTestConnectInit {
 	private final Logger logger = ProjectLog.getLogger(); 
     private Connection connection;
-    private static final DBConnectInit INSTANCE = new DBConnectInit();
+    private static final DBTestConnectInit INSTANCE = new DBTestConnectInit();
     
     public static String pathOfActivePropopertyFile = "src/test/java/setup/connectInit.properties";
     
@@ -28,7 +28,7 @@ public class DBConnectInit {
     	pathOfActivePropopertyFile = path;
       }
 
-    private DBConnectInit() {
+    private DBTestConnectInit() {
     }
 
     public void connect() {
