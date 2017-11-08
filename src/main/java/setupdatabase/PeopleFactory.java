@@ -43,7 +43,7 @@ public class PeopleFactory {
 			k.setTelefoonnummer(Telnr);
 
 			Adres adres = new Adres();
-			String straatnaam = sn[3];
+			String straatnaam = sn[rand3];
 			adres.setStraatnaam(straatnaam);
 
 			int nr = rand1 + rand2 + rand3;
