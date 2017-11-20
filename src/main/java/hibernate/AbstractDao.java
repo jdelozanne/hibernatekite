@@ -93,7 +93,7 @@ public abstract class AbstractDao<T extends Serializable> implements DaoInterfac
         CriteriaQuery<T> criteria = builder.createQuery(this.entityClass);
         Root<T> root = criteria.from(this.entityClass);
         criteria.select(root);
-        criteria.where(builder.equal(root.get(table), name));
+        criteria.where(builder.like(root.get(table), name));
 
         List<T> names = em.createQuery(criteria).getResultList();
 
