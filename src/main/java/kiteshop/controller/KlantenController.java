@@ -3,8 +3,6 @@ package kiteshop.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-
-import kiteshop.daos.mysql.KlantDaoSql;
 import kiteshop.pojos.Klant;
 import kiteshop.utilities.ProjectLog;
 import kiteshop.daos.KlantDaoInterface;
