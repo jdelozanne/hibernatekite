@@ -6,7 +6,7 @@
 package kiteshop.pojos;
 
 import java.util.ArrayList;
-import kiteshop.daos.mysql.AccountDaoSql;
+
 
 /**
  *
