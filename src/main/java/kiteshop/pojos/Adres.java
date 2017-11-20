@@ -5,11 +5,24 @@
  */
 package kiteshop.pojos;
 
+import java.io.Serializable;
+
+import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
  *
  * @author julia
  */
-public class Adres {
+@Entity
+public class Adres implements Serializable{
+	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	int id;
 
     private String woonplaats;
     private String postcode;
@@ -17,12 +30,13 @@ public class Adres {
     private int huisnummer;
     private String toevoeging;
        
+    /*
     private AdresType adresType;
-
+*/
     public Adres() {
     }
 
-       
+     /*  
     public AdresType getAdresType() {
 		return adresType;
 	}
@@ -30,7 +44,7 @@ public class Adres {
     public void setAdresType(AdresType adresType) {
 		this.adresType = adresType;
 	}
-
+*/
 	public String getWoonplaats() {
         return woonplaats;
     }
@@ -75,7 +89,7 @@ public class Adres {
 	@Override
 	public String toString() {
 		return "Adres [woonplaats=" + woonplaats + ", postcode=" + postcode + ", straatnaam=" + straatnaam
-				+ ", huisnummer=" + huisnummer + ", toevoeging=" + toevoeging + ", adresType=" + adresType + "]";
+				+ ", huisnummer=" + huisnummer + ", toevoeging=" + toevoeging + ", adresType="  + "]";
 	}
 
 	//Benodigd voor het testen
@@ -83,7 +97,7 @@ public class Adres {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((adresType == null) ? 0 : adresType.hashCode());
+		//result = prime * result + ((adresType == null) ? 0 : adresType.hashCode());
 		result = prime * result + huisnummer;
 		result = prime * result + ((postcode == null) ? 0 : postcode.hashCode());
 		result = prime * result + ((straatnaam == null) ? 0 : straatnaam.hashCode());
@@ -102,8 +116,9 @@ public class Adres {
 		if (getClass() != obj.getClass())
 			return false;
 		Adres other = (Adres) obj;
-		if (adresType != other.adresType)
+		/*if (adresType != other.adresType)
 			return false;
+			*/
 		if (huisnummer != other.huisnummer)
 			return false;
 		if (postcode == null) {

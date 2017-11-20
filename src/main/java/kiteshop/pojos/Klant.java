@@ -7,11 +7,24 @@ bla die bla
  */
 package kiteshop.pojos;
 
-public class Klant {
+import java.io.Serializable;
+
+import javax.persistence.*;
+
+
+@Entity
+public class Klant implements Serializable {
     
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
     private int klantID;
+	
+	@ManyToOne
     private Adres bezoekAdres;
+	
+	@ManyToOne
     private Adres factuurAdres;
+	
     private String voornaam;
     private String tussenvoegsel;
     private String achternaam;
