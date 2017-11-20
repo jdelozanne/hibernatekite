@@ -56,12 +56,12 @@ public class HoofdController {
 		MenuBestellingen menuBestellingen = new MenuBestellingen(new BestellingenController(entityManagerFactory));
 		menuBestellingen.start();
 	}
-/*
+
 	public void startMenuAccounts() {
-		MenuAccounts menuAccounts = new MenuAccounts(new AccountController(DaoFactory.createAccountDao()));
+		MenuAccounts menuAccounts = new MenuAccounts(new AccountController(entityManagerFactory));
 		menuAccounts.start();
 	}
 
-*/
+
     
 }

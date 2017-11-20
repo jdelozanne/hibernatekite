@@ -28,6 +28,7 @@ public class AccountController {
     private final Logger logger = ProjectLog.getLogger();
     
     AbstractDao accountDAO;
+    String tableForNameSearch = "gebruikersnaam";
     
     public EntityManagerFactory entityManagerFactory;
 
@@ -56,8 +57,8 @@ public class AccountController {
         logger.info("Gebruikers naam :" + gebruikersnaam 
                 + " Wachtwoord :" + gegevenWachtwoord 
                 + "Juiste wachtwoord :" 
-                + ((Account) accountDAO.readByName(gebruikersnaam)).getWachtwoord());
-        Account currentAccount = (Account) accountDAO.readByName(gebruikersnaam);
+                + ((Account) accountDAO.readOneByName(this.tableForNameSearch, gebruikersnaam)).getWachtwoord());
+        Account currentAccount = (Account) accountDAO.readOneByName(this.tableForNameSearch, gebruikersnaam);
         String saltCurrentAccount = currentAccount.getSalt();
         String gegevenWachtwoordGehashd = PaswordHasher.createHashedPassword(saltCurrentAccount, gegevenWachtwoord);
 
@@ -107,12 +108,12 @@ public class AccountController {
     }
 
     public Account readAccountByGebruikersnaam(String gebruikersnaam) {
-        return (Account) accountDAO.readByName(gebruikersnaam);
+        return (Account) accountDAO.readOneByName(this.tableForNameSearch, gebruikersnaam);
     }
 
     public boolean accountExists(String gebruikersnaam) {
         boolean exists = false;
-        if (((Account) accountDAO.readByName(gebruikersnaam)).getGebruikersnaam() != null) {
+        if (((Account) accountDAO.readOneByName(this.tableForNameSearch, gebruikersnaam))!= null) {
             exists = true;
         }
         return exists;

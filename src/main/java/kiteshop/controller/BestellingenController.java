@@ -20,7 +20,9 @@ public class BestellingenController {
     AbstractDao bestellingDAO;
     AbstractDao bestelRegelDAO;
     AbstractDao productDAO;
-    AbstractDao klantDao;  
+    AbstractDao klantDao; 
+    String tableForNameSearch = "achternaam";
+    String tableForNameProductSearch = "naam";
 
 	public BestellingenController(EntityManagerFactory entityManagerFactory) {
 		bestellingDAO = new ConcreteDao(Bestelling.class, entityManagerFactory);
@@ -77,10 +79,10 @@ public class BestellingenController {
     
     //NIET-bestellingdao functies
     public List<Klant> showKlantenAchternaam(String achternaam) {
-        return klantDao.readByName(achternaam);
+        return klantDao.readByName(this.tableForNameSearch, achternaam);
     }
     public List<Product> showProductByName(String productnaam) {
-        List<Product> producten = productDAO.readByName(productnaam);
+        List<Product> producten = productDAO.readByName(this.tableForNameProductSearch, productnaam);
         return producten;
     }
     

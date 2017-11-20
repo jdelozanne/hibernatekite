@@ -25,8 +25,8 @@ public class ConcreteDao<T extends Serializable> extends AbstractDao<T> implemen
     }
     
     @Override
-    public List<T> readByName(String name) {
-        return super.readByName(name); //To change body of generated methods, choose Tools | Templates.
+    public List<T> readByName(String table, String name) {
+        return super.readByName(table, name); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -52,6 +52,11 @@ public class ConcreteDao<T extends Serializable> extends AbstractDao<T> implemen
     @Override
     public void delete(T domain) {
         super.delete(domain); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public T readOneByName(String table, String name) {
+        return super.readOneByName(table, name); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

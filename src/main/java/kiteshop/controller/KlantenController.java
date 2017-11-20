@@ -16,6 +16,7 @@ public class KlantenController {
     private final Logger logger = ProjectLog.getLogger();
     private AbstractDao klantDAO;
     private AbstractDao adresDAO;
+    String tableForNameSearch = "achternaam";
 
     public KlantenController(EntityManagerFactory entityManagerFactory) {
     	this.klantDAO = new ConcreteDao(Klant.class, entityManagerFactory);
@@ -37,7 +38,7 @@ public class KlantenController {
     }
 
     public List<Klant> showKlantenAchternaam(String achternaam) {
-        return klantDAO.readByName(achternaam);
+        return klantDAO.readByName(this.tableForNameSearch,achternaam);
     }
 
     public void updateKlant(Klant klant) {

@@ -32,7 +32,7 @@ public class HoofdMenu {
         System.out.println("Kies 5 Uitloggen");
         int keuze = vraagInteger();
 
-/*        
+      
         switch (keuze) {
             case 1:
                 System.out.println("naar menu klanten");
@@ -66,7 +66,7 @@ public class HoofdMenu {
                 System.out.println("Probeer opnieuw");
                 start();
         }
-        */
+        
     }
 
 

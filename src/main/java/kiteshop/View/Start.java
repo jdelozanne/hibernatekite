@@ -22,14 +22,14 @@ public class Start {
     public static void main(String[] args) {
     	
     	
-    	MenuBestellingen menuBestellingen = new MenuBestellingen(new BestellingenController(Persistence.createEntityManagerFactory("hibertest")));
-		menuBestellingen.start();
+    	//MenuBestellingen menuBestellingen = new MenuBestellingen(new BestellingenController(Persistence.createEntityManagerFactory("hibertest")));
+		//menuBestellingen.start();
     	//MenuKlanten menuklanten = new MenuKlanten(new KlantenController(Persistence.createEntityManagerFactory("hibertest")));
-		//menuklanten.start();
+	//	menuklanten.start();
     	
     	//MenuProducten menuProducten = new MenuProducten(new ProductenController(Persistence.createEntityManagerFactory("hibertest")));
-		//menuProducten.start();
-		//new HoofdController(Persistence.createEntityManagerFactory("hibertest")).start();
+	//menuProducten.start();
+		new HoofdController(Persistence.createEntityManagerFactory("hibertest")).start();
                 
 
     }

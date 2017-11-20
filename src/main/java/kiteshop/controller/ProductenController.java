@@ -16,6 +16,7 @@ public class ProductenController {
     private final Logger logger = ProjectLog.getLogger();
     
     AbstractDao productDAO;
+    String tableForNameSearch = "naam";
 
     public ProductenController(EntityManagerFactory entityManagerFactory) {
     	productDAO = new ConcreteDao(Product.class,entityManagerFactory);
@@ -31,7 +32,7 @@ public class ProductenController {
     }
 
     public List<Product> showProductByName(String productnaam) {
-        List<Product> producten = productDAO.readByName(productnaam);
+        List<Product> producten = productDAO.readByName(this.tableForNameSearch, productnaam);
         return producten;
     }
 
