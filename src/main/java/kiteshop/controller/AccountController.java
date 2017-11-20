@@ -9,6 +9,11 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.persistence.EntityManagerFactory;
+
+import hibernate.AbstractDao;
+import hibernate.ConcreteDao;
 import kiteshop.View.InlogMenu;
 import kiteshop.pojos.Account;
 import kiteshop.daos.AccountDaoInterface;
@@ -21,13 +26,19 @@ public class AccountController {
     private static final long TIMELIMIT = 60000;
 
     private final Logger logger = ProjectLog.getLogger();
-    AccountDaoInterface accountDAO;
+    
+    AbstractDao accountDAO;
+    
+    public EntityManagerFactory entityManagerFactory;
 
-    public AccountController(AccountDaoInterface accountDao) {
-        this.accountDAO = accountDao;
-    }
+    
 
-    public void createAccount(Account account) {
+    public AccountController(EntityManagerFactory entityManagerFactory) {
+    	accountDAO = new ConcreteDao(Account.class,entityManagerFactory );
+		
+	}
+
+	public void createAccount(Account account) {
         /* 
 		 * Het ingegeven nog niet gehashte password wordt in de hasher gestopt en daarna wordt het pasword overschreven 
 		 * door het gehashte, en het orgineel bestaat dan dus niet meer
@@ -38,15 +49,15 @@ public class AccountController {
         account.setSalt(salthex);
         account.setWachtwoord(hashedwachtwoord);
 
-        accountDAO.createAccount(account);
+        accountDAO.create(account);
     }
 
     public boolean checkLogin(String gebruikersnaam, String gegevenWachtwoord) {
         logger.info("Gebruikers naam :" + gebruikersnaam 
                 + " Wachtwoord :" + gegevenWachtwoord 
                 + "Juiste wachtwoord :" 
-                + accountDAO.readAccountByGebruikersnaam(gebruikersnaam).getWachtwoord());
-        Account currentAccount = accountDAO.readAccountByGebruikersnaam(gebruikersnaam);
+                + ((Account) accountDAO.readByName(gebruikersnaam)).getWachtwoord());
+        Account currentAccount = (Account) accountDAO.readByName(gebruikersnaam);
         String saltCurrentAccount = currentAccount.getSalt();
         String gegevenWachtwoordGehashd = PaswordHasher.createHashedPassword(saltCurrentAccount, gegevenWachtwoord);
 
@@ -96,27 +107,27 @@ public class AccountController {
     }
 
     public Account readAccountByGebruikersnaam(String gebruikersnaam) {
-        return accountDAO.readAccountByGebruikersnaam(gebruikersnaam);
+        return (Account) accountDAO.readByName(gebruikersnaam);
     }
 
     public boolean accountExists(String gebruikersnaam) {
         boolean exists = false;
-        if (accountDAO.readAccountByGebruikersnaam(gebruikersnaam).getGebruikersnaam() != null) {
+        if (((Account) accountDAO.readByName(gebruikersnaam)).getGebruikersnaam() != null) {
             exists = true;
         }
         return exists;
     }
 
     public void deleteAccount(Account account) {
-        accountDAO.deleteAccount(account);
+        accountDAO.delete(account);
     }
 
     public void updateAccount(Account account) {
-        accountDAO.updateAccount(account);
+        accountDAO.update(account);
     }
 
     public List<Account> readAllAccounts() {
-        return accountDAO.readAllAccounts();
+        return accountDAO.readAll();
     }
 
 

@@ -5,6 +5,7 @@
  */
 package kiteshop.pojos;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -12,7 +13,7 @@ import java.util.ArrayList;
  *
  * @author julia
  */
-public class Account {
+public class Account implements Serializable {
 
     private int accountID;
     private String gebruikersnaam;
