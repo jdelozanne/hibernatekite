@@ -1,1 +1,0 @@
-java -jar kiteshop.jar
