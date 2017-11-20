@@ -3,43 +3,54 @@ package kiteshop.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import kiteshop.pojos.Klant;
+
+import javax.persistence.EntityManagerFactory;
+
+import kiteshop.pojos.*;
 import kiteshop.utilities.ProjectLog;
 import kiteshop.daos.KlantDaoInterface;
+import hibernate.*;
 
 public class KlantenController {
 
     private final Logger logger = ProjectLog.getLogger();
-    private KlantDaoInterface klantDAO;
+    private AbstractDao klantDAO;
+    private AbstractDao adresDAO;
 
-    public KlantenController(KlantDaoInterface klantDAO) {
-        this.klantDAO = klantDAO;
+    public KlantenController(EntityManagerFactory entityManagerFactory) {
+    	this.klantDAO = new ConcreteDao(Klant.class, entityManagerFactory);
+    	this.adresDAO = new ConcreteDao(Adres.class, entityManagerFactory);
     }
 
     public void createKlant(Klant klant) {
         logger.info("Klant " + klant + " wordt toegevoegd aan database");
-        klantDAO.createKlant(klant);
+        adresDAO.create(klant.getBezoekAdres());
+        if(klant.getFactuurAdres()!=null){
+        	 adresDAO.create(klant.getFactuurAdres());
+        }
+        
+        klantDAO.create(klant);
     }
 
     public Klant readKlantenByID(int id) {
-        return klantDAO.readKlantById(id);
+        return (Klant) klantDAO.readById(id);
     }
 
     public List<Klant> showKlantenAchternaam(String achternaam) {
-        return klantDAO.readKlantByAchternaam(achternaam);
+        return klantDAO.readByName(achternaam);
     }
 
     public void updateKlant(Klant klant) {
         logger.info("Updating " + klant);
-        klantDAO.updateKlant(klant);
+        klantDAO.update(klant);
     }
 
     public void deleteKlant(Klant klant) {
         logger.info("Deleting " + klant);
-        klantDAO.deleteKlant(klant);
+        klantDAO.delete(klant);
     }
 
     public List<Klant> showAllKlanten() {
-        return klantDAO.readAllKlanten();
+        return klantDAO.readAll();
     }
 }

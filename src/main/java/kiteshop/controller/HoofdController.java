@@ -37,13 +37,13 @@ public class HoofdController {
 		}
 	}
 
-	/*
+	
 	public void startMenuKlanten() {
-		MenuKlanten menuklanten = new MenuKlanten(new KlantenController(DaoFactory.createKlantDao()));
+		MenuKlanten menuklanten = new MenuKlanten(new KlantenController(entityManagerFactory));
 		menuklanten.start();
 		
 	}
-*/
+
 
 
 	public void startMenuProducten() {

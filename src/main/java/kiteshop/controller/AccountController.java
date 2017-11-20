@@ -16,7 +16,7 @@ import hibernate.AbstractDao;
 import hibernate.ConcreteDao;
 import kiteshop.View.InlogMenu;
 import kiteshop.pojos.Account;
-import kiteshop.daos.AccountDaoInterface;
+
 import kiteshop.utilities.PaswordHasher;
 import static kiteshop.utilities.PaswordHasher.createHashedToken;
 import kiteshop.utilities.ProjectLog;

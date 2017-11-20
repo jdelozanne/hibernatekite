@@ -8,6 +8,7 @@ package kiteshop.View;
 import javax.persistence.Persistence;
 
 import kiteshop.controller.HoofdController;
+import kiteshop.controller.KlantenController;
 import kiteshop.controller.ProductenController;
 
 
@@ -19,8 +20,11 @@ public class Start {
   
     public static void main(String[] args) {
     	
-    	MenuProducten menuProducten = new MenuProducten(new ProductenController(Persistence.createEntityManagerFactory("hibertest")));
-		menuProducten.start();
+    	MenuKlanten menuklanten = new MenuKlanten(new KlantenController(Persistence.createEntityManagerFactory("hibertest")));
+		menuklanten.start();
+    	
+    	//MenuProducten menuProducten = new MenuProducten(new ProductenController(Persistence.createEntityManagerFactory("hibertest")));
+		//menuProducten.start();
 		//new HoofdController(Persistence.createEntityManagerFactory("hibertest")).start();
                 
 
