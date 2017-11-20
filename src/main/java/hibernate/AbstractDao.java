@@ -41,10 +41,12 @@ public abstract class AbstractDao<T extends Serializable> implements DaoInterfac
 
 	@Override
 	public void delete(T domain) {
-		EntityManager em = entityfactory.createEntityManager();
-		domain = em.merge(domain);
-		em.remove(domain);
-		em.close();
+		EntityManager em = this.entityfactory.createEntityManager();
+        T d = em.find(this.entityClass, 3);
+        em.getTransaction().begin();
+        em.remove(d);
+        em.getTransaction().commit();
+        em.close();
 	}
 
 	@Override
@@ -62,6 +64,7 @@ public abstract class AbstractDao<T extends Serializable> implements DaoInterfac
 		em.getTransaction().begin();
 		em.merge(domain);
 		em.getTransaction().commit();
+                em.close();
 
 	}
 
