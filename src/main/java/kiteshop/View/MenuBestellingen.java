@@ -15,8 +15,6 @@ import static kiteshop.utilities.Validator.vraagInteger;
 import static kiteshop.utilities.Validator.vraagIntegerMinMax;
 
 import kiteshop.controller.BestellingenController;
-import kiteshop.daos.mysql.KlantDaoSql;
-import kiteshop.daos.mysql.ProductDaoSql;
 import kiteshop.pojos.*;
 import kiteshop.utilities.ProjectLog;
 

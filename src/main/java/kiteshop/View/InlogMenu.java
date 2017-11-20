@@ -25,10 +25,9 @@ import static kiteshop.utilities.Validator.vraagWachtwoord;
 
 import kiteshop.utilities.ProjectLog;
 import kiteshop.utilities.ProjectLog.*;
-
 import kiteshop.controller.*;
 import static kiteshop.controller.AccountController.getTime;
-import kiteshop.daos.mysql.AccountDaoSql;
+
 import kiteshop.pojos.Account;
 import static kiteshop.utilities.PaswordHasher.createHashedPassword;
 import static kiteshop.utilities.PaswordHasher.createHashedToken;

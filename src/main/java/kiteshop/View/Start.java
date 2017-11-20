@@ -6,9 +6,7 @@
 package kiteshop.View;
 
 import kiteshop.controller.HoofdController;
-import kiteshop.daos.mongodb.DaoFactoryMongo;
-import kiteshop.daos.mongodb.ProductDaoMongo;
-import kiteshop.daos.mysql.DaoFactorySql;
+
 
 /**
  *
@@ -17,7 +15,7 @@ import kiteshop.daos.mysql.DaoFactorySql;
 public class Start {
   
     public static void main(String[] args) {
-		new HoofdController(new DaoFactorySql()).start();
+		//start op nieuwe manier
                 
 
     }
