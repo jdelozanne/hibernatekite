@@ -20,7 +20,7 @@ import javax.persistence.PersistenceContext;
  * @param <PK>
  *
  */
-public abstract class AbstractDao<T, PK extends Serializable> implements DaoInterface<T, PK> {
+public abstract class AbstractDao<T extends Serializable> implements DaoInterface<T> {
 
     private Class<T> entityClass;
 
@@ -68,8 +68,8 @@ public abstract class AbstractDao<T, PK extends Serializable> implements DaoInte
 //nog uitzoeken hoe je een list kan vullen
     @Override
     public List<T> readAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
+return em.createQuery( "from " + this.entityClass.getName() )
+       .getResultList();        }
 
     @Override
     public List<T> readByName(String name) {
