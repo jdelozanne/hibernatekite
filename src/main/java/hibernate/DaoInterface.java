@@ -14,7 +14,7 @@ import java.util.List;
  * @param <T>
  * @param <PK>
  */
-public interface DaoInterface <T, PK extends Serializable> {
+public interface DaoInterface <T extends Serializable> {
      
     public void create(T domain);
          
