@@ -22,58 +22,67 @@ import javax.persistence.PersistenceContext;
  */
 public abstract class AbstractDao<T extends Serializable> implements DaoInterface<T> {
 
-    private Class<T> entityClass;
+	EntityManagerFactory entityfactory;
 
-    public AbstractDao() {
-        this.entityClass = (Class<T>) ((ParameterizedType) getClass()
-                .getGenericSuperclass()).getActualTypeArguments()[0];
-    }
+	private Class<T> entityClass;
 
-    public AbstractDao(Class<T> type) {
-        this.entityClass = type;
-    }
+	public AbstractDao() {
+		this.entityClass = (Class<T>) ((ParameterizedType) getClass()
+				.getGenericSuperclass()).getActualTypeArguments()[0];
+	}
 
-    EntityManagerFactory entityfactory = Persistence.createEntityManagerFactory("hibertest");
-    EntityManager em = entityfactory.createEntityManager();
+	public AbstractDao(Class<T> type,EntityManagerFactory entityfactory ) {
+		this.entityClass = type;
+		this.entityfactory =entityfactory;
+	}
 
-    @Override
-    public void delete(T domain) {
-        domain = this.em.merge(domain);
-        this.em.remove(domain);
-    }
 
-    @Override
-    public void create(T domain) {
-        em.getTransaction().begin();
-        em.persist(domain);
-        em.getTransaction().commit();
-        em.close();
-    }
 
-    @Override
-    public void update(T domain) {
-        em.getTransaction().begin();
-        em.merge(domain);
-        em.getTransaction().commit();
-        
-    }
 
-    @Override
-    public T readById(Serializable id) {
-        em.getTransaction().begin();
-        T object = em.find(this.entityClass, id);
-        em.getTransaction().commit();
-        return object;
-    }
-//nog uitzoeken hoe je een list kan vullen
-    @Override
-    public List<T> readAll() {
-return em.createQuery( "from " + this.entityClass.getName() )
-       .getResultList();        }
+	@Override
+	public void delete(T domain) {
+		EntityManager em = entityfactory.createEntityManager();
+		domain = em.merge(domain);
+		em.remove(domain);
+		em.close();
+	}
 
-    @Override
-    public List<T> readByName(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+	@Override
+	public void create(T domain) {
+		EntityManager em = entityfactory.createEntityManager();
+		em.getTransaction().begin();
+		em.persist(domain);
+		em.getTransaction().commit();
+		em.close();
+	}
+
+	@Override
+	public void update(T domain) {
+		EntityManager em = entityfactory.createEntityManager();
+		em.getTransaction().begin();
+		em.merge(domain);
+		em.getTransaction().commit();
+
+	}
+
+	@Override
+	public T readById(Serializable id) {
+		EntityManager em = entityfactory.createEntityManager();
+		em.getTransaction().begin();
+		T object = em.find(this.entityClass, id);
+		em.getTransaction().commit();
+		return object;
+	}
+	//nog uitzoeken hoe je een list kan vullen
+	@Override
+	public List<T> readAll() {
+		EntityManager em = entityfactory.createEntityManager();
+		return em.createQuery( "from " + this.entityClass.getName() )
+				.getResultList();        }
+
+	@Override
+	public List<T> readByName(String name) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
 
 }

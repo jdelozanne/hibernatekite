@@ -8,6 +8,8 @@ package hibernate;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.EntityManagerFactory;
+
 /**
  *
  * @author julia
@@ -18,8 +20,8 @@ public class ConcreteDao<T extends Serializable> extends AbstractDao<T> implemen
     public ConcreteDao() {
     }
 
-    public ConcreteDao(Class<T> type) {
-        super(type);
+    public ConcreteDao(Class<T> type, EntityManagerFactory entityfactory) {
+        super(type,entityfactory );
     }
     
     @Override
