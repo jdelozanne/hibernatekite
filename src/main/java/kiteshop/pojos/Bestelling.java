@@ -5,6 +5,7 @@
  */
 package kiteshop.pojos;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import javax.persistence.*;
  */
 
 @Entity
-public class Bestelling {
+public class Bestelling implements Serializable {
 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id

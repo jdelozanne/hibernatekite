@@ -164,7 +164,7 @@ public class MenuBestellingen {
 	}
 
 	public void showBestelregels(Bestelling b) {
-		List<BestelRegel> bestelregels = controller.getBestelregelsByBestelling(b);
+		List<BestelRegel> bestelregels = b.getBestelling();
 		System.out.println("De volgende bestelregels zijn gevonden,geeft u alstublieft het nummer van de bestelregel die u wil wijzigen");
 		for (int i = 0; i < bestelregels.size(); i++) {
 			System.out.println(i + 1 + " " + bestelregels.get(i).toString());
