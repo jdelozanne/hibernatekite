@@ -17,7 +17,7 @@ import kiteshop.controller.HoofdController;
 public class Start {
   
     public static void main(String[] args) {
-		new HoofdController(Persistence.createEntityManagerFactory("Hibernate")).start();
+		new HoofdController(Persistence.createEntityManagerFactory("hibertest")).start();
                 
 
     }
