@@ -5,8 +5,7 @@
  */
 package kiteshop.controller;
 
-import kiteshop.daos.mysql.DaoFactorySql;
-import kiteshop.daos.mongodb.DaoFactoryMongo;
+
 import kiteshop.View.*;
 
 import kiteshop.daos.*;
@@ -56,13 +55,6 @@ public class HoofdController {
 		menuAccounts.start();
 	}
 
-	public void setDatabase(int keuze) {  
-		if(keuze==1){
-			DaoFactory = new DaoFactorySql(); // hier zou je ook de juiste connectie in de factory kunnen injecteren
-		} else {
-			DaoFactory = new DaoFactoryMongo();
-		}
-		
-	}
+
     
 }

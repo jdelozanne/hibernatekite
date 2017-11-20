@@ -4,9 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import kiteshop.controller.AccountController;
-import kiteshop.daos.mysql.AccountDaoSql;
-import kiteshop.daos.mysql.KlantDaoSql;
-import kiteshop.daos.mysql.ProductDaoSql;
+
 import kiteshop.pojos.Account;
 import kiteshop.pojos.Adres;
 import kiteshop.pojos.AdresType;
@@ -56,8 +54,14 @@ public class PeopleFactory {
 			adres.setWoonplaats(plaats);
 			adres.setAdresType(AdresType.BEZOEKADRES);
 			k.setBezoekAdres(adres);
-			KlantDaoSql klantdao = new KlantDaoSql();
-			klantdao.createKlant(k);
+
+/* creer nieuwe generic dao
+ * 
+ * klantdao.createKlant(k);
+ */
+			
+			
+			
 		}
 	}
 
@@ -69,11 +73,18 @@ public class PeopleFactory {
 		Account account2 = new Account();
 		account2.setGebruikersnaam("Steef");
 		account2.setWachtwoord("Peef5");
-		AccountDaoSql acdao = new AccountDaoSql();
-		AccountController ac = new AccountController(acdao);
-
-		ac.createAccount(account);
+		
+		/* creer nieuwe generic dao
+		 * 
+		 * AccountController ac = new AccountController(acdao);
+		 * ac.createAccount(account);
 		ac.createAccount(account2);
+		 */
+					
+	
+		
+
+		
 
 
 
@@ -89,7 +100,12 @@ public class PeopleFactory {
 		Product p9 = new Product("F-One Furtive", new BigDecimal(999), 100);
 		Product p10 = new Product("F-One Breeze", new BigDecimal(1149), 75);
 
-		ProductDaoSql productdao = new ProductDaoSql();
+		
+		/* creer nieuwe generic dao
+		 * 
+		 * kProductDaoSql productdao = new ProductDaoSql();
+		
+		
 		productdao.createProduct(p);
 		productdao.createProduct(p2);
 		productdao.createProduct(p3);
@@ -101,7 +117,7 @@ public class PeopleFactory {
 		productdao.createProduct(p9);
 		productdao.createProduct(p10);
 
-
+ */
 
 	}
 

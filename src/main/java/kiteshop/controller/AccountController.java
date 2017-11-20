@@ -10,9 +10,6 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import kiteshop.View.InlogMenu;
-
-import kiteshop.daos.mysql.AccountDaoSql;
-import kiteshop.daos.mongodb.AccountDaoMongo;
 import kiteshop.pojos.Account;
 import kiteshop.daos.AccountDaoInterface;
 import kiteshop.utilities.PaswordHasher;
@@ -122,9 +119,6 @@ public class AccountController {
         return accountDAO.readAllAccounts();
     }
 
-    public List<Account> readAllAccountsMongo() {
-        return new AccountDaoMongo().readAllAccounts();
-    }
 
     public static long getTime() {
         long time = currentTimeMillis();
