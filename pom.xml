@@ -48,34 +48,49 @@
         </dependency>
 
         <dependency>
-        <groupId>org.mongodb</groupId>
-        <artifactId>mongodb-driver</artifactId>
-        <version>3.5.0</version>
-        <exclusions>
-    <exclusion>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-    </exclusion>
-  </exclusions>
-    </dependency>
-    <dependency>
-        <groupId>com.zaxxer</groupId>
-        <artifactId>HikariCP</artifactId>
-        <version>2.7.2</version>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver</artifactId>
+            <version>3.5.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>2.7.2</version>
         
-    </dependency>
-    <dependency>
-    <groupId>io.jsonwebtoken</groupId>
-    <artifactId>jjwt</artifactId>
-    <version>0.2</version>
-</dependency>
- <dependency>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-jar-plugin</artifactId>
-    <version>2.6</version>
-</dependency>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>1.0.0.Final</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>5.2.10.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>eclipselink</artifactId>
+            <version>2.5.2</version>
+        </dependency>
 
-        
     </dependencies>
     
     <build>
@@ -110,17 +125,17 @@
             </plugin>
         </plugins>
    
-    <resources>
-        <resource>
-            <directory>src/main/resources</directory>
-            <includes>                      
-                <include>pom.xml</include>
-            </includes>
-        </resource>
-        <resource>
-            <directory>src/main/resources</directory>
-        </resource>
-    </resources>
-</build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>                      
+                    <include>*/**.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+    </build>
     <name>KiteHibernate</name>
 </project>

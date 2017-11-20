@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kiteshop.daos;
+package hibernate;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,16 +11,20 @@ import java.util.List;
 /**
  *
  * @author julia
+ * @param <T>
+ * @param <PK>
  */
-public interface DaoInterface <T> {
-    public List<T> loadAll();
+public interface DaoInterface <T, PK extends Serializable> {
      
-    public void save(T domain);
+    public void create(T domain);
          
     public void update(T domain);
          
     public void delete(T domain);
      
-    public T get(Serializable id);
-     
+    public T readById(Serializable id);
+    
+    public List<T> readAll();
+    
+    public List<T> readByName(String name);
 }
