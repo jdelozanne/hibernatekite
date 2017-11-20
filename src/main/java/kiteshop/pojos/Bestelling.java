@@ -9,16 +9,28 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.*;
+
 /**
  *
  * @author julia
  */
+
+@Entity
 public class Bestelling {
 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
     private int bestellingID;
+	
+	@ManyToOne
     private Klant klant;
+	
+	@JoinColumn
+	@OneToMany
     private List<BestelRegel> bestelregels;
-    private BigDecimal totaalprijs;
+    
+	private BigDecimal totaalprijs;
     
     public Bestelling() {
         bestelregels = new ArrayList<>();

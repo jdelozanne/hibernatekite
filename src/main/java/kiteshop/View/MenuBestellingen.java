@@ -105,7 +105,7 @@ public class MenuBestellingen {
 			System.out.println("Hoeveel stuks wilt u van dit specifieke product toevoegen?");
 			int aantal = vraagInteger();
 
-			b = new BestelRegel(bestelling, p, aantal);
+			b = new BestelRegel(p, aantal);
 		}
 		return b;
 	}
@@ -175,7 +175,7 @@ public class MenuBestellingen {
 
 	public void updateBestelling(BestelRegel br, Bestelling b) {
 		Scanner input = new Scanner(System.in);
-		br.setBestelling(b);
+	
 		System.out.println("Wat wilt u veranderen, kies 1 voor product of kies 2 voor het aantal");
 		int keuze = input.nextInt();
 		input.nextLine();

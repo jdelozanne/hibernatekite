@@ -2,20 +2,28 @@ package kiteshop.pojos;
 
 import java.math.BigDecimal;
 
+
+import javax.persistence.*;
+
+
+@Entity
 public class BestelRegel {
 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
     private int bestelRegelID;
-    private Product product;
+    
+	@ManyToOne
+	private Product product;
     private int aantal;
-    private Bestelling bestelling;
     
     public BestelRegel(){
         product = new Product();
-        bestelling = new Bestelling();
+  
     }
     
-    public BestelRegel(Bestelling bestelling, Product product, int aantal) {
-        this.bestelling = bestelling;
+    public BestelRegel(Product product, int aantal) {
+  
         this.product = product;
         this.aantal = aantal;
     }
@@ -44,17 +52,9 @@ public class BestelRegel {
         this.aantal = aantal;
     }
 
-    public Bestelling getBestelling() {
-        return bestelling;
-    }
+  
 
-    public void setBestelling(Bestelling bestelling) {
-        this.bestelling = bestelling;
-    }
-
-    public int getBestellingID() {
-        return getBestelling().getBestellingID(); 
-    }
+ 
     
     public BigDecimal pricePerLine(){
         BigDecimal prijsPerRegel = null;
