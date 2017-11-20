@@ -5,6 +5,8 @@
  */
 package kiteshop.View;
 
+import javax.persistence.Persistence;
+
 import kiteshop.controller.HoofdController;
 
 
@@ -15,7 +17,7 @@ import kiteshop.controller.HoofdController;
 public class Start {
   
     public static void main(String[] args) {
-		//start op nieuwe manier
+		new HoofdController(Persistence.createEntityManagerFactory("Hibernate")).start();
                 
 
     }
