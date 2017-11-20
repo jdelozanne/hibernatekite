@@ -30,13 +30,13 @@ public class Adres implements Serializable{
     private int huisnummer;
     private String toevoeging;
        
-    /*
+    
     private AdresType adresType;
-*/
+
     public Adres() {
     }
 
-     /*  
+   
     public AdresType getAdresType() {
 		return adresType;
 	}
@@ -44,7 +44,7 @@ public class Adres implements Serializable{
     public void setAdresType(AdresType adresType) {
 		this.adresType = adresType;
 	}
-*/
+
 	public String getWoonplaats() {
         return woonplaats;
     }
@@ -116,9 +116,9 @@ public class Adres implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Adres other = (Adres) obj;
-		/*if (adresType != other.adresType)
+		if (adresType != other.adresType)
 			return false;
-			*/
+			
 		if (huisnummer != other.huisnummer)
 			return false;
 		if (postcode == null) {
