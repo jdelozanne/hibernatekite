@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import kiteshop.View.MenuProducten;
-import kiteshop.daos.mysql.*;
 import kiteshop.pojos.*;
 import kiteshop.utilities.ProjectLog;
 import kiteshop.daos.*;
