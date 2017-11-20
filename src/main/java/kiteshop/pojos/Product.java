@@ -6,14 +6,20 @@
 package kiteshop.pojos;
 
 import java.math.BigDecimal;
+import javax.persistence.*;
 
 /**
  *
  * @author julia
  */
+
+@Entity
 public class Product {
 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
     private int productID;
+	
     private String naam;
     private BigDecimal prijs;
     private int voorraad;

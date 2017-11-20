@@ -8,19 +8,28 @@ package kiteshop.pojos;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.persistence.*;
+
+
 
 /**
  *
  * @author julia
  */
+
+@Entity
 public class Account implements Serializable {
 
+	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
     private int accountID;
+	
     private String gebruikersnaam;
     private String wachtwoord;
     private String salt;
     
-    private AccountType type;
+
 
     public Account() {
     }
@@ -31,13 +40,6 @@ public class Account implements Serializable {
         this.wachtwoord = wachtwoord;
     }
 
-    public AccountType getType() {
-        return type;
-    }
-
-    public void setType(AccountType type) {
-        this.type = type;
-    }
 
     public void setGebruikersnaam(String s) {
         this.gebruikersnaam = s;
@@ -74,7 +76,7 @@ public class Account implements Serializable {
 	@Override
     public String toString() {
         return "Account [accountID=" + accountID + ", gebruikersnaam=" + gebruikersnaam + ", wachtwoord=" + wachtwoord
-                + ", type=" + type + "]";
+                + ", type=" +  "]";
     }
 
     @Override
@@ -83,7 +85,7 @@ public class Account implements Serializable {
         int result = 1;
         result = prime * result + accountID;
         result = prime * result + ((gebruikersnaam == null) ? 0 : gebruikersnaam.hashCode());
-        result = prime * result + ((type == null) ? 0 : type.hashCode());
+  
         result = prime * result + ((wachtwoord == null) ? 0 : wachtwoord.hashCode());
         return result;
     }
@@ -110,9 +112,7 @@ public class Account implements Serializable {
         } else if (!gebruikersnaam.equals(other.gebruikersnaam)) {
             return false;
         }
-        if (type != other.type) {
-            return false;
-        }
+    
         if (wachtwoord == null) {
             if (other.wachtwoord != null) {
                 return false;
