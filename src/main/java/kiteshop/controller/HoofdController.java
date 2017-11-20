@@ -6,6 +6,9 @@
 package kiteshop.controller;
 
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import kiteshop.View.*;
 
 import kiteshop.daos.*;
@@ -16,14 +19,14 @@ import kiteshop.daos.*;
  */
 public class HoofdController {
 
-     public DaoFactoryInterface DaoFactory;
+	public EntityManagerFactory entityManagerFactory;
 
-	public HoofdController(DaoFactoryInterface daoFactory) {
-		DaoFactory = daoFactory;
+	public HoofdController(EntityManagerFactory entityManagerFactory) {
+		this.entityManagerFactory =entityManagerFactory;
 	}
 
 	public void start() {
-		InlogMenu inlogMenu = new InlogMenu(new AccountController(DaoFactory.createAccountDao()));
+		InlogMenu inlogMenu = new InlogMenu(new AccountController(entityManagerFactory));
 		boolean inlogSuccesfull = inlogMenu.start();
 		
 		if(inlogSuccesfull){
@@ -34,6 +37,7 @@ public class HoofdController {
 		}
 	}
 
+	/*
 	public void startMenuKlanten() {
 		MenuKlanten menuklanten = new MenuKlanten(new KlantenController(DaoFactory.createKlantDao()));
 		menuklanten.start();
@@ -55,6 +59,6 @@ public class HoofdController {
 		menuAccounts.start();
 	}
 
-
+*/
     
 }
