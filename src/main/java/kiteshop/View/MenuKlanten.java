@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 import static kiteshop.utilities.Validator.*;
 /**
  *
- * @author julia en steef
+ * @author julia en steef e
  */
 public class MenuKlanten {
 	private final Logger logger = ProjectLog.getLogger();
