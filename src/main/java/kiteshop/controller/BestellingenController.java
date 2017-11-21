@@ -23,7 +23,7 @@ public class BestellingenController {
     AbstractDao klantDao; 
     String tableForNameSearch = "achternaam";
     String tableForNameProductSearch = "naam";
-    String tableForIdSearch = "klant_klantID";
+    String tableForIdSearch = "klant";
 
 	public BestellingenController(EntityManagerFactory entityManagerFactory) {
 		bestellingDAO = new ConcreteDao(Bestelling.class, entityManagerFactory);
