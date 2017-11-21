@@ -115,10 +115,12 @@ public class MenuKlanten {
 			System.out.println(klant.getBezoekAdres().getStraatnaam()+" "+klant.getBezoekAdres().getHuisnummer());
 			System.out.println(klant.getBezoekAdres().getPostcode()+" "+klant.getBezoekAdres().getWoonplaats());
 			System.out.println();
+			if(klant.getFactuurAdres()!=null){
 			System.out.println("Factuuradres:");
 			System.out.println(klant.getFactuurAdres().getStraatnaam()+" "+klant.getFactuurAdres().getHuisnummer());
 			System.out.println(klant.getFactuurAdres().getPostcode()+" "+klant.getFactuurAdres().getWoonplaats());
 			System.out.println();
+			}
 		}
 		if(controller.showAllKlanten().isEmpty()){
 			System.out.println("Er zijn geen klanten gevonden met deze achternaam");

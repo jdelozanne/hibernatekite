@@ -3,6 +3,11 @@ package setupdatabase;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import hibernate.AbstractDao;
+import hibernate.ConcreteDao;
 import kiteshop.controller.AccountController;
 
 import kiteshop.pojos.Account;
@@ -12,9 +17,11 @@ import kiteshop.pojos.Klant;
 import kiteshop.pojos.Product;
 
 public class PeopleFactory {
+	
 
 
-	public static void createPeople(int i){
+
+	public static void createPeople(int i, EntityManagerFactory emf){
 
 		String[] fn = {"Bram", "Tom", "Klaas", "Paul", "Steef", "Julia", "Jeroen", "Inge", "Sanne", "Jeanette"};
 
@@ -55,17 +62,20 @@ public class PeopleFactory {
 			adres.setAdresType(AdresType.BEZOEKADRES);
 			k.setBezoekAdres(adres);
 
-/* creer nieuwe generic dao
- * 
- * klantdao.createKlant(k);
- */
+			AbstractDao adresDAO = new ConcreteDao(Adres.class, emf);
+			adresDAO.create(adres);
+			
+			
+			AbstractDao klantDAO = new ConcreteDao(Klant.class, emf);
+			klantDAO.create(k);
+
 			
 			
 			
 		}
 	}
 
-	public static void createProducts(){
+	public static void createProducts(EntityManagerFactory emf){
 
 		Account account = new Account();
 		account.setGebruikersnaam("Julia");
@@ -74,19 +84,10 @@ public class PeopleFactory {
 		account2.setGebruikersnaam("Steef");
 		account2.setWachtwoord("Peef5");
 		
-		/* creer nieuwe generic dao
-		 * 
-		 * AccountController ac = new AccountController(acdao);
-		 * ac.createAccount(account);
-		ac.createAccount(account2);
-		 */
-					
+		AbstractDao accDAO = new ConcreteDao(Account.class, emf);
+		accDAO.create(account);
+		accDAO.create(account2);
 	
-		
-
-		
-
-
 
 		Product p = new Product("Cabrinha Contra", new BigDecimal(1224), 100);
 		Product p1 = new Product("Wolkensturmer Spiderkites", new BigDecimal(169), 200);
@@ -100,24 +101,21 @@ public class PeopleFactory {
 		Product p9 = new Product("F-One Furtive", new BigDecimal(999), 100);
 		Product p10 = new Product("F-One Breeze", new BigDecimal(1149), 75);
 
+		AbstractDao productdao = new ConcreteDao(Product.class, emf);
+	
 		
-		/* creer nieuwe generic dao
-		 * 
-		 * kProductDaoSql productdao = new ProductDaoSql();
-		
-		
-		productdao.createProduct(p);
-		productdao.createProduct(p2);
-		productdao.createProduct(p3);
-		productdao.createProduct(p4);
-		productdao.createProduct(p5);
-		productdao.createProduct(p6);
-		productdao.createProduct(p7);
-		productdao.createProduct(p8);
-		productdao.createProduct(p9);
-		productdao.createProduct(p10);
+		productdao.create(p);
+		productdao.create(p2);
+		productdao.create(p3);
+		productdao.create(p4);
+		productdao.create(p5);
+		productdao.create(p6);
+		productdao.create(p7);
+		productdao.create(p8);
+		productdao.create(p9);
+		productdao.create(p10);
 
- */
+
 
 	}
 
