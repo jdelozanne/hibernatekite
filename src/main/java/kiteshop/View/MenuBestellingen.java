@@ -137,7 +137,7 @@ public class MenuBestellingen {
 		if(searchResult.size()==0){
 			System.out.println("Er zijn geen klanten gevonden, u gaat terug naar het bestellingen menu");
 		} else if(searchResult.size()==1){
-			klant= searchResult.get(0);
+			klant = searchResult.get(0);
 			System.out.println("Betreffende klant: "+ klant.getVoornaam() + " "+ klant.getAchternaam());
 		} else {
 			System.out.println("De volgende klanten zijn gevonden, geeft u alstublieft het nummer van de betreffende klant");
@@ -156,7 +156,7 @@ public class MenuBestellingen {
 
 		List<Bestelling> bestellingen = controller.getBestellingByKlantID(choosenKlant.getKlantID());
 		System.out.println("De volgende bestellingen zijn gevonden van deze klant, geeft u alstublieft het nummer van de bestelling die u wil wijzigen");
-		for (int i = 0; i < bestellingen.size(); i++) {
+ 		for (int i = 0; i < bestellingen.size(); i++) {
 			System.out.println(i + 1 + " " + bestellingen.get(i).bestellingToString());
 		}
 		Bestelling choosenBestelling = bestellingen.get(vraagInteger() - 1);

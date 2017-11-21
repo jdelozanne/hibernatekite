@@ -15,6 +15,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import kiteshop.pojos.Bestelling;
 import kiteshop.pojos.Klant;
 
 /**
@@ -111,10 +112,24 @@ EntityManager em = entityfactory.createEntityManager();
         T resultName = null;
 
         List<T> names = em.createQuery(criteria).getResultList();
-        if(names.size()!= 0){
+        if(!names.isEmpty()){
         resultName = names.get(0);
         }
 
         return resultName;    }
+    
+    @Override
+    public List<T> readByForeignkey(String table, int id) {
+        EntityManager em = entityfactory.createEntityManager();
+        CriteriaBuilder builder = this.entityfactory.getCriteriaBuilder();
+        CriteriaQuery<T> criteria = builder.createQuery(this.entityClass);
+        Root<T> root = criteria.from(this.entityClass);
+        criteria.select(root);
+        criteria.where(builder.equal(root.get(table), id));
+
+        List<T> orders = em.createQuery(criteria).getResultList();
+
+        return orders;
+    }
 
 }

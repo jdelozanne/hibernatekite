@@ -23,7 +23,7 @@ import kiteshop.utilities.ProjectLog;
 
 public class AccountController {
 
-    private static final long TIMELIMIT = 60000;
+    private static final long TIMELIMIT = 600000000;
 
     private final Logger logger = ProjectLog.getLogger();
     
