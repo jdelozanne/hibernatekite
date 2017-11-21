@@ -58,5 +58,11 @@ public class ConcreteDao<T extends Serializable> extends AbstractDao<T> implemen
     public T readOneByName(String table, String name) {
         return super.readOneByName(table, name); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public List<T> readByForeignkey(String table, int id) {
+        return super.readByForeignkey(table, id); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     
 }

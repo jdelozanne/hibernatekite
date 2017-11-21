@@ -23,6 +23,7 @@ public class BestellingenController {
     AbstractDao klantDao; 
     String tableForNameSearch = "achternaam";
     String tableForNameProductSearch = "naam";
+    String tableForIdSearch = "klant_klantID";
 
 	public BestellingenController(EntityManagerFactory entityManagerFactory) {
 		bestellingDAO = new ConcreteDao(Bestelling.class, entityManagerFactory);
@@ -36,10 +37,11 @@ public class BestellingenController {
 
 	//Bestelling functies
 	public void createBestelling(Bestelling bestelling) {
-		bestellingDAO.create(bestelling);
+		
 		for(BestelRegel br: bestelling.getBestelling()){
 			bestelRegelDAO.create(br);
 		}
+                bestellingDAO.create(bestelling);
 		adjustVoorraad(bestelling);
         logger.info("nieuwe bestelling gemaakt");
     }
@@ -47,9 +49,9 @@ public class BestellingenController {
     public void updateBestelling(int id) {
         bestellingDAO.readById(id);
     }
-
+//aanpassen
     public List<Bestelling> getBestellingByKlantID(int klantID) {
-        return null;
+        return bestellingDAO.readByForeignkey(tableForIdSearch, klantID);
     }
 
     public List<Bestelling> showBestellingen() {
