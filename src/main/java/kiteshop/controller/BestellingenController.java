@@ -25,6 +25,7 @@ public class BestellingenController {
     String tableForNameProductSearch = "naam";
     String tableForIdSearch = "klant";
 
+
 	public BestellingenController(EntityManagerFactory entityManagerFactory) {
 		bestellingDAO = new ConcreteDao(Bestelling.class, entityManagerFactory);
 		bestelRegelDAO = new ConcreteDao(BestelRegel.class, entityManagerFactory);
