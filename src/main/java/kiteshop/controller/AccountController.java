@@ -30,6 +30,7 @@ public class AccountController {
     AbstractDao accountDAO;
     String tableForNameSearch = "gebruikersnaam";
     
+   
     public EntityManagerFactory entityManagerFactory;
 
     

@@ -9,7 +9,6 @@ import javax.persistence.EntityManagerFactory;
 import hibernate.*;
 import kiteshop.pojos.Product;
 import kiteshop.utilities.ProjectLog;
-import kiteshop.daos.ProductDaoInterface;
 
 public class ProductenController {
 

@@ -9,7 +9,7 @@ import javax.persistence.EntityManagerFactory;
 import kiteshop.View.MenuProducten;
 import kiteshop.pojos.*;
 import kiteshop.utilities.ProjectLog;
-import kiteshop.daos.*;
+
 import hibernate.*;
 
 public class BestellingenController {

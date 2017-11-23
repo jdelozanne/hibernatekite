@@ -8,7 +8,6 @@ import javax.persistence.EntityManagerFactory;
 
 import kiteshop.pojos.*;
 import kiteshop.utilities.ProjectLog;
-import kiteshop.daos.KlantDaoInterface;
 import hibernate.*;
 
 public class KlantenController {

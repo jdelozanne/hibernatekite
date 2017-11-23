@@ -16,6 +16,7 @@ import kiteshop.utilities.ProjectLog;
 public class HoofdMenu {
 	private final Logger logger = ProjectLog.getLogger();
 	private Scanner input = new Scanner(System.in);
+    
         
     HoofdController controller;
     

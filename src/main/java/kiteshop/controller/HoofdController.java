@@ -11,7 +11,6 @@ import javax.persistence.Persistence;
 
 import kiteshop.View.*;
 
-import kiteshop.daos.*;
 
 /**
  *
