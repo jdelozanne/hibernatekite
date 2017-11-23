@@ -20,6 +20,7 @@ import kiteshop.pojos.Account;
 import kiteshop.utilities.PaswordHasher;
 import static kiteshop.utilities.PaswordHasher.createHashedToken;
 import kiteshop.utilities.ProjectLog;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class AccountController {
 
@@ -30,7 +31,7 @@ public class AccountController {
     AbstractDao accountDAO;
     String tableForNameSearch = "gebruikersnaam";
     
-   
+   @Autowired
     public EntityManagerFactory entityManagerFactory;
 
     
