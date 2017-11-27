@@ -6,8 +6,12 @@ import java.util.ArrayList;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
+
 import hibernate.AbstractDao;
-import hibernate.ConcreteDao;
+
 import kiteshop.controller.AccountController;
 
 import kiteshop.pojos.Account;
@@ -16,9 +20,23 @@ import kiteshop.pojos.AdresType;
 import kiteshop.pojos.Klant;
 import kiteshop.pojos.Product;
 
+@Configurable
 public class PeopleFactory {
-	
 
+
+	@Autowired @Qualifier("KlantDao")
+	private static AbstractDao klantDAO;
+
+	@Autowired @Qualifier("AdresDao")
+	private static AbstractDao adresDAO;
+
+	@Autowired @Qualifier("AccountDao")
+	static
+	AbstractDao accountDAO;
+
+	@Autowired @Qualifier("ProductDao")
+	static
+	AbstractDao productdao;
 
 
 	public static void createPeople(int i, EntityManagerFactory emf){
@@ -62,16 +80,16 @@ public class PeopleFactory {
 			adres.setAdresType(AdresType.BEZOEKADRES);
 			k.setBezoekAdres(adres);
 
-			AbstractDao adresDAO = new ConcreteDao(Adres.class, emf);
+			
 			adresDAO.create(adres);
-			
-			
-			AbstractDao klantDAO = new ConcreteDao(Klant.class, emf);
+
+
+		
 			klantDAO.create(k);
 
-			
-			
-			
+
+
+
 		}
 	}
 
@@ -83,11 +101,11 @@ public class PeopleFactory {
 		Account account2 = new Account();
 		account2.setGebruikersnaam("Steef");
 		account2.setWachtwoord("Peef5");
+
 		
-		AbstractDao accDAO = new ConcreteDao(Account.class, emf);
-		accDAO.create(account);
-		accDAO.create(account2);
-	
+		accountDAO.create(account);
+		accountDAO.create(account2);
+
 
 		Product p = new Product("Cabrinha Contra", new BigDecimal(1224), 100);
 		Product p1 = new Product("Wolkensturmer Spiderkites", new BigDecimal(169), 200);
@@ -101,9 +119,7 @@ public class PeopleFactory {
 		Product p9 = new Product("F-One Furtive", new BigDecimal(999), 100);
 		Product p10 = new Product("F-One Breeze", new BigDecimal(1149), 75);
 
-		AbstractDao productdao = new ConcreteDao(Product.class, emf);
 	
-		
 		productdao.create(p);
 		productdao.create(p2);
 		productdao.create(p3);
