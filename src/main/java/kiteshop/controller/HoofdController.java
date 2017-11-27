@@ -28,7 +28,8 @@ public class HoofdController {
    // }
 
     public void start() {
-        InlogMenu inlogMenu = new InlogMenu(new AccountController(entityManagerFactory));
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("hibertest");
+        InlogMenu inlogMenu = new InlogMenu(new AccountController(emf));
         boolean inlogSuccesfull = inlogMenu.start();
 
         if (inlogSuccesfull) {
