@@ -16,12 +16,14 @@ import org.springframework.stereotype.Component;
  * @author julia
  */
 
+@Component
 public class HoofdMenu {
 	private final Logger logger = ProjectLog.getLogger();
 	private Scanner input = new Scanner(System.in);
-      
+     
+	@Autowired
     HoofdController controller;
-    //deze constructor leeg maken
+
     public HoofdMenu(HoofdController hoofdController) {
 		controller = hoofdController;
 	}

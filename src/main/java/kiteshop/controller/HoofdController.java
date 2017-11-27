@@ -31,7 +31,7 @@ public class HoofdController {
 	@Autowired MenuProducten menuProducten;
 	@Autowired MenuAccounts menuAccounts;
 	@Autowired MenuBestellingen menuBestellingen;
-	
+	@Autowired HoofdMenu hoofdMenu;
 	
 
 	@PersistenceUnit
@@ -44,7 +44,6 @@ public class HoofdController {
 	public void start() {
 	boolean inlogSuccesfull = inlogMenu.start();
 		if (inlogSuccesfull) {
-			HoofdMenu hoofdMenu = new HoofdMenu(this);
 			hoofdMenu.start();
 		} else {
 			start();
