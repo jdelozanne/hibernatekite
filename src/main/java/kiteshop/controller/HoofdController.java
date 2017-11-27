@@ -5,6 +5,7 @@
  */
 package kiteshop.controller;
 
+
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
@@ -17,19 +18,20 @@ import org.springframework.stereotype.Component;
  *
  * @author julia en steef
  */
+
+
 @Component
 public class HoofdController {
 
-    @PersistenceContext(unitName = "hibertest")
+    @PersistenceUnit
     public EntityManagerFactory entityManagerFactory;
 
-    //public HoofdController(EntityManagerFactory entityManagerFactory) {
-    //    this.entityManagerFactory = entityManagerFactory;
-   // }
+    public HoofdController(EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
+   }
 
     public void start() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("hibertest");
-        InlogMenu inlogMenu = new InlogMenu(new AccountController(emf));
+        InlogMenu inlogMenu = new InlogMenu(new AccountController(entityManagerFactory));
         boolean inlogSuccesfull = inlogMenu.start();
 
         if (inlogSuccesfull) {
