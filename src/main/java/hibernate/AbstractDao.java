@@ -44,9 +44,10 @@ public abstract class AbstractDao<T extends Serializable> implements DaoInterfac
     @Override
     public void delete(T domain) {
         EntityManager em = this.entityfactory.createEntityManager();
-        T d = em.find(this.entityClass, 3);
+        //DIt is nodig op een of andere manier, zie stack overflow Removing a detached instance
+        Object managed = em.merge(domain);
         em.getTransaction().begin();
-        em.remove(d);
+        em.remove(managed);
         em.getTransaction().commit();
         em.close();
     }
