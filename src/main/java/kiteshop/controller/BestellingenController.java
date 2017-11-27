@@ -93,7 +93,7 @@ public class BestellingenController {
         return klantDao.readByName(this.tableForNameSearch, achternaam);
     }
     public List<Product> showProductByName(String productnaam) {
-        List<Product> producten = productDAO.readByName(this.tableForNameProductSearch, productnaam);
+        List<Product> producten = productDAO.readByNameLike(this.tableForNameProductSearch, productnaam);
         return producten;
     }
     

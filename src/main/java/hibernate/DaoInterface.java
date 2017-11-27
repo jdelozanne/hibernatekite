@@ -31,4 +31,6 @@ public interface DaoInterface <T extends Serializable> {
     public T readOneByName(String table, String name);
     
     public List<T> readByForeignkey(String table, int id);
+
+	List<T> readByNameLike(String table, String name);
 }

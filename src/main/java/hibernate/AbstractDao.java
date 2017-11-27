@@ -100,6 +100,20 @@ public abstract class AbstractDao<T extends Serializable> implements DaoInterfac
 
         return names;
     }
+    
+    @Override
+    public List<T> readByNameLike(String table, String name) {
+        EntityManager em = entityfactory.createEntityManager();
+        CriteriaBuilder builder = this.entityfactory.getCriteriaBuilder();
+        CriteriaQuery<T> criteria = builder.createQuery(this.entityClass);
+        Root<T> root = criteria.from(this.entityClass);
+        criteria.select(root);
+        criteria.where(builder.like(root.get(table), "%"+name+"%"));
+
+        List<T> names = em.createQuery(criteria).getResultList();
+
+        return names;
+    }
 
     @Override
     public T readOneByName(String table, String name) {
