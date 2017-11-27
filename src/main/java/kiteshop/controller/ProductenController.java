@@ -5,17 +5,24 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
+
+import org.springframework.stereotype.Component;
 
 import hibernate.*;
 import kiteshop.pojos.Product;
 import kiteshop.utilities.ProjectLog;
 
+@Component
 public class ProductenController {
 
     private final Logger logger = ProjectLog.getLogger();
     
     AbstractDao productDAO;
     String tableForNameSearch = "naam";
+    
+    @PersistenceUnit
+    public EntityManagerFactory entityManagerFactory;
 
     public ProductenController(EntityManagerFactory entityManagerFactory) {
     	productDAO = new ConcreteDao(Product.class,entityManagerFactory);

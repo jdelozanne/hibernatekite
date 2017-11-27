@@ -12,6 +12,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 
 import kiteshop.View.*;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -23,44 +25,45 @@ import org.springframework.stereotype.Component;
 @Component
 public class HoofdController {
 
-    @PersistenceUnit
-    public EntityManagerFactory entityManagerFactory;
 
-    public HoofdController(EntityManagerFactory entityManagerFactory) {
-        this.entityManagerFactory = entityManagerFactory;
-   }
+	@Autowired InlogMenu inlogMenu;
+	@Autowired MenuKlanten menuklanten;
+	@Autowired MenuProducten menuProducten;
+	
 
-    public void start() {
-        InlogMenu inlogMenu = new InlogMenu(new AccountController(entityManagerFactory));
-        boolean inlogSuccesfull = inlogMenu.start();
+	@PersistenceUnit
+	public EntityManagerFactory entityManagerFactory;
 
-        if (inlogSuccesfull) {
-            HoofdMenu hoofdMenu = new HoofdMenu(this);
-            hoofdMenu.start();
-        } else {
-            start();
-        }
-    }
+	public HoofdController(EntityManagerFactory entityManagerFactory) {
+		this.entityManagerFactory = entityManagerFactory;
+	}
 
-    public void startMenuKlanten() {
-        MenuKlanten menuklanten = new MenuKlanten(new KlantenController(entityManagerFactory));
-        menuklanten.start();
+	public void start() {
+	boolean inlogSuccesfull = inlogMenu.start();
+		if (inlogSuccesfull) {
+			HoofdMenu hoofdMenu = new HoofdMenu(this);
+			hoofdMenu.start();
+		} else {
+			start();
+		}
+	}
 
-    }
+	public void startMenuKlanten() {
+		menuklanten.start();
+	}
 
-    public void startMenuProducten() {
-        MenuProducten menuProducten = new MenuProducten(new ProductenController(entityManagerFactory));
-        menuProducten.start();
-    }
+	public void startMenuProducten() {
+		menuProducten.start();
+	}
 
-    public void startMenuBestellingen() {
-        MenuBestellingen menuBestellingen = new MenuBestellingen(new BestellingenController(entityManagerFactory));
-        menuBestellingen.start();
-    }
+	public void startMenuBestellingen() {
+		MenuBestellingen menuBestellingen = new MenuBestellingen(new BestellingenController(entityManagerFactory));
+		menuBestellingen.start();
+	}
 
-    public void startMenuAccounts() {
-        MenuAccounts menuAccounts = new MenuAccounts(new AccountController(entityManagerFactory));
-        menuAccounts.start();
-    }
+	public void startMenuAccounts() {
+		MenuAccounts menuAccounts = new MenuAccounts(new AccountController(entityManagerFactory));
+		menuAccounts.start();
+	}
 
 }

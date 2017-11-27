@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 
 import hibernate.AbstractDao;
 import hibernate.ConcreteDao;
@@ -21,7 +22,10 @@ import kiteshop.utilities.PaswordHasher;
 import static kiteshop.utilities.PaswordHasher.createHashedToken;
 import kiteshop.utilities.ProjectLog;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+
+@Component
 public class AccountController {
 
     private static final long TIMELIMIT = 600000000;
@@ -31,7 +35,7 @@ public class AccountController {
     AbstractDao accountDAO;
     String tableForNameSearch = "gebruikersnaam";
     
-   
+    @PersistenceUnit
     public EntityManagerFactory entityManagerFactory;
 
     

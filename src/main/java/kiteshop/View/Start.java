@@ -31,7 +31,7 @@ import setupdatabase.PeopleFactory;
  * @author Steef P
  */
 @Configuration
-@ComponentScan({"kiteshop.View", "kiteshop.controller"})
+@ComponentScan({"kiteshop.*", "hibernate"})
 public class Start {
 
 	@Autowired

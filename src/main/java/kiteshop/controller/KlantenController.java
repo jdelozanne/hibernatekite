@@ -5,17 +5,25 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
+
+import org.springframework.stereotype.Component;
 
 import kiteshop.pojos.*;
 import kiteshop.utilities.ProjectLog;
 import hibernate.*;
 
+
+@Component
 public class KlantenController {
 
     private final Logger logger = ProjectLog.getLogger();
     private AbstractDao klantDAO;
     private AbstractDao adresDAO;
     String tableForNameSearch = "achternaam";
+    
+    @PersistenceUnit
+    public EntityManagerFactory entityManagerFactory;
 
     public KlantenController(EntityManagerFactory entityManagerFactory) {
     	this.klantDAO = new ConcreteDao(Klant.class, entityManagerFactory);

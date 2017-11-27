@@ -11,15 +11,21 @@ import kiteshop.utilities.ProjectLog;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import static kiteshop.utilities.Validator.*;
 /**
  *
  * @author julia en steef e
  */
+
+@Component
 public class MenuKlanten {
 	private final Logger logger = ProjectLog.getLogger();
 
-
+	@Autowired
 	KlantenController controller;
 
 	public MenuKlanten(KlantenController controller) {

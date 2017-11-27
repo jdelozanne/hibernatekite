@@ -11,6 +11,9 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import kiteshop.controller.ProductenController;
 import kiteshop.pojos.Product;
 
@@ -18,11 +21,16 @@ import kiteshop.pojos.Product;
  *
  * @author julia
  */
+
+@Component
 public class MenuProducten {
 
 	Scanner input = new Scanner(System.in);
+	
+	@Autowired
 	ProductenController controller;
 
+	
 	public MenuProducten(ProductenController controller) {
 		this.controller = controller;
 	}
