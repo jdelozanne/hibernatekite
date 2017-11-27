@@ -7,6 +7,8 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import kiteshop.pojos.*;
@@ -18,16 +20,17 @@ import hibernate.*;
 public class KlantenController {
 
     private final Logger logger = ProjectLog.getLogger();
+    
+    @Autowired @Qualifier("KlantDao")
     private AbstractDao klantDAO;
+    
+    @Autowired @Qualifier("AdresDao")
     private AbstractDao adresDAO;
+    
     String tableForNameSearch = "achternaam";
     
-    @PersistenceUnit
-    public EntityManagerFactory entityManagerFactory;
-
-    public KlantenController(EntityManagerFactory entityManagerFactory) {
-    	this.klantDAO = new ConcreteDao(Klant.class, entityManagerFactory);
-    	this.adresDAO = new ConcreteDao(Adres.class, entityManagerFactory);
+    public KlantenController() {
+    
     }
 
     public void createKlant(Klant klant) {
