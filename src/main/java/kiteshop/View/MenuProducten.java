@@ -142,7 +142,7 @@ public class MenuProducten {
 		Scanner input = new Scanner(System.in);
 		Product product = null;
 		System.out.println("Geef alstublieft de productnaam of type ");
-		List<Product> producten = controller.showProductByName(input.nextLine());
+		List<Product> producten = controller.showProductByNameLike(input.nextLine());
 		if (producten.size() == 0) {
 			System.out.println("Er zijn geen producten gevonden, u gaat terug naar het productenmenu");
 		} else {

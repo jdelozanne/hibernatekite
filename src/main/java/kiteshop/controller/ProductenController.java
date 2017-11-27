@@ -37,10 +37,16 @@ public class ProductenController {
         displayProducten(producten);
     }
 
+    // Denk dat deze niet meer wordt gebruikt
     public List<Product> showProductByName(String productnaam) {
         List<Product> producten = productDAO.readByName(this.tableForNameSearch, productnaam);
         return producten;
     }
+    
+    public List<Product> showProductByNameLike(String productnaam) {
+		 List<Product> producten = productDAO.readByNameLike(this.tableForNameSearch, productnaam);
+	        return producten;
+	}
 
     public void displayProducten(List<Product> lijst) {
         for (Product p : lijst) {
@@ -56,4 +62,6 @@ public class ProductenController {
         productDAO.delete(product);
         logger.info("Product " + product + "wordt verwijderd");
     }
+
+	
 }
