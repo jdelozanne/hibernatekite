@@ -8,18 +8,21 @@ import static kiteshop.utilities.Validator.vraagInteger;
 
 import kiteshop.controller.HoofdController;
 import kiteshop.utilities.ProjectLog;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author julia
  */
+@Component
 public class HoofdMenu {
 	private final Logger logger = ProjectLog.getLogger();
 	private Scanner input = new Scanner(System.in);
     
-        
+    @Autowired    
     HoofdController controller;
-    
+    //deze constructor leeg maken
     public HoofdMenu(HoofdController hoofdController) {
 		controller = hoofdController;
 	}

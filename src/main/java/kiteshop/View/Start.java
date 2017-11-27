@@ -7,11 +7,17 @@ package kiteshop.View;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 
 import kiteshop.controller.BestellingenController;
 import kiteshop.controller.HoofdController;
 import kiteshop.controller.KlantenController;
 import kiteshop.controller.ProductenController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import setupdatabase.PeopleFactory;
 
 
@@ -19,23 +25,21 @@ import setupdatabase.PeopleFactory;
  *
  * @author Steef P
  */
+@Configuration
+@ComponentScan({"kiteshop.View", "kiteshop.controller", "kiteshop.utilities" })
 public class Start {
   
+   // @Autowired
+    //HoofdController hoofdcontroller;
+    
     public static void main(String[] args) {
-    	EntityManagerFactory emf = Persistence.createEntityManagerFactory("hibertest");
     	
-    	PeopleFactory.createPeople(20, emf);
-    	PeopleFactory.createProducts(emf);
-    	
-    	//MenuBestellingen menuBestellingen = new MenuBestellingen(new BestellingenController(emf));
-		//menuBestellingen.start();
-    	//MenuKlanten menuklanten = new MenuKlanten(new KlantenController(Persistence.createEntityManagerFactory("hibertest")));
-	//	menuklanten.start();
-    	
-    	//MenuProducten menuProducten = new MenuProducten(new ProductenController(Persistence.createEntityManagerFactory("hibertest")));
-	//menuProducten.start();
-	new HoofdController(emf).start();
-                
+	//new HoofdController(emf).start();
+        ApplicationContext context = new AnnotationConfigApplicationContext(Start.class);
+        HoofdController hoofdcontroller = context.getBean(HoofdController.class);
+
+       // Start start = context.getBean(Start.class);
+        hoofdcontroller.start();        
 
     }
     

@@ -5,44 +5,36 @@
  */
 package kiteshop.View;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
-import static java.lang.System.currentTimeMillis;
-import java.util.Calendar;
-import java.util.Date;
-import static kiteshop.utilities.Validator.isValidInt;
+
 import static kiteshop.utilities.Validator.isValidWachtwoord;
 
 import java.util.Scanner;
-import java.util.TimeZone;
-import java.util.UUID;
-import java.util.logging.Level;
+
 import java.util.logging.Logger;
 import static kiteshop.utilities.Validator.vraagInteger;
-import static kiteshop.utilities.Validator.vraagWachtwoord;
 
 import kiteshop.utilities.ProjectLog;
-import kiteshop.utilities.ProjectLog.*;
 import kiteshop.controller.*;
 import static kiteshop.controller.AccountController.getTime;
 
 import kiteshop.pojos.Account;
-import static kiteshop.utilities.PaswordHasher.createHashedPassword;
 import static kiteshop.utilities.PaswordHasher.createHashedToken;
-import static kiteshop.utilities.PaswordHasher.createSaltHex;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author julia
  */
+@Component
 public class InlogMenu {
 
     private final Logger logger = ProjectLog.getLogger();
     private Scanner input = new Scanner(System.in);
+    
+    @Autowired
     AccountController controller;
-
+//leeg maken
     public InlogMenu(AccountController controller) {
         this.controller = controller;
     }
