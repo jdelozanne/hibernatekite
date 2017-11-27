@@ -7,6 +7,8 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import kiteshop.View.MenuProducten;
@@ -21,28 +23,26 @@ public class BestellingenController {
 
     private final Logger logger = ProjectLog.getLogger();
 
-    
+    @Autowired @Qualifier("BestellingDao")
     AbstractDao bestellingDAO;
+    
+    @Autowired @Qualifier("BestelRegelDao")
     AbstractDao bestelRegelDAO;
+    
+    @Autowired @Qualifier("ProductDao")
     AbstractDao productDAO;
+    
+    @Autowired @Qualifier("KlantDao")
     AbstractDao klantDao; 
+    
     String tableForNameSearch = "achternaam";
     String tableForNameProductSearch = "naam";
     String tableForIdSearch = "klant";
 
-    @PersistenceUnit
-    public EntityManagerFactory entityManagerFactory;
     
 
-	public BestellingenController(EntityManagerFactory entityManagerFactory) {
-		bestellingDAO = new ConcreteDao(Bestelling.class, entityManagerFactory);
-		bestelRegelDAO = new ConcreteDao(BestelRegel.class, entityManagerFactory);
-		productDAO = new ConcreteDao(Product.class, entityManagerFactory);
-		klantDao = new ConcreteDao(Klant.class, entityManagerFactory);
+	public BestellingenController() {
 	}
-
-	
-	
 
 	//Bestelling functies
 	public void createBestelling(Bestelling bestelling) {
