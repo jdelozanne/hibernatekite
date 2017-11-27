@@ -14,14 +14,14 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 
 import hibernate.AbstractDao;
-import hibernate.ConcreteDao;
 import kiteshop.View.InlogMenu;
 import kiteshop.pojos.Account;
-
+import kiteshop.pojos.Product;
 import kiteshop.utilities.PaswordHasher;
 import static kiteshop.utilities.PaswordHasher.createHashedToken;
 import kiteshop.utilities.ProjectLog;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 
@@ -32,18 +32,12 @@ public class AccountController {
 
     private final Logger logger = ProjectLog.getLogger();
     
+    @Autowired @Qualifier("AccountDao")
     AbstractDao accountDAO;
     String tableForNameSearch = "gebruikersnaam";
-    
-    @PersistenceUnit
-    public EntityManagerFactory entityManagerFactory;
-
-    
-
-    public AccountController(EntityManagerFactory entityManagerFactory) {
-    	accountDAO = new ConcreteDao(Account.class,entityManagerFactory );
-		
-	}
+  
+    public AccountController() {
+ 	}
 
 	public void createAccount(Account account) {
         /* 

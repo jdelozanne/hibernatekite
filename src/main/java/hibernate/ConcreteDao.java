@@ -21,7 +21,7 @@ public class ConcreteDao<T extends Serializable> extends AbstractDao<T> implemen
     }
 
     public ConcreteDao(Class<T> type, EntityManagerFactory entityfactory) {
-        super(type,entityfactory );
+        super(type);
     }
     
     @Override

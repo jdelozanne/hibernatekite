@@ -15,6 +15,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import kiteshop.pojos.Bestelling;
 import kiteshop.pojos.Klant;
 
@@ -25,10 +29,15 @@ import kiteshop.pojos.Klant;
  * @param <PK>
  *
  */
+
+@Component
 public abstract class AbstractDao<T extends Serializable> implements DaoInterface<T> {
 
+	
+	@Autowired
     EntityManagerFactory entityfactory;
 
+    
     private Class<T> entityClass;
 
     public AbstractDao() {
@@ -36,9 +45,9 @@ public abstract class AbstractDao<T extends Serializable> implements DaoInterfac
                 .getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
-    public AbstractDao(Class<T> type, EntityManagerFactory entityfactory) {
+    public AbstractDao(Class<T> type ) {
         this.entityClass = type;
-        this.entityfactory = entityfactory;
+        
     }
 
     @Override

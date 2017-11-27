@@ -7,6 +7,8 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import hibernate.*;
@@ -18,14 +20,14 @@ public class ProductenController {
 
     private final Logger logger = ProjectLog.getLogger();
     
+    @Autowired @Qualifier("ProductDao")
     AbstractDao productDAO;
     String tableForNameSearch = "naam";
     
-    @PersistenceUnit
-    public EntityManagerFactory entityManagerFactory;
+    
 
-    public ProductenController(EntityManagerFactory entityManagerFactory) {
-    	productDAO = new ConcreteDao(Product.class,entityManagerFactory);
+    public ProductenController() {
+    
     }
 
     public void createProduct(Product product) {
