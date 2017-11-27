@@ -31,7 +31,7 @@ public class AccountController {
     AbstractDao accountDAO;
     String tableForNameSearch = "gebruikersnaam";
     
-   @Autowired
+   
     public EntityManagerFactory entityManagerFactory;
 
     

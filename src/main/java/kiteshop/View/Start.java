@@ -20,28 +20,26 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import setupdatabase.PeopleFactory;
 
-
 /**
  *
  * @author Steef P
  */
 @Configuration
-@ComponentScan({"kiteshop.View", "kiteshop.controller", "kiteshop.utilities" })
+@ComponentScan({"kiteshop.View", "kiteshop.controller"})
 public class Start {
-  
-   // @Autowired
-    //HoofdController hoofdcontroller;
-    
+
+    @Autowired
+    HoofdController hoofdcontroller;
+
     public static void main(String[] args) {
-    	
-	//new HoofdController(emf).start();
+
+        //new HoofdController(emf).start();
         ApplicationContext context = new AnnotationConfigApplicationContext(Start.class);
         HoofdController hoofdcontroller = context.getBean(HoofdController.class);
 
-       // Start start = context.getBean(Start.class);
-        hoofdcontroller.start();        
+        // Start start = context.getBean(Start.class);
+        hoofdcontroller.start();
 
     }
-    
-    
+
 }

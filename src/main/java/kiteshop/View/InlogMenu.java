@@ -26,13 +26,12 @@ import org.springframework.stereotype.Component;
  *
  * @author julia
  */
-@Component
+
 public class InlogMenu {
 
     private final Logger logger = ProjectLog.getLogger();
     private Scanner input = new Scanner(System.in);
-    
-    @Autowired
+
     AccountController controller;
 //leeg maken
     public InlogMenu(AccountController controller) {
