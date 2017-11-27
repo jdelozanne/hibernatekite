@@ -29,6 +29,9 @@ public class HoofdController {
 	@Autowired InlogMenu inlogMenu;
 	@Autowired MenuKlanten menuklanten;
 	@Autowired MenuProducten menuProducten;
+	@Autowired MenuAccounts menuAccounts;
+	@Autowired MenuBestellingen menuBestellingen;
+	
 	
 
 	@PersistenceUnit
@@ -57,12 +60,10 @@ public class HoofdController {
 	}
 
 	public void startMenuBestellingen() {
-		MenuBestellingen menuBestellingen = new MenuBestellingen(new BestellingenController(entityManagerFactory));
 		menuBestellingen.start();
 	}
 
 	public void startMenuAccounts() {
-		MenuAccounts menuAccounts = new MenuAccounts(new AccountController(entityManagerFactory));
 		menuAccounts.start();
 	}
 

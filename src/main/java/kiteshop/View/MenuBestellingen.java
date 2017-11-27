@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import static kiteshop.utilities.Validator.vraagInteger;
 import static kiteshop.utilities.Validator.vraagIntegerMinMax;
 
@@ -22,10 +26,13 @@ import kiteshop.utilities.ProjectLog;
  *
  * @author julia
  */
+
+@Component
 public class MenuBestellingen {
 
 	private final Logger logger = ProjectLog.getLogger();
 
+	@Autowired
 	BestellingenController controller;
 
 	public MenuBestellingen(BestellingenController controller) {

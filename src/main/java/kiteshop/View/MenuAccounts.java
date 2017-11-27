@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import kiteshop.controller.AccountController;
 import kiteshop.pojos.Account;
 import kiteshop.pojos.Adres;
@@ -22,10 +25,13 @@ import static kiteshop.utilities.Validator.*;
  *
  * @author julia en steef
  */
+
+@Component
 public class MenuAccounts {
 	private final Logger logger = ProjectLog.getLogger();
 	private Scanner input = new Scanner(System.in);
 	
+	@Autowired
 	AccountController controller;
 
 	public MenuAccounts(AccountController controller) {

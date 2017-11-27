@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
+
+import org.springframework.stereotype.Component;
 
 import kiteshop.View.MenuProducten;
 import kiteshop.pojos.*;
@@ -12,6 +15,8 @@ import kiteshop.utilities.ProjectLog;
 
 import hibernate.*;
 
+
+@Component
 public class BestellingenController {
 
     private final Logger logger = ProjectLog.getLogger();
@@ -25,6 +30,9 @@ public class BestellingenController {
     String tableForNameProductSearch = "naam";
     String tableForIdSearch = "klant";
 
+    @PersistenceUnit
+    public EntityManagerFactory entityManagerFactory;
+    
 
 	public BestellingenController(EntityManagerFactory entityManagerFactory) {
 		bestellingDAO = new ConcreteDao(Bestelling.class, entityManagerFactory);
